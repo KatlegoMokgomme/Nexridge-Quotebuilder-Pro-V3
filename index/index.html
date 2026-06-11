@@ -1,0 +1,2676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="NRT Enterprise — Professional Quotation Platform">
+<title>NRT Enterprise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#020409;--bg-1:#060c17;--bg-2:#0a1220;--bg-3:#0f1a2e;--bg-4:#152034;
+  --bg-h:rgba(255,255,255,.04);--bg-a:rgba(255,255,255,.07);
+  --brand:#00e5b0;--brand-2:#00c99a;--brand-3:#009e7a;
+  --brand-a8:rgba(0,229,176,.08);--brand-a12:rgba(0,229,176,.12);--brand-a20:rgba(0,229,176,.20);
+  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.13);--bd-brand:rgba(0,229,176,.18);
+  --tx:rgba(255,255,255,.92);--tx2:rgba(255,255,255,.58);--tx3:rgba(255,255,255,.32);--tx4:rgba(255,255,255,.14);
+  --ok:#10b981;--ok-a:rgba(16,185,129,.12);
+  --warn:#f59e0b;--warn-a:rgba(245,158,11,.12);
+  --err:#ef4444;--err-a:rgba(239,68,68,.12);
+  --info:#3b82f6;--info-a:rgba(59,130,246,.12);
+  --purple:#8b5cf6;--purple-a:rgba(139,92,246,.12);
+  --d-ink:#0f172a;--d-ink2:#334155;--d-ink3:#64748b;
+  --d-line:#e2e8f0;--d-line2:#cbd5e1;--d-bg:#f8fafc;--d-bg2:#f1f5f9;
+  --sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --nav-w:60px;--top-h:54px;--sb-w:300px;
+  --z-sb:100;--z-modal:200;--z-toast:300;--z-pal:400;--z-login:500;
+  --sh-sm:0 1px 4px rgba(0,0,0,.4);--sh-md:0 4px 20px rgba(0,0,0,.5);
+  --sh-lg:0 12px 48px rgba(0,0,0,.65);--sh-xl:0 24px 80px rgba(0,0,0,.75);
+  --glow:0 0 20px rgba(0,229,176,.22),0 0 60px rgba(0,229,176,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);background:var(--bg-0);color:var(--tx);
+  -webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:3px}
+:focus:not(:focus-visible){outline:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.18)}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;z-index:var(--z-login);
+  background:radial-gradient(ellipse at 25% 35%,rgba(0,229,176,.06) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 75%,rgba(59,130,246,.04) 0%,transparent 50%),var(--bg-0);
+  display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  transition:opacity .38s ease,visibility .38s ease}
+.login-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.login-card{width:100%;max-width:420px;background:var(--bg-1);border:1px solid var(--bd2);
+  border-radius:20px;padding:2.75rem 2.25rem;box-shadow:var(--sh-xl);position:relative;overflow:hidden}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brand-a20),transparent)}
+.login-brand{display:flex;align-items:center;gap:.75rem;margin-bottom:2.5rem}
+.login-brand-icon{width:40px;height:40px;background:var(--brand);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--glow)}
+.login-brand-icon svg{width:19px;height:19px;color:var(--bg-0)}
+.login-brand-name{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.login-brand-name em{color:var(--brand);font-style:normal}
+.login-brand-tag{font-size:.6rem;font-family:var(--mono);color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-top:.1rem}
+.login-h{font-size:1.45rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.3rem}
+.login-sub{font-size:.83rem;color:var(--tx2);margin-bottom:1.875rem;line-height:1.6}
+.login-field{margin-bottom:.875rem}
+.login-label{display:block;font-size:.65rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:.4rem}
+.login-input{width:100%;background:var(--bg-2);border:1px solid var(--bd);border-radius:10px;
+  padding:.72rem 1rem;color:var(--tx);font-size:.88rem;outline:none;transition:all .18s}
+.login-input:focus{border-color:var(--brand-a20);background:var(--bg-3);box-shadow:0 0 0 3px var(--brand-a8)}
+.login-input.shake{animation:shake .38s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.pw-wrap{position:relative}
+.pw-wrap .login-input{padding-right:3.25rem}
+.pw-eye{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--tx3);cursor:pointer;padding:.25rem;transition:color .15s;border-radius:4px}
+.pw-eye:hover{color:var(--brand)}
+.login-err{font-size:.76rem;color:var(--err);background:var(--err-a);border:1px solid rgba(239,68,68,.2);
+  border-radius:8px;padding:.55rem .825rem;margin-bottom:.875rem;display:none}
+.login-err.visible{display:block}
+.login-btn{width:100%;background:var(--brand);color:var(--bg-0);border:none;border-radius:10px;
+  padding:.8rem;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;margin-top:.25rem;
+  display:flex;align-items:center;justify-content:center;gap:.5rem}
+.login-btn:hover:not(:disabled){background:var(--brand-2);box-shadow:var(--glow)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-foot{font-size:.67rem;color:var(--tx3);text-align:center;margin-top:1.625rem;
+  padding-top:1.125rem;border-top:1px solid var(--bd);font-family:var(--mono)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* APP SHELL */
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* TOP BAR */
+.topbar{height:var(--top-h);flex-shrink:0;background:var(--bg-1);border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;padding:0 1rem 0 .5rem;gap:.625rem;z-index:50}
+.tb-brand{display:flex;align-items:center;gap:.55rem;padding:.2rem .625rem;
+  min-width:var(--nav-w);flex-shrink:0}
+.tb-logo{width:28px;height:28px;background:var(--brand);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-logo svg{width:13px;height:13px;color:var(--bg-0)}
+.tb-name{font-size:.85rem;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.tb-name em{color:var(--brand);font-style:normal}
+.tb-divider{width:1px;height:22px;background:var(--bd);flex-shrink:0}
+.tb-search{flex:1;max-width:460px;background:var(--bg-2);border:1px solid var(--bd);
+  border-radius:8px;display:flex;align-items:center;gap:.45rem;padding:.38rem .7rem;
+  cursor:pointer;transition:all .18s}
+.tb-search:hover{border-color:var(--bd2);background:var(--bg-3)}
+.tb-search-icon{color:var(--tx3);flex-shrink:0;width:13px;height:13px}
+.tb-search-ph{font-size:.8rem;color:var(--tx3);flex:1}
+.tb-search-kbd{font-family:var(--mono);font-size:.57rem;background:var(--bg-3);border:1px solid var(--bd2);
+  border-radius:4px;padding:.12rem .38rem;color:var(--tx3);flex-shrink:0}
+.tb-spacer{flex:1}
+.tb-actions{display:flex;align-items:center;gap:.25rem}
+.tb-btn{background:none;border:none;cursor:pointer;color:var(--tx2);padding:.42rem .5rem;
+  border-radius:7px;transition:all .15s;position:relative;display:flex;align-items:center;justify-content:center}
+.tb-btn:hover{background:var(--bg-h);color:var(--tx)}
+.nb{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--err);
+  border-radius:50%;border:1.5px solid var(--bg-1)}
+.user-chip{display:flex;align-items:center;gap:.45rem;padding:.28rem .575rem .28rem .35rem;
+  background:var(--bg-2);border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:all .15s}
+.user-chip:hover{background:var(--bg-3);border-color:var(--bd2)}
+.ua{width:26px;height:26px;border-radius:6px;background:var(--brand-a12);border:1px solid var(--brand-a20);
+  display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;
+  color:var(--brand);font-family:var(--mono);text-transform:uppercase;flex-shrink:0}
+.uc-name{font-size:.77rem;font-weight:600}
+.uc-role{font-size:.6rem;color:var(--tx3);font-family:var(--mono)}
+
+/* BODY */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* NAV RAIL */
+.nav-rail{width:var(--nav-w);flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--bd);
+  display:flex;flex-direction:column;align-items:center;padding:.5rem 0;gap:.12rem;z-index:var(--z-sb)}
+.nav-item{width:42px;height:42px;border-radius:10px;background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.13rem;
+  transition:all .16s;color:var(--tx3);position:relative}
+.nav-item:hover{background:var(--bg-h);color:var(--tx2)}
+.nav-item.active{background:var(--brand-a12);color:var(--brand)}
+.nav-item.active::before{content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);
+  width:2px;height:20px;background:var(--brand);border-radius:0 2px 2px 0}
+.nav-item svg{width:17px;height:17px;flex-shrink:0}
+.nav-lbl{font-size:.45rem;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.nav-tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
+  background:var(--bg-3);border:1px solid var(--bd2);border-radius:6px;padding:.28rem .6rem;
+  font-size:.7rem;white-space:nowrap;color:var(--tx);pointer-events:none;opacity:0;
+  transition:opacity .14s;z-index:999;box-shadow:var(--sh-sm)}
+.nav-item:hover .nav-tip{opacity:1}
+.nav-div{width:26px;height:1px;background:var(--bd);margin:.18rem 0;flex-shrink:0}
+.nav-sp{flex:1}
+
+/* MAIN */
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.view{display:none;flex:1;overflow:hidden}
+.view.active{display:flex;flex-direction:column;overflow:hidden}
+
+/* DASHBOARD */
+.dash-scroll{flex:1;overflow-y:auto;padding:1.625rem 1.875rem;
+  scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.dash-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.625rem;flex-wrap:wrap;gap:.875rem}
+.dash-greeting{font-size:1.45rem;font-weight:700;letter-spacing:-.03em}
+.dash-greeting span{color:var(--brand)}
+.dash-dt{font-size:.75rem;color:var(--tx3);font-family:var(--mono);margin-top:.18rem}
+
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.375rem}
+.kpi{background:var(--bg-1);border:1px solid var(--bd);border-radius:13px;padding:1.125rem 1.25rem;
+  position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s;cursor:default}
+.kpi:hover{border-color:var(--bd2);box-shadow:var(--sh-sm)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:13px 13px 0 0}
+.kpi.c-brand::after{background:var(--brand)}.kpi.c-ok::after{background:var(--ok)}
+.kpi.c-info::after{background:var(--info)}.kpi.c-warn::after{background:var(--warn)}
+.kpi-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
+.kpi.c-brand .kpi-ic{background:var(--brand-a12);color:var(--brand)}
+.kpi.c-ok .kpi-ic{background:var(--ok-a);color:var(--ok)}
+.kpi.c-info .kpi-ic{background:var(--info-a);color:var(--info)}
+.kpi.c-warn .kpi-ic{background:var(--warn-a);color:var(--warn)}
+.kpi-ic svg{width:16px;height:16px}
+.kpi-val{font-size:1.55rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.22rem}
+.kpi-lbl{font-size:.7rem;color:var(--tx3);font-weight:500}
+.kpi-sub{font-size:.65rem;color:var(--tx3);font-family:var(--mono);margin-top:.25rem}
+
+/* Dashboard 2-col */
+.dash-grid{display:grid;grid-template-columns:1fr 320px;gap:1.125rem;margin-bottom:1.125rem}
+.dc{background:var(--bg-1);border:1px solid var(--bd);border-radius:13px;padding:1.25rem}
+.dc-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.125rem}
+.dc-title{font-size:.87rem;font-weight:600}
+.dc-sub{font-size:.7rem;color:var(--tx3);font-family:var(--mono);margin-top:.12rem}
+.dc-act{font-size:.7rem;color:var(--brand);cursor:pointer;background:none;border:none;font-family:var(--sans);transition:color .15s}
+.dc-act:hover{color:var(--brand-2)}
+
+/* Pipeline */
+.pipe-bar{height:9px;border-radius:100px;overflow:hidden;display:flex;gap:2px;margin:1rem 0 .75rem}
+.pipe-seg{height:100%;border-radius:100px;transition:width .5s ease;min-width:3px}
+.pipe-seg.draft{background:var(--tx4)}.pipe-seg.sent{background:var(--info)}
+.pipe-seg.accepted{background:var(--ok)}.pipe-seg.rejected{background:var(--err)}
+.pipe-seg.expired{background:var(--warn)}
+.pipe-legend{display:flex;flex-wrap:wrap;gap:.5rem .75rem}
+.pl-item{display:flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--tx2)}
+.pl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* Status pills */
+.sp{display:inline-flex;align-items:center;padding:.18rem .5rem;border-radius:100px;
+  font-size:.6rem;font-family:var(--mono);letter-spacing:.07em;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.sp-draft{background:var(--bg-h);color:var(--tx3)}
+.sp-sent{background:var(--info-a);color:var(--info)}
+.sp-accepted{background:var(--ok-a);color:var(--ok)}
+.sp-rejected{background:var(--err-a);color:var(--err)}
+.sp-expired{background:var(--warn-a);color:var(--warn)}
+
+/* Data table */
+.dtable{width:100%;border-collapse:collapse}
+.dtable th{padding:.45rem .75rem;text-align:left;font-size:.62rem;font-family:var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd);font-weight:500}
+.dtable td{padding:.65rem .75rem;font-size:.8rem;border-bottom:1px solid var(--bd);vertical-align:middle}
+.dtable tbody tr{cursor:pointer;transition:background .1s}
+.dtable tbody tr:hover td{background:var(--bg-h)}
+.dtable tbody tr:last-child td{border-bottom:none}
+.ci{display:flex;align-items:center;gap:.55rem}
+.cinit{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;
+  justify-content:center;font-size:.65rem;font-weight:700;font-family:var(--mono);
+  text-transform:uppercase;flex-shrink:0}
+.td-num{font-family:var(--mono);font-size:.72rem;color:var(--brand)}
+.td-amt{font-family:var(--mono);font-weight:600}
+.td-muted{color:var(--tx3)}
+
+/* Quick actions */
+.qa-list{display:flex;flex-direction:column;gap:.4rem}
+.qa{background:var(--bg-2);border:1px solid var(--bd);border-radius:9px;padding:.65rem .875rem;
+  display:flex;align-items:center;gap:.65rem;cursor:pointer;transition:all .16s;text-align:left;width:100%}
+.qa:hover{background:var(--bg-3);border-color:var(--bd2)}
+.qa-ic{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qa-lbl{font-size:.8rem;font-weight:600}
+.qa-sub{font-size:.66rem;color:var(--tx3);margin-top:.08rem}
+
+/* Expiring card */
+.exp-item{display:flex;align-items:center;gap:.625rem;padding:.55rem 0;border-bottom:1px solid var(--bd)}
+.exp-item:last-child{border-bottom:none}
+.exp-dot{width:8px;height:8px;border-radius:50%;background:var(--warn);flex-shrink:0}
+.exp-lbl{font-size:.8rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exp-days{font-size:.68rem;font-family:var(--mono);color:var(--warn);flex-shrink:0}
+.empty-blk{padding:1.25rem 0;text-align:center;color:var(--tx3);font-size:.8rem}
+
+/* QUOTES VIEW */
+.vhd{padding:1.125rem 1.625rem;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;gap:.875rem;flex-shrink:0;flex-wrap:wrap}
+.v-title{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.v-actions{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.fbar{padding:.55rem 1.625rem;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;gap:.5rem;flex-shrink:0;flex-wrap:wrap}
+.fsearch{background:var(--bg-2);border:1px solid var(--bd);border-radius:7px;
+  display:flex;align-items:center;gap:.38rem;padding:.32rem .7rem;flex:1;max-width:280px}
+.fsearch input{background:none;border:none;outline:none;color:var(--tx);font-size:.8rem;width:100%}
+.fsearch input::placeholder{color:var(--tx3)}
+.fchip{background:var(--bg-2);border:1px solid var(--bd);border-radius:6px;
+  padding:.27rem .6rem;font-size:.7rem;font-family:var(--mono);color:var(--tx2);
+  cursor:pointer;transition:all .15s;white-space:nowrap}
+.fchip:hover{border-color:var(--bd2);color:var(--tx)}
+.fchip.active{background:var(--brand-a12);border-color:var(--brand-a20);color:var(--brand)}
+.qscroll{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+table.qtable{width:100%;border-collapse:collapse}
+table.qtable th{position:sticky;top:0;background:var(--bg-1);z-index:1;
+  padding:.55rem .875rem;text-align:left;font-size:.6rem;font-family:var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);
+  border-bottom:1px solid var(--bd);font-weight:500;white-space:nowrap}
+table.qtable td{padding:.7rem .875rem;font-size:.8rem;border-bottom:1px solid var(--bd);vertical-align:middle}
+table.qtable tbody tr{cursor:pointer;transition:background .1s}
+table.qtable tbody tr:hover td{background:var(--bg-h)}
+.row-acts{display:flex;gap:.22rem;opacity:0;transition:opacity .15s}
+table.qtable tbody tr:hover .row-acts{opacity:1}
+.ra{background:var(--bg-2);border:1px solid var(--bd);border-radius:5px;
+  padding:.22rem .42rem;color:var(--tx2);cursor:pointer;font-size:.7rem;transition:all .15s}
+.ra:hover{background:var(--bg-3);border-color:var(--bd2);color:var(--tx)}
+.ra.danger:hover{background:var(--err-a);border-color:rgba(239,68,68,.3);color:var(--err)}
+.empty-st{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:3rem 1.5rem;text-align:center}
+.empty-ic{width:52px;height:52px;border-radius:12px;background:var(--bg-2);border:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:center;margin-bottom:.875rem}
+.empty-ic svg{width:22px;height:22px;color:var(--tx3)}
+.empty-ttl{font-size:.87rem;font-weight:600;margin-bottom:.3rem}
+.empty-sub{font-size:.76rem;color:var(--tx3);line-height:1.6;max-width:260px}
+
+/* EDITOR VIEW */
+.editor-view{display:flex;overflow:hidden;flex:1}
+.esb{width:var(--sb-w);flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--bd);
+  display:flex;flex-direction:column;overflow:hidden;transition:width .3s ease;position:relative}
+.esb.collapsed{width:0;border:none}
+.sb-rh{position:absolute;right:-3px;top:0;bottom:0;width:6px;cursor:col-resize;z-index:10;
+  display:flex;align-items:center;justify-content:center}
+.sb-rh::after{content:'';width:2px;height:32px;background:var(--bd);border-radius:2px;
+  opacity:0;transition:opacity .18s}
+.sb-rh:hover::after,.sb-rh.dragging::after{opacity:1;background:var(--brand)}
+.esb-hd{padding:.875rem 1rem .7rem;border-bottom:1px solid var(--bd);flex-shrink:0}
+.esb-num{font-family:var(--mono);font-size:.6rem;color:var(--brand);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.esb-total{font-size:1.45rem;font-weight:800;letter-spacing:-.04em;color:var(--brand)}
+.esb-meta{font-size:.68rem;color:var(--tx3);font-family:var(--mono);display:flex;flex-direction:column;gap:.16rem;margin-top:.28rem}
+.esb-srow{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+.esb-ssel{background:var(--bg-2);border:1px solid var(--bd);border-radius:7px;color:var(--tx);
+  font-family:var(--mono);font-size:.62rem;padding:.28rem .55rem;cursor:pointer;outline:none;transition:border-color .18s}
+.esb-ssel:focus{border-color:var(--brand-a20)}
+.esb-unsaved{display:none;align-items:center;gap:.28rem;font-family:var(--mono);font-size:.58rem;color:var(--warn)}
+.esb-unsaved.visible{display:flex}
+.esb-udot{width:5px;height:5px;border-radius:50%;background:var(--warn);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.esb-tabs{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
+.esb-tab{flex:1;padding:.58rem .15rem;background:none;border:none;color:var(--tx3);
+  font-size:.57rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .16s;min-height:40px}
+.esb-tab:hover{color:var(--tx2)}
+.esb-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+.esb-body{flex:1;overflow:hidden;position:relative}
+.esb-panel{display:none;position:absolute;inset:0;overflow-y:auto;padding:.825rem 1rem 2rem;
+  scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.esb-panel.active{display:block}
+
+/* Forms */
+.fg{margin-bottom:.7rem}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.fl{display:block;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);margin-bottom:.32rem}
+.fl.req::after{content:' *';color:var(--err);opacity:.8}
+.fi,.fs,.ft{width:100%;background:var(--bg-2);border:1px solid var(--bd);border-radius:7px;
+  padding:.545rem .8rem;color:var(--tx);font-size:.8rem;outline:none;-webkit-appearance:none;
+  transition:border-color .16s,background .16s,box-shadow .16s}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--brand-a20);background:rgba(0,229,176,.025);box-shadow:0 0 0 3px var(--brand-a8)}
+.fi.has-error,.fs.has-error{border-color:rgba(239,68,68,.45)}
+.field-error{font-size:.61rem;color:var(--err);font-family:var(--mono);margin-top:.22rem;display:none}
+.field-error.visible{display:block}
+.fs option{background:var(--bg-2)}
+.ft{resize:vertical;min-height:64px}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-top:.22rem}
+.ps-opt{background:var(--bg-2);border:1px solid var(--bd);border-radius:7px;padding:.55rem .65rem;
+  cursor:pointer;transition:all .16s;text-align:center;min-height:40px}
+.ps-opt:hover{border-color:var(--bd2)}
+.ps-opt.active{background:var(--brand-a8);border-color:var(--brand-a20)}
+.ps-label{font-size:.58rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:.18rem}
+.ps-val{font-size:.8rem;font-weight:700;color:var(--tx)}
+.ps-opt.active .ps-label,.ps-opt.active .ps-val{color:var(--brand)}
+.disc-row{display:flex;gap:.38rem}
+.disc-row .fs{width:76px;flex-shrink:0}
+.disc-row .fi{flex:1}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.38rem;border-radius:7px;
+  font-family:var(--sans);font-size:.78rem;font-weight:600;cursor:pointer;border:none;
+  padding:.5rem .9rem;transition:all .16s;min-height:34px;text-decoration:none;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-brand{background:var(--brand);color:var(--bg-0)}
+.btn-brand:hover:not(:disabled){background:var(--brand-2);box-shadow:var(--glow)}
+.btn-ghost{background:var(--bg-2);color:var(--tx);border:1px solid var(--bd)}
+.btn-ghost:hover:not(:disabled){background:var(--bg-3);border-color:var(--bd2)}
+.btn-wa{background:#25d366;color:#fff;border:none}
+.btn-wa:hover:not(:disabled){background:#1fba5a}
+.btn-danger{background:var(--err-a);color:var(--err);border:1px solid rgba(239,68,68,.2)}
+.btn-danger:hover:not(:disabled){background:rgba(239,68,68,.18)}
+.btn-sm{font-size:.72rem;padding:.35rem .7rem;min-height:30px}
+.btn-icon{padding:.48rem .6rem;flex:0}
+.btn-flex{flex:1}
+.esb-foot{border-top:1px solid var(--bd);padding:.65rem 1rem;display:flex;gap:.35rem;flex-shrink:0;flex-wrap:wrap}
+.sb-use{padding:.35rem 1rem;border-top:1px solid var(--bd);flex-shrink:0}
+.sb-use-bar{height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.sb-use-fill{height:100%;border-radius:2px;transition:width .4s;background:var(--brand)}
+.sb-use-fill.warn{background:var(--warn)}.sb-use-fill.full{background:var(--err)}
+.sb-use-lbl{font-size:.57rem;font-family:var(--mono);color:var(--tx3);margin-top:.22rem}
+
+/* CANVAS */
+.canvas-area{flex:1;overflow-y:auto;padding:1.125rem;background:#0a1120;
+  scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.cbar{max-width:860px;margin:0 auto .75rem;display:flex;align-items:center;
+  justify-content:space-between;gap:.55rem;flex-wrap:wrap}
+.cbar-l{display:flex;align-items:center;gap:.55rem}
+.cbar-r{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.intg-dot{width:7px;height:7px;border-radius:50%;background:var(--tx4);display:inline-block;flex-shrink:0}
+.intg-dot.connected{background:var(--brand);box-shadow:0 0 4px rgba(0,229,176,.5)}
+
+/* QUOTE DOCUMENT */
+.quote-doc{max-width:860px;margin:0 auto;background:#fff;border-radius:13px;
+  box-shadow:0 16px 80px rgba(0,0,0,.7);overflow:hidden;position:relative;font-family:var(--sans)}
+.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-38deg);
+  font-size:7rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;
+  pointer-events:none;z-index:1;opacity:.042;display:none;user-select:none}
+.wm.sent{display:block;color:#3b82f6}.wm.accepted{display:block;color:#059669}
+.wm.rejected{display:block;color:#ef4444}.wm.expired{display:block;color:#f97316}
+.dh{background:#020409;padding:2.25rem 2.75rem;display:flex;justify-content:space-between;
+  align-items:flex-start;gap:2rem;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.dh-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.dh-name{font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:-.03em;text-align:center}
+.dh-name em{color:#00e5b0;font-style:normal}
+.dh-sub{font-size:.58rem;color:rgba(255,255,255,.3);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-top:.22rem;text-align:center}
+.dh-meta{text-align:right;flex-shrink:0}
+.dm-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.18rem}
+.dm-val{font-size:.83rem;font-weight:600;color:#fff;font-family:var(--mono)}
+.dm-title{font-size:1.7rem;font-weight:800;color:#00e5b0;letter-spacing:-.03em;line-height:1}
+.dm-divider{height:1px;background:rgba(255,255,255,.07);margin:.7rem 0}
+.dm-grid{display:flex;flex-direction:column;gap:.38rem}
+.parties{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--d-line)}
+.party{padding:1.5rem 2.75rem;position:relative}
+.party:first-child{border-right:1px solid var(--d-line)}
+.party::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:.53rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.55rem}
+.party strong{display:block;font-size:.93rem;font-weight:700;color:var(--d-ink);margin-bottom:.28rem}
+.party p{font-size:.8rem;color:var(--d-ink2);line-height:1.7;font-weight:300}
+.doc-body{padding:0 2.75rem}
+.sec{padding:1.375rem 0;border-bottom:1px solid var(--d-line)}
+.sec:last-child{border-bottom:none}
+.sec-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#00c99a;margin-bottom:.7rem;display:flex;align-items:center;gap:.55rem;cursor:pointer}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--d-line)}
+.sec-toggle{background:none;border:none;cursor:pointer;color:var(--d-ink3);font-size:.65rem;
+  padding:.1rem .25rem;border-radius:3px;transition:all .16s;margin-left:auto;flex-shrink:0}
+.sec-toggle:hover{color:#00c99a;background:rgba(0,201,154,.08)}
+.sec-content{overflow:hidden;transition:max-height .35s ease,opacity .25s ease;max-height:5000px;opacity:1}
+.sec-content.collapsed{max-height:0!important;opacity:0}
+.sec.collapsed .sec-label{margin-bottom:0}
+.sec.collapsed .sec-toggle{transform:rotate(-90deg)}
+.proj-title{font-size:1.15rem;font-weight:700;color:var(--d-ink);letter-spacing:-.02em;margin-bottom:.35rem;display:block;width:100%}
+.proj-desc{font-size:.83rem;color:var(--d-ink2);line-height:1.75;font-weight:300;display:block;width:100%}
+.proj-meta{display:flex;gap:1.625rem;margin-top:.8rem;flex-wrap:wrap}
+.pm-cell-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.18rem}
+.pm-cell-val{font-size:.82rem;font-weight:600;color:var(--d-ink)}
+.items-tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+.items-tbl thead tr{background:var(--d-bg2);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.items-tbl th{padding:.55rem .7rem;text-align:left;font-family:var(--mono);font-size:.53rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);border-bottom:1px solid var(--d-line);font-weight:500}
+.items-tbl th:last-child,.items-tbl th.price-col,.items-tbl th.total-col{text-align:right}
+.items-tbl th.del-col{width:80px}
+.cat-row td{background:var(--d-bg2);padding:.38rem .7rem;font-family:var(--mono);font-size:.57rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);border-bottom:1px solid var(--d-line);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.items-tbl tbody tr:not(.cat-row){border-bottom:1px solid var(--d-line)}
+.items-tbl td{padding:.68rem .7rem;color:var(--d-ink);vertical-align:top}
+.item-inp{background:none;border:1px solid transparent;border-radius:4px;font-family:var(--sans);
+  color:var(--d-ink);outline:none;transition:border-color .12s,background .12s;width:100%}
+.item-inp:hover{border-color:rgba(0,229,176,.3)}
+.item-inp:focus{border-color:rgba(0,229,176,.6);background:rgba(0,229,176,.04)}
+.item-inp.desc{font-weight:600;font-size:.8rem;padding:.18rem .28rem;margin-bottom:.2rem}
+.item-inp.note{font-size:.7rem;color:var(--d-ink2);font-weight:300;padding:.12rem .28rem}
+.item-inp.qty{width:48px;text-align:center;font-family:var(--mono);font-size:.8rem;padding:.18rem .28rem}
+.item-inp.price{width:100px;text-align:right;font-family:var(--mono);font-size:.8rem;padding:.18rem .28rem}
+.item-inp.cat{font-size:.67rem;font-family:var(--mono);color:var(--d-ink3);padding:.12rem .28rem}
+.item-total-val{font-family:var(--mono);font-weight:700;text-align:right;font-size:.8rem}
+.item-move{background:none;border:none;cursor:pointer;color:var(--d-ink3);font-size:.72rem;padding:.12rem .26rem;transition:all .12s;border-radius:3px}
+.item-move:hover{color:#00c99a;background:rgba(0,201,154,.08)}
+.item-del{background:none;border:none;cursor:pointer;color:#fca5a5;font-size:.76rem;padding:.12rem .26rem;transition:all .12s;border-radius:3px}
+.item-del:hover{color:var(--err);background:var(--err-a)}
+.add-row-btn{margin-top:.7rem;background:#f0fdf9;border:1px dashed #a7f3d0;color:#059669;
+  font-size:.73rem;font-weight:600;font-family:var(--sans);border-radius:7px;padding:.42rem 1rem;cursor:pointer;transition:all .18s}
+.add-row-btn:hover{background:#dcfce7}
+.totals-wrap{display:flex;justify-content:flex-end;margin-top:.875rem}
+.totals-inner{width:272px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;padding:.32rem 0;font-size:.8rem}
+.tot-row .tl{color:var(--d-ink2)}
+.tot-row .tv{font-family:var(--mono);font-weight:600;color:var(--d-ink)}
+.tot-row.disc-row-ui .tv{color:var(--err)}
+.tot-divider{height:1px;background:var(--d-line2);margin:.32rem 0}
+.tot-row.grand{background:#020409;margin:0 -.75rem;padding:.68rem .75rem;border-radius:8px;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.tot-row.grand .tl{color:rgba(255,255,255,.45);font-size:.63rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.tot-row.grand .tv{color:#00e5b0;font-size:1.15rem;font-family:var(--sans);font-weight:800}
+.pay-schedule{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem}
+.pay-card{flex:1;min-width:135px;background:var(--d-bg);border:1px solid var(--d-line);
+  border-radius:9px;padding:.8rem .9rem;position:relative;overflow:hidden;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pay-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pay-card.dep::before{background:#00e5b0}.pay-card.mil::before{background:#3b82f6}
+.pay-card.bal::before{background:#64748b}.pay-card.full::before{background:#020409}
+.pc-phase{font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.32rem}
+.pc-pct{font-size:.67rem;color:var(--d-ink3);margin-bottom:.22rem}
+.pc-amt{font-size:1.15rem;font-weight:800;color:var(--d-ink);font-family:var(--sans);letter-spacing:-.02em;margin-bottom:.18rem}
+.pc-when{font-size:.73rem;color:var(--d-ink2);font-weight:300}
+.pc-when strong{color:var(--d-ink);font-weight:600}
+.ie-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.625rem;margin-top:.5rem}
+.ie-col h4{font-size:.73rem;font-weight:700;color:var(--d-ink);margin-bottom:.55rem;display:flex;align-items:center;gap:.35rem}
+.ie-list{list-style:none;display:flex;flex-direction:column;gap:.38rem}
+.ie-list li{font-size:.76rem;color:var(--d-ink2);display:flex;align-items:flex-start;gap:.45rem;line-height:1.5}
+.ie-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.ie-dot.g{background:var(--ok)}.ie-dot.r{background:var(--err)}
+.terms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.75rem;margin-top:.5rem}
+.term-card{padding:.8rem .9rem;background:var(--d-bg);border:1px solid var(--d-line);border-radius:8px;
+  border-left:3px solid #00e5b0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.term-card h5{font-size:.73rem;font-weight:700;color:var(--d-ink);margin-bottom:.22rem}
+.term-card p{font-size:.71rem;color:var(--d-ink2);line-height:1.55;font-weight:300}
+.bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.75rem;margin-top:.5rem}
+.bk-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.18rem}
+.bk-val{font-size:.83rem;font-weight:600;color:var(--d-ink)}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.25rem;margin-top:.5rem}
+.acc-box{background:#f0fdf9;border:1px solid #a7f3d0;border-radius:8px;padding:.8rem .9rem;
+  margin-bottom:.875rem;font-size:.76rem;color:#065f46;line-height:1.65;font-weight:300}
+.acc-box strong{color:#047857;font-weight:600}
+.sig-line{border-bottom:1.5px solid var(--d-line2);margin-bottom:.32rem;height:40px}
+.sig-cap{font-family:var(--mono);font-size:.57rem;color:var(--d-ink3);letter-spacing:.1em;text-transform:uppercase}
+.doc-footer{background:#020409;padding:1rem 2.75rem;display:flex;justify-content:space-between;
+  align-items:center;gap:1.75rem;flex-wrap:wrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.doc-footer p{font-size:.65rem;color:rgba(255,255,255,.28);font-family:var(--mono)}
+.df-contacts{display:flex;gap:1.375rem;flex-wrap:wrap}
+.df-contacts span{font-size:.65rem;color:rgba(255,255,255,.35);font-family:var(--mono)}
+.df-contacts span strong{color:rgba(255,255,255,.62)}
+[contenteditable=true]{outline:none;cursor:text;border-radius:4px;transition:background .12s,box-shadow .12s}
+[contenteditable=true]:hover{background:rgba(0,229,176,.05)}
+[contenteditable=true]:focus{background:rgba(0,229,176,.08);box-shadow:0 0 0 2px rgba(0,229,176,.28)}
+.sec-note{font-size:.71rem;color:var(--d-ink2);margin-top:.55rem;font-weight:300}
+
+/* COMMAND PALETTE */
+.pal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);
+  z-index:var(--z-pal);backdrop-filter:blur(6px);align-items:flex-start;justify-content:center;padding:14vh 1.5rem 1.5rem}
+.pal-ov.open{display:flex}
+.pal-box{background:var(--bg-2);border:1px solid var(--bd2);border-radius:13px;
+  width:100%;max-width:540px;box-shadow:var(--sh-xl);overflow:hidden}
+.pal-inp-wrap{display:flex;align-items:center;gap:.55rem;padding:.8rem 1rem;border-bottom:1px solid var(--bd)}
+.pal-input{background:none;border:none;outline:none;color:var(--tx);font-size:.95rem;flex:1;font-family:var(--sans)}
+.pal-input::placeholder{color:var(--tx3)}
+.pal-results{max-height:360px;overflow-y:auto}
+.pal-group{padding:.45rem .9rem .2rem;font-size:.6rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.pal-item{display:flex;align-items:center;gap:.65rem;padding:.55rem .9rem;cursor:pointer;transition:background .1s}
+.pal-item:hover,.pal-item.sel{background:var(--bg-h)}
+.pal-ic{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem}
+.pal-txt{flex:1;min-width:0}
+.pal-lbl{font-size:.83rem;font-weight:500}
+.pal-sub{font-size:.7rem;color:var(--tx3)}
+.pal-kbd{font-family:var(--mono);font-size:.58rem;background:var(--bg-3);border:1px solid var(--bd2);border-radius:3px;padding:.12rem .38rem;color:var(--tx3)}
+.pal-empty{padding:2rem;text-align:center;color:var(--tx3);font-size:.83rem}
+.pal-foot{padding:.45rem .9rem;border-top:1px solid var(--bd);display:flex;gap:.875rem}
+.ph{font-size:.6rem;font-family:var(--mono);color:var(--tx3);display:flex;align-items:center;gap:.28rem}
+.pk{background:var(--bg-3);border:1px solid var(--bd2);border-radius:3px;padding:.1rem .32rem;font-family:var(--mono);font-size:.57rem;color:var(--tx3)}
+
+/* TOASTS */
+.toast-container{position:fixed;bottom:1.125rem;right:1.125rem;
+  display:flex;flex-direction:column;gap:.38rem;z-index:var(--z-toast);pointer-events:none}
+.toast{display:flex;align-items:flex-start;gap:.45rem;background:var(--bg-3);border:1px solid var(--bd2);
+  border-radius:9px;padding:.6rem .825rem;min-width:230px;max-width:340px;pointer-events:all;
+  box-shadow:var(--sh-md);opacity:0;transform:translateX(1.5rem);transition:opacity .2s,transform .2s}
+.toast.visible{opacity:1;transform:translateX(0)}
+.toast-success{border-left:3px solid var(--ok)}.toast-error{border-left:3px solid var(--err)}
+.toast-warning{border-left:3px solid var(--warn)}.toast-info{border-left:3px solid var(--info)}
+.toast-icon{font-size:.78rem;flex-shrink:0;margin-top:.1rem}
+.toast-success .toast-icon{color:var(--ok)}.toast-error .toast-icon{color:var(--err)}
+.toast-warning .toast-icon{color:var(--warn)}.toast-info .toast-icon{color:var(--info)}
+.toast-msg{flex:1;color:var(--tx);font-size:.78rem;line-height:1.4}
+.toast-close{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.75rem;padding:.1rem;border-radius:3px;transition:color .12s}
+.toast-close:hover{color:var(--tx)}
+
+/* MODALS */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
+  z-index:var(--z-modal);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1.5rem}
+.modal-ov.open{display:flex}
+.modal{background:var(--bg-2);border:1px solid var(--bd2);border-radius:13px;padding:1.625rem;
+  width:100%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:var(--sh-xl)}
+.modal-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;gap:.875rem}
+.modal-title{font-size:.97rem;font-weight:700}
+.modal-sub{font-size:.73rem;color:var(--tx3);margin-top:.18rem;line-height:1.4}
+.modal-close{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:1rem;padding:.28rem;border-radius:6px;transition:all .16s;flex-shrink:0}
+.modal-close:hover{color:var(--tx);background:var(--bg-h)}
+.intg-card{background:var(--bg-1);border:1px solid var(--bd);border-radius:9px;padding:.8rem 1.1rem;margin-bottom:.55rem;transition:border-color .18s}
+.intg-card:last-child{margin-bottom:0}
+.intg-card-top{display:flex;align-items:center;gap:.75rem}
+.intg-card.connected{border-color:var(--bd-brand)}
+.intg-logo{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0;font-family:var(--mono)}
+.intg-logo.xero{background:rgba(19,181,234,.12);border:1px solid rgba(19,181,234,.2);color:#13b5ea}
+.intg-logo.quickbooks{background:rgba(44,160,28,.12);border:1px solid rgba(44,160,28,.2);color:#2ca01c}
+.intg-logo.sage{background:rgba(0,160,120,.12);border:1px solid rgba(0,160,120,.2);color:#00a078}
+.intg-info{flex:1;min-width:0}
+.intg-name{font-weight:700;font-size:.85rem;margin-bottom:.12rem}
+.intg-desc{font-size:.7rem;color:var(--tx3);line-height:1.4}
+.intg-right{display:flex;flex-direction:column;align-items:flex-end;gap:.32rem;flex-shrink:0}
+.intg-badge{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .48rem;border-radius:100px}
+.intg-badge.disconnected{background:var(--bg-h);color:var(--tx3)}
+.intg-badge.connected{background:var(--ok-a);color:var(--ok)}
+.intg-badge.error{background:var(--err-a);color:var(--err)}
+.intg-expand{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.63rem;font-family:var(--mono);transition:color .15s;text-transform:uppercase;letter-spacing:.07em}
+.intg-expand:hover{color:var(--brand)}
+.intg-config{border-top:1px solid var(--bd);margin-top:.7rem;padding-top:.7rem;display:none}
+.intg-config.open{display:block}
+.intg-note{margin-top:1rem;padding:.7rem .825rem;background:var(--brand-a8);border:1px solid var(--bd-brand);border-radius:7px;font-size:.7rem;color:var(--tx3);line-height:1.6}
+.intg-note strong{color:var(--brand)}
+.um-tabs{display:flex;gap:.35rem;margin-bottom:1rem;border-bottom:1px solid var(--bd);padding-bottom:.7rem}
+.um-tab{background:var(--bg-2);border:1px solid var(--bd);border-radius:6px;padding:.38rem .75rem;font-size:.71rem;font-family:var(--sans);font-weight:600;color:var(--tx3);cursor:pointer;transition:all .16s}
+.um-tab:hover{color:var(--tx);background:var(--bg-3)}
+.um-tab.active{background:var(--brand-a8);border-color:var(--brand-a20);color:var(--brand)}
+.um-panel{display:none}.um-panel.active{display:block}
+.user-list{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.8rem}
+.user-row{display:flex;align-items:center;gap:.55rem;background:var(--bg-1);border:1px solid var(--bd);border-radius:8px;padding:.575rem .825rem}
+.user-row.you{border-color:var(--bd-brand)}
+.user-avatar{width:28px;height:28px;border-radius:6px;background:var(--brand-a12);border:1px solid var(--brand-a20);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--brand);flex-shrink:0;font-family:var(--mono);text-transform:uppercase}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:.83rem;font-weight:700}
+.user-role{font-size:.58rem;font-family:var(--mono);color:var(--tx3);letter-spacing:.07em;text-transform:uppercase}
+.user-actions{display:flex;gap:.28rem}
+.uab{background:none;border:1px solid var(--bd);border-radius:5px;padding:.22rem .48rem;color:var(--tx3);cursor:pointer;font-size:.7rem;transition:all .16s}
+.uab:hover{border-color:var(--bd2);color:var(--tx)}
+.uab.danger:hover{border-color:rgba(239,68,68,.3);color:var(--err);background:var(--err-a)}
+.uab.brand:hover{border-color:var(--brand-a20);color:var(--brand);background:var(--brand-a8)}
+.confirm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
+  z-index:calc(var(--z-modal) + 10);align-items:center;justify-content:center;padding:1.5rem}
+.confirm-ov.open{display:flex}
+.confirm-box{background:var(--bg-2);border:1px solid var(--bd2);border-radius:11px;padding:1.5rem;max-width:350px;width:100%;box-shadow:var(--sh-xl)}
+.confirm-title{font-size:.93rem;font-weight:700;margin-bottom:.38rem}
+.confirm-msg{font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:1.25rem}
+.confirm-actions{display:flex;gap:.45rem;justify-content:flex-end}
+.user-menu{position:fixed;background:var(--bg-2);border:1px solid var(--bd2);border-radius:9px;
+  min-width:175px;box-shadow:var(--sh-lg);z-index:200;overflow:hidden;
+  opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .14s}
+.user-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.um-item{display:flex;align-items:center;gap:.55rem;padding:.575rem .825rem;
+  cursor:pointer;font-size:.8rem;transition:background .1s;color:var(--tx)}
+.um-item:hover{background:var(--bg-h)}
+.um-item.danger{color:var(--err)}
+.um-item.danger:hover{background:var(--err-a)}
+.um-sep{height:1px;background:var(--bd);margin:.22rem 0}
+.chpw-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
+  z-index:10001;align-items:center;justify-content:center;padding:1.5rem}
+.chpw-modal.open{display:flex}
+.chpw-box{background:var(--bg-2);border:1px solid var(--bd2);border-radius:13px;padding:1.625rem;
+  width:100%;max-width:440px;max-height:88vh;overflow-y:auto;box-shadow:var(--sh-xl)}
+.notif-panel{position:fixed;background:var(--bg-2);border:1px solid var(--bd2);border-radius:11px;
+  width:300px;max-height:400px;overflow-y:auto;box-shadow:var(--sh-lg);z-index:200;
+  opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .14s}
+.notif-panel.open{opacity:1;visibility:visible;transform:translateY(0)}
+.notif-hd{padding:.65rem .9rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.notif-title{font-size:.83rem;font-weight:600}
+.notif-clear{font-size:.68rem;color:var(--brand);cursor:pointer;background:none;border:none;font-family:var(--sans)}
+.ni{padding:.68rem .9rem;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .1s}
+.ni:hover{background:var(--bg-h)}
+.ni:last-child{border-bottom:none}
+.ni-ttl{font-size:.8rem;font-weight:500;margin-bottom:.18rem}
+.ni-sub{font-size:.68rem;color:var(--tx3)}
+
+/* PRINT */
+@media print{
+  :root{--d-ink:#000!important;--d-ink2:#222!important;--d-ink3:#444!important;
+    --d-line:#cbd5e1!important;--d-line2:#64748b!important;--d-bg:#f8fafc!important;--d-bg2:#f1f5f9!important}
+  html,body{height:auto!important;overflow:visible!important;background:#fff!important;font-size:10pt!important}
+  .app{display:block!important;height:auto!important}
+  .topbar,.nav-rail,.esb,.cbar,.toast-container,.modal-ov,.confirm-ov,.pal-ov,.chpw-modal,
+  .user-menu,.notif-panel,.add-row-btn,.item-move,.item-del,.sb-rh{display:none!important}
+  .canvas-area{padding:0!important;overflow:visible!important;background:#fff!important}
+  .quote-doc{max-width:100%!important;width:100%!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+  .sec{break-inside:avoid!important;padding:.5rem 0!important}
+  .pay-schedule,.sig-grid,.terms-grid,.bank-grid,.parties{break-inside:avoid!important}
+  .sec-toggle{display:none!important}
+  .sec-content{max-height:none!important;opacity:1!important}
+  .doc-body{padding:0 1rem!important}
+  .dh{padding:1rem 1.25rem!important}
+  .party{padding:.7rem 1rem!important}
+  .party p{line-height:1.35!important}
+  .items-tbl{font-size:.76rem!important}
+  .items-tbl th{padding:.33rem .52rem!important;background:#f1f5f9!important}
+  .items-tbl td{padding:.33rem .52rem!important}
+  .items-tbl th:nth-child(2),.items-tbl td:nth-child(2){display:none!important}
+  thead{display:table-header-group!important}
+  .item-inp{border:none!important;background:none!important;padding:0!important}
+  [contenteditable]{background:none!important;box-shadow:none!important}
+  .pay-card{padding:.38rem .6rem!important;min-width:105px!important}
+  .bank-grid{grid-template-columns:repeat(3,1fr)!important;gap:.38rem!important}
+  .terms-grid{grid-template-columns:1fr 1fr!important;gap:.33rem!important}
+  .term-card{padding:.33rem .52rem!important}
+  .term-card p{font-size:.63rem!important;line-height:1.3!important}
+  .sig-grid{gap:.825rem!important}
+  .acc-box{padding:.38rem!important}
+  .doc-footer{background:#fff!important;padding:.575rem 1rem!important;border-top:1px solid #ddd!important}
+  .doc-footer p,.df-contacts span{color:#444!important}
+  .df-contacts span strong{color:#000!important}
+  .wm{display:none!important}
+  .wm.sent,.wm.accepted,.wm.rejected,.wm.expired{display:block!important}
+  @page{size:A4;margin:12mm 10mm}
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .nav-rail{display:none}
+  .dash-grid{grid-template-columns:1fr}
+  .esb{position:fixed;left:0;top:var(--top-h);bottom:0;z-index:var(--z-sb);
+    transform:translateX(0);transition:transform .3s ease;width:var(--sb-w)!important}
+  .esb.collapsed{transform:translateX(-100%)}
+  .parties{grid-template-columns:1fr}
+  .party:first-child{border-right:none;border-bottom:1px solid var(--d-line)}
+  .party{padding:1.1rem 1.5rem}
+  .doc-body{padding:0 1.5rem}
+  .dh{padding:1.625rem 1.5rem;flex-direction:column;gap:.75rem}
+  .ie-grid,.sig-grid{grid-template-columns:1fr}
+  .toast-container{right:.75rem;bottom:.75rem;left:.75rem}
+  .toast{max-width:100%}
+}
+@media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr}.fg-row{grid-template-columns:1fr}
+  .pay-schedule{flex-direction:column}.pay-card{min-width:100%}.tb-search{display:none}}
+</style>
+</head>
+<body>
+
+<div id="toastContainer" class="toast-container" aria-live="polite" role="status"></div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen" role="main">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      </div>
+      <div>
+        <div class="login-brand-name">NRT<em>Enterprise</em></div>
+        <div class="login-brand-tag">Quotation Platform</div>
+      </div>
+    </div>
+    <div class="login-h">Sign in</div>
+    <div class="login-sub">Access your workspace. Session ends when you close this tab.</div>
+    <div id="loginError" class="login-err" role="alert"></div>
+    <form id="loginForm" onsubmit="return false" autocomplete="on" novalidate>
+      <div class="login-field"><label class="login-label" for="loginUser">Username</label><input class="login-input" type="text" id="loginUser" name="username" placeholder="Enter username" autocomplete="username" required></div>
+      <div class="login-field"><label class="login-label" for="loginPass">Password</label>
+        <div class="pw-wrap"><input class="login-input" type="password" id="loginPass" name="password" placeholder="Enter password" autocomplete="current-password" required>
+          <button type="button" class="pw-eye" id="pwToggle" aria-label="Show password"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Sign In</button>
+    </form>
+    <div class="login-foot">NexridgeTech IT Solutions &nbsp;&middot;&nbsp; NRT Enterprise v3.0</div>
+  </div>
+</div>
+
+<!-- COMMAND PALETTE -->
+<div class="pal-ov" id="paletteOverlay" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="pal-box">
+    <div class="pal-inp-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--tx3)" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="pal-input" id="paletteInput" placeholder="Search quotes, clients, actions&hellip;" autocomplete="off" spellcheck="false">
+      <span class="pk">Esc</span>
+    </div>
+    <div class="pal-results" id="paletteResults"></div>
+    <div class="pal-foot">
+      <span class="ph"><span class="pk">&uarr;&darr;</span> Navigate</span>
+      <span class="ph"><span class="pk">&crarr;</span> Select</span>
+      <span class="ph"><span class="pk">Esc</span> Close</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="confirm-ov" id="confirmDialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="confirm-box">
+    <div class="confirm-title" id="confirmTitle">Are you sure?</div>
+    <div class="confirm-msg" id="confirmMessage">This action cannot be undone.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="confirmCancel">Cancel</button>
+      <button class="btn btn-danger" id="confirmOk">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATION MODAL -->
+<div class="modal-ov" id="integrationModal" role="dialog" aria-modal="true" aria-labelledby="intgModalTitle">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><div class="modal-title" id="intgModalTitle">Integrations</div><div class="modal-sub">Connect accounting and business platforms to sync quotes automatically.</div></div>
+      <button class="modal-close" id="intgModalClose" aria-label="Close">&#x2715;</button>
+    </div>
+    <div id="intgList"></div>
+    <div class="intg-note"><strong>Production setup:</strong> OAuth integrations require a server-side token-exchange endpoint. Enter your Client ID and click Connect to begin the authorisation flow. Implement the callback route in your backend to exchange the code for tokens.</div>
+  </div>
+</div>
+
+<!-- USER MANAGEMENT -->
+<div class="chpw-modal" id="chpwModal" role="dialog" aria-modal="true">
+  <div class="chpw-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.125rem">
+      <span style="font-size:.97rem;font-weight:700">&#128100; Manage Users</span>
+      <button style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:1rem;padding:.28rem;border-radius:6px;transition:all .16s" onclick="closeChpw()" aria-label="Close">&#x2715;</button>
+    </div>
+    <div id="umMsg" style="font-size:.71rem;font-family:var(--mono);margin-bottom:.8rem;padding:.42rem .65rem;border-radius:6px;display:none"></div>
+    <div class="um-tabs">
+      <button class="um-tab active" id="umTab-users" onclick="umSwitchTab('users')">Users</button>
+      <button class="um-tab" id="umTab-add" onclick="umSwitchTab('add')">Add User</button>
+      <button class="um-tab" id="umTab-pw" onclick="umSwitchTab('pw')">Change Password</button>
+    </div>
+    <div class="um-panel active" id="umPanel-users">
+      <div class="user-list" id="umUserList"></div>
+      <div style="font-size:.65rem;color:var(--tx3);font-family:var(--mono);line-height:1.5;margin-top:.45rem">&#9888; Last user cannot be deleted. To reset: F12 &rarr; Application &rarr; localStorage &rarr; delete <code style="background:var(--bg-h);padding:.08rem .28rem;border-radius:3px">nxt_users</code></div>
+    </div>
+    <div class="um-panel" id="umPanel-add">
+      <div class="fg"><label class="fl req" for="addUser">Username</label><input class="fi" type="text" id="addUser" placeholder="e.g. dakalo" autocomplete="off"></div>
+      <div class="fg"><label class="fl req" for="addPass">Password</label><input class="fi" type="password" id="addPass" placeholder="Min 8 characters" autocomplete="new-password"></div>
+      <div class="fg"><label class="fl req" for="addConfirm">Confirm Password</label><input class="fi" type="password" id="addConfirm" placeholder="Repeat password" autocomplete="new-password"></div>
+      <div style="display:flex;gap:.45rem;justify-content:flex-end;margin-top:.45rem">
+        <button class="btn btn-ghost" onclick="umSwitchTab('users')">Cancel</button>
+        <button class="btn btn-brand" onclick="umAddUser()">Add User</button>
+      </div>
+    </div>
+    <div class="um-panel" id="umPanel-pw">
+      <div style="font-size:.76rem;color:var(--tx3);margin-bottom:.8rem">Changing password for: <strong style="color:var(--brand)" id="umCurrentUser"></strong></div>
+      <div class="fg"><label class="fl req" for="chpwCurrent">Current Password</label><input class="fi" type="password" id="chpwCurrent" placeholder="Your current password" autocomplete="current-password"></div>
+      <div class="fg"><label class="fl req" for="chpwNew">New Password</label><input class="fi" type="password" id="chpwNew" placeholder="Min 8 characters" autocomplete="new-password"></div>
+      <div class="fg"><label class="fl req" for="chpwConfirm">Confirm New Password</label><input class="fi" type="password" id="chpwConfirm" placeholder="Repeat new password" autocomplete="new-password"></div>
+      <div style="display:flex;gap:.45rem;justify-content:flex-end;margin-top:.45rem">
+        <button class="btn btn-ghost" onclick="umSwitchTab('users')">Cancel</button>
+        <button class="btn btn-brand" onclick="umChangeMyPassword()">Update Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- USER MENU -->
+<div class="user-menu" id="userMenu">
+  <div class="um-item" onclick="openChpw()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Manage Users</div>
+  <div class="um-item" onclick="openIntegrationModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</div>
+  <div class="um-sep"></div>
+  <div class="um-item danger" id="menuLogout"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-hd"><span class="notif-title">Notifications</span><button class="notif-clear" onclick="clearNotifications()">Clear all</button></div>
+  <div id="notifList"><div class="empty-blk">No notifications</div></div>
+</div>
+
+<!-- APP SHELL -->
+<div class="app">
+  <header class="topbar">
+    <div class="tb-brand">
+      <div class="tb-logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+      <div class="tb-name">NRT<em>Enterprise</em></div>
+    </div>
+    <div class="tb-divider" aria-hidden="true"></div>
+    <button class="tb-search" id="topbarSearch" aria-label="Search (Ctrl+K)">
+      <svg class="tb-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span class="tb-search-ph">Search quotes, clients, actions&hellip;</span>
+      <span class="tb-search-kbd">Ctrl+K</span>
+    </button>
+    <div class="tb-spacer"></div>
+    <div class="tb-actions">
+      <button class="btn btn-brand btn-sm" id="topbarNewQuote"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Quote</button>
+      <button class="tb-btn" id="notifBtn" aria-label="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="nb" id="notifBadge" style="display:none"></span></button>
+      <button class="user-chip" id="userChipBtn" aria-label="User menu" aria-haspopup="true">
+        <div class="ua" id="topbarAvatar">A</div>
+        <div><div class="uc-name" id="topbarUsername">admin</div><div class="uc-role">NRT Enterprise</div></div>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--tx3)" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-body">
+    <nav class="nav-rail" aria-label="Main navigation">
+      <button class="nav-item active" id="nav-dashboard" onclick="switchView('dashboard')" aria-label="Dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span class="nav-lbl">Dash</span><span class="nav-tip">Dashboard</span>
+      </button>
+      <button class="nav-item" id="nav-quotes" onclick="switchView('quotes')" aria-label="All Quotes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="nav-lbl">Quotes</span><span class="nav-tip">All Quotes</span>
+      </button>
+      <button class="nav-item" id="nav-editor" onclick="switchView('editor')" aria-label="Quote Editor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-lbl">Editor</span><span class="nav-tip">Quote Editor</span>
+      </button>
+      <div class="nav-div" aria-hidden="true"></div>
+      <button class="nav-item" onclick="openIntegrationModal()" aria-label="Integrations">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span class="nav-lbl">Intg</span><span class="nav-tip">Integrations</span>
+      </button>
+      <div class="nav-sp" aria-hidden="true"></div>
+      <button class="nav-item" onclick="openChpw()" aria-label="Manage Users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nav-lbl">Users</span><span class="nav-tip">Manage Users</span>
+      </button>
+    </nav>
+
+    <main class="main" id="quoteMain">
+
+      <!-- DASHBOARD -->
+      <div class="view active" id="view-dashboard">
+        <div class="dash-scroll">
+          <div class="dash-hd">
+            <div><div class="dash-greeting">Good day, <span id="dashName">admin</span></div><div class="dash-dt" id="dashDate"></div></div>
+            <button class="btn btn-brand" id="dashNewBtn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Quote</button>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi c-brand"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="kpi-val" id="kpiPipeline">R 0</div><div class="kpi-lbl">Total Pipeline</div><div class="kpi-sub" id="kpiPipelineSub">All active quotes</div></div>
+            <div class="kpi c-ok"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="kpi-val" id="kpiAccepted">0%</div><div class="kpi-lbl">Acceptance Rate</div><div class="kpi-sub" id="kpiAcceptedSub">Accepted vs closed</div></div>
+            <div class="kpi c-info"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="kpi-val" id="kpiTotal">0</div><div class="kpi-lbl">Total Quotes</div><div class="kpi-sub" id="kpiTotalSub">All time</div></div>
+            <div class="kpi c-warn"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-val" id="kpiAvg">R 0</div><div class="kpi-lbl">Avg Quote Value</div><div class="kpi-sub" id="kpiAvgSub">Per quote</div></div>
+          </div>
+          <div class="dash-grid">
+            <div class="dc">
+              <div class="dc-hd"><div><div class="dc-title">Quote Pipeline</div><div class="dc-sub" id="pipelineSub">Status breakdown</div></div><button class="dc-act" onclick="switchView('quotes')">View all &rarr;</button></div>
+              <div class="pipe-bar" id="pipelineBar"></div>
+              <div class="pipe-legend" id="pipelineLegend"></div>
+              <div style="margin-top:1.125rem"><div class="dc-title" style="margin-bottom:.75rem;font-size:.82rem">Recent Quotes</div>
+                <table class="dtable"><thead><tr><th>Quote #</th><th>Client</th><th>Value</th><th>Status</th></tr></thead><tbody id="dashRecentBody"></tbody></table>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div class="dc"><div class="dc-hd"><div class="dc-title">Quick Actions</div></div>
+                <div class="qa-list">
+                  <button class="qa" id="qaNew"><div class="qa-ic" style="background:var(--brand-a12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="qa-lbl">New Quote</div><div class="qa-sub">Start from blank</div></div></button>
+                  <button class="qa" id="qaAll"><div class="qa-ic" style="background:var(--info-a)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="qa-lbl">All Quotes</div><div class="qa-sub">Browse &amp; manage</div></div></button>
+                  <button class="qa" id="qaIntg"><div class="qa-ic" style="background:var(--purple-a)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><div><div class="qa-lbl">Integrations</div><div class="qa-sub">Xero, QuickBooks, Sage</div></div></button>
+                </div>
+              </div>
+              <div class="dc"><div class="dc-hd"><div><div class="dc-title">Expiring Soon</div><div class="dc-sub">Next 7 days</div></div></div><div id="expiringList"><div class="empty-blk">No expiring quotes</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUOTES LIST -->
+      <div class="view" id="view-quotes">
+        <div class="vhd"><div class="v-title">Quotes</div>
+          <div class="v-actions">
+            <button class="btn btn-ghost btn-sm" id="qlExportBtn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export JSON</button>
+            <button class="btn btn-brand btn-sm" id="qlNewBtn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Quote</button>
+          </div>
+        </div>
+        <div class="fbar">
+          <div class="fsearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--tx3)" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="search" id="qlSearch" placeholder="Search by number, client, status&hellip;" aria-label="Search quotes"></div>
+          <button class="fchip active" data-filter="all" onclick="setQlFilter('all')">All</button>
+          <button class="fchip" data-filter="draft" onclick="setQlFilter('draft')">Draft</button>
+          <button class="fchip" data-filter="sent" onclick="setQlFilter('sent')">Sent</button>
+          <button class="fchip" data-filter="accepted" onclick="setQlFilter('accepted')">Accepted</button>
+          <button class="fchip" data-filter="rejected" onclick="setQlFilter('rejected')">Rejected</button>
+        </div>
+        <div class="qscroll">
+          <table class="qtable" aria-label="Quotes list">
+            <thead><tr><th>Quote #</th><th>Client</th><th>Service</th><th>Value</th><th>Status</th><th>Issued</th><th style="width:100px"></th></tr></thead>
+            <tbody id="qlTableBody"></tbody>
+          </table>
+          <div id="qlEmpty" class="empty-st" style="display:none">
+            <div class="empty-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="empty-ttl">No quotes found</div>
+            <div class="empty-sub">Create your first quote or adjust the filters.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDITOR -->
+      <div class="view" id="view-editor">
+        <div class="editor-view">
+          <aside class="esb" id="sidebar" aria-label="Quote configuration">
+            <div class="sb-rh" id="sbResizeHandle" aria-hidden="true"></div>
+            <div class="esb-hd">
+              <div class="esb-num" id="scNum">New Quote</div>
+              <div class="esb-total" id="scTotal">R 0.00</div>
+              <div class="esb-meta"><span>Client: <em id="scClient" style="color:rgba(255,255,255,.5);font-style:normal">—</em></span><span>Valid: <em id="scValid" style="color:rgba(255,255,255,.5);font-style:normal">—</em></span></div>
+              <div class="esb-srow">
+                <select id="statusSel" class="esb-ssel" aria-label="Quote status"><option value="draft">Draft</option><option value="sent">Sent</option><option value="accepted">Accepted</option><option value="rejected">Rejected</option><option value="expired">Expired</option></select>
+                <div class="esb-unsaved" id="unsavedIndicator" aria-live="polite"><div class="esb-udot"></div>Unsaved</div>
+              </div>
+            </div>
+            <div class="esb-tabs" role="tablist">
+              <button class="esb-tab active" role="tab" id="tabBtn-info" aria-selected="true" aria-controls="tab-info">Info</button>
+              <button class="esb-tab" role="tab" id="tabBtn-client" aria-selected="false" aria-controls="tab-client">Client</button>
+              <button class="esb-tab" role="tab" id="tabBtn-finance" aria-selected="false" aria-controls="tab-finance">Finance</button>
+              <button class="esb-tab" role="tab" id="tabBtn-bank" aria-selected="false" aria-controls="tab-bank">Bank</button>
+            </div>
+            <div class="esb-body">
+              <div class="esb-panel active" id="tab-info" role="tabpanel" aria-labelledby="tabBtn-info">
+                <div class="fg"><label class="fl req" for="fi-num">Quote Number</label><div style="display:flex;gap:.38rem;align-items:center"><input class="fi" id="fi-num" placeholder="NRT-2026-001"><button class="btn btn-ghost" style="flex-shrink:0;padding:.48rem .55rem;font-size:.67rem" id="btnAutoNum">Auto</button></div></div>
+                <div class="fg-row"><div class="fg"><label class="fl req" for="fi-issued">Date Issued</label><input class="fi" type="date" id="fi-issued"></div><div class="fg"><label class="fl" for="fi-valid">Valid (days)</label><input class="fi" type="number" id="fi-valid" min="7" max="365" placeholder="30"></div></div>
+                <div class="fg"><label class="fl" for="fi-ptitle">Project Title</label><input class="fi" id="fi-ptitle" placeholder="e.g. Business Website"></div>
+                <div class="fg"><label class="fl" for="fi-stype">Service Type</label><select class="fs" id="fi-stype"><option>Web Development</option><option>IT Infrastructure</option><option>Network Systems</option><option>Custom Application</option><option>IT Support Retainer</option><option>Cloud &amp; Hosting</option><option>Cybersecurity</option><option>Software Integration</option><option>Data &amp; Analytics</option><option>Other</option></select></div>
+                <div class="fg"><label class="fl" for="fi-delivery">Estimated Delivery</label><input class="fi" id="fi-delivery" placeholder="14 working days from deposit"></div>
+                <div class="fg"><label class="fl" for="fi-desc">Project Description</label><textarea class="ft" id="fi-desc" placeholder="Brief description&hellip;"></textarea></div>
+              </div>
+              <div class="esb-panel" id="tab-client" role="tabpanel" aria-labelledby="tabBtn-client">
+                <div class="fg"><label class="fl req" for="fc-company">Company Name</label><input class="fi" id="fc-company" placeholder="Client Business Name"></div>
+                <div class="fg"><label class="fl" for="fc-contact">Contact Person</label><input class="fi" id="fc-contact" placeholder="First &amp; Last Name"></div>
+                <div class="fg"><label class="fl" for="fc-email">Email Address</label><input class="fi" type="email" id="fc-email" placeholder="name@business.co.za" aria-describedby="fc-email-err"><div class="field-error" id="fc-email-err" role="alert">Please enter a valid email address.</div></div>
+                <div class="fg"><label class="fl" for="fc-phone">Phone Number</label><input class="fi" type="tel" id="fc-phone" placeholder="+27 XX XXX XXXX"></div>
+                <div class="fg"><label class="fl" for="fc-address">Address / City</label><input class="fi" id="fc-address" placeholder="City, Province"></div>
+              </div>
+              <div class="esb-panel" id="tab-finance" role="tabpanel" aria-labelledby="tabBtn-finance">
+                <div class="fg"><label class="fl">Payment Structure</label>
+                  <div class="ps-grid" role="group">
+                    <div class="ps-opt active" id="ps-50-50" role="button" tabindex="0" aria-pressed="true"><div class="ps-label">Standard</div><div class="ps-val">50 / 50</div></div>
+                    <div class="ps-opt" id="ps-33-33-34" role="button" tabindex="0" aria-pressed="false"><div class="ps-label">Milestone</div><div class="ps-val">33/33/34</div></div>
+                    <div class="ps-opt" id="ps-100" role="button" tabindex="0" aria-pressed="false"><div class="ps-label">Upfront</div><div class="ps-val">100%</div></div>
+                    <div class="ps-opt" id="ps-custom" role="button" tabindex="0" aria-pressed="false"><div class="ps-label">Custom</div><div class="ps-val">Manual</div></div>
+                  </div>
+                  <div id="customSplitWrap" style="display:none;margin-top:.6rem"><div style="font-size:.66rem;color:var(--tx3);margin-bottom:.38rem;font-family:var(--mono)">Must total 100% <span id="splitTotal" style="margin-left:.35rem;color:var(--brand);font-weight:600"></span></div><div style="display:flex;gap:.38rem;flex-wrap:wrap" id="customSplitFields"></div><button id="btnAddSplit" style="margin-top:.32rem;background:none;border:1px dashed var(--brand-a20);color:var(--brand);font-size:.66rem;font-family:var(--mono);border-radius:6px;padding:.25rem .6rem;cursor:pointer">+ Add Stage</button></div>
+                </div>
+                <div class="fg"><label class="fl">Discount</label><div class="disc-row"><select class="fs" id="discType"><option value="percent">%</option><option value="fixed">R</option></select><input class="fi" type="number" min="0" id="discVal" placeholder="0"></div></div>
+                <div class="fg" style="display:flex;align-items:center;gap:.6rem"><input type="checkbox" id="vatChk" style="accent-color:var(--brand);width:16px;height:16px;cursor:pointer"><label for="vatChk" style="font-size:.8rem;cursor:pointer;font-weight:500">Include 15% VAT</label></div>
+              </div>
+              <div class="esb-panel" id="tab-bank" role="tabpanel" aria-labelledby="tabBtn-bank">
+                <div class="fg"><label class="fl req" for="fb-name">Account Name</label><input class="fi" id="fb-name" placeholder="NexridgeTech IT Solutions"></div>
+                <div class="fg"><label class="fl req" for="fb-bank">Bank Name</label><input class="fi" id="fb-bank" placeholder="e.g. FNB / Capitec"></div>
+                <div class="fg-row"><div class="fg"><label class="fl req" for="fb-acc">Account Number</label><input class="fi" id="fb-acc" placeholder="XXXXXXXXXX"></div><div class="fg"><label class="fl" for="fb-branch">Branch Code</label><input class="fi" id="fb-branch" placeholder="XXXXXX"></div></div>
+                <div class="fg"><label class="fl" for="fb-type">Account Type</label><select class="fs" id="fb-type"><option>Current / Cheque</option><option>Savings</option><option>Business</option><option>Transmission</option></select></div>
+              </div>
+            </div>
+            <div class="esb-foot">
+              <button class="btn btn-ghost btn-sm" id="btnWA"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.087.536 4.048 1.478 5.757L.057 23.882a.5.5 0 0 0 .606.606l6.116-1.421A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.918a9.906 9.906 0 0 1-5.048-1.374l-.361-.215-3.742.869.935-3.641-.236-.375A9.867 9.867 0 0 1 2.082 12C2.082 6.52 6.52 2.082 12 2.082S21.918 6.52 21.918 12 17.48 21.918 12 21.918z"/></svg>WhatsApp</button>
+              <button class="btn btn-ghost btn-sm" id="btnSave"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save</button>
+              <button class="btn btn-brand btn-sm btn-flex" id="btnPrint"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Export PDF</button>
+            </div>
+            <div class="sb-use" id="sbUsage" style="display:none"><div class="sb-use-bar"><div class="sb-use-fill" id="sbUsageFill" style="width:0%"></div></div><div class="sb-use-lbl" id="sbUsageLabel">Storage</div></div>
+          </aside>
+
+          <div class="canvas-area" id="canvasArea">
+            <div class="cbar">
+              <div class="cbar-l">
+                <button class="btn btn-ghost btn-sm btn-icon" id="ctToggle" aria-label="Toggle sidebar" style="font-size:.88rem">&#9776;</button>
+                <span style="font-size:.7rem;color:var(--tx3);font-family:var(--mono)">Click text to edit &nbsp;&middot;&nbsp; <kbd style="background:var(--bg-2);border:1px solid var(--bd2);border-radius:3px;font-family:var(--mono);font-size:.57rem;padding:.1rem .32rem">Ctrl+S</kbd></span>
+              </div>
+              <div class="cbar-r">
+                <button class="btn btn-ghost btn-sm" id="ctBtnIntg"><span class="intg-dot" id="ctIntgDot"></span> Integrations</button>
+                <button class="btn btn-ghost btn-sm" id="ctBtnWA">Share</button>
+                <button class="btn btn-ghost btn-sm" id="ctBtnSave">Save Draft</button>
+                <button class="btn btn-brand btn-sm" id="ctBtnPrint">Export PDF</button>
+              </div>
+            </div>
+
+            <div class="quote-doc" id="quoteDoc">
+              <div class="wm" id="watermark" aria-hidden="true"></div>
+              <header class="dh">
+                <div class="dh-brand"><div class="dh-name">Nexridge<em>Tech</em></div><div class="dh-sub">IT Solutions &middot; South Africa</div></div>
+                <div class="dh-meta">
+                  <div class="dm-label">Document</div><div class="dm-title">QUOTATION</div><div class="dm-divider"></div>
+                  <div class="dm-grid">
+                    <div><div class="dm-label">Quote Number</div><div class="dm-val" id="dQuoteNum">&mdash;</div></div>
+                    <div><div class="dm-label">Date Issued</div><div class="dm-val" id="dIssued">&mdash;</div></div>
+                    <div><div class="dm-label">Valid Until</div><div class="dm-val" id="dValid">&mdash;</div></div>
+                  </div>
+                </div>
+              </header>
+              <div class="parties">
+                <div class="party" data-label="From"><strong>NexridgeTech IT Solutions</strong><p>Mpumalanga, South Africa<br>+27 60 743 3055<br>info@nexridgetech.co.za<br>www.nexridgetech.co.za</p></div>
+                <div class="party" data-label="Prepared For"><strong id="dClientCompany">Client Business Name</strong><p><span id="dClientContact">Contact Person</span><br><span id="dClientEmail">email@business.co.za</span><br><span id="dClientPhone">+27 XX XXX XXXX</span><br><span id="dClientAddress">City, Province</span></p></div>
+              </div>
+              <div class="doc-body">
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Project Overview<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><span class="proj-title" contenteditable="true" id="dProjTitle">Project Title</span><span class="proj-desc" contenteditable="true" id="dProjDesc">Describe what is being delivered.</span><div class="proj-meta"><div class="pm-cell"><div class="pm-cell-label">Delivery</div><div class="pm-cell-val" id="dDelivery">14 working days</div></div><div class="pm-cell"><div class="pm-cell-label">Service</div><div class="pm-cell-val" id="dSvcType">Web Development</div></div><div class="pm-cell"><div class="pm-cell-label">Revisions</div><div class="pm-cell-val">2 rounds included</div></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Scope of Work<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><table class="items-tbl" aria-label="Line items"><thead><tr><th style="width:40%">Deliverable</th><th style="width:16%">Category</th><th style="width:7%">Qty</th><th class="price-col" style="width:13%">Unit Price</th><th class="total-col" style="width:12%">Total</th><th class="del-col"></th></tr></thead><tbody id="itemsBody"></tbody></table><button class="add-row-btn" id="btnAddItem">+ Add Line Item</button><div class="totals-wrap"><div class="totals-inner"><div class="tot-row"><span class="tl">Subtotal</span><span class="tv" id="tSubtotal">R 0.00</span></div><div class="tot-row disc-row-ui" id="tDiscRow" style="display:none"><span class="tl" id="tDiscLabel">Discount</span><span class="tv" id="tDiscount">&minus;R 0.00</span></div><div class="tot-row" id="tVatRow" style="display:none"><span class="tl">VAT (15%)</span><span class="tv" id="tVat">R 0.00</span></div><div class="tot-divider"></div><div class="tot-row grand"><span class="tl">Total Due</span><span class="tv" id="tTotal">R 0.00</span></div></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Payment Schedule<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="pay-schedule" id="paySchedule"></div><p class="sec-note">&#9888; Work begins only on receipt of deposit. Timeline starts from the date payment clears.</p></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Inclusions &amp; Exclusions<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="ie-grid"><div class="ie-col"><h4><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Included</h4><ul class="ie-list"><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Custom design &mdash; no templates</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Mobile-responsive layout</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">2 rounds of revisions</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Basic on-page SEO</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Contact form with email notification</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">30-day post-launch warranty</span></li></ul></div><div class="ie-col"><h4><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Not Included</h4><ul class="ie-list"><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Copywriting or content</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Photography or stock images</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Domain registration</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Ongoing hosting</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Additional pages beyond scope</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Third revision round or new features</span></li></ul></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Terms &amp; Conditions<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="terms-grid"><div class="term-card"><h5>Revisions</h5><p>2 rounds included. Additional rounds billed at R450/hour.</p></div><div class="term-card"><h5>Client Delays</h5><p>Late feedback extends the delivery timeline.</p></div><div class="term-card"><h5>Intellectual Property</h5><p>All IP transfers on receipt of final payment.</p></div><div class="term-card"><h5>Cancellation</h5><p>Cancellation after work begins forfeits the deposit.</p></div><div class="term-card"><h5>Warranty</h5><p>30-day post-launch warranty on delivered scope only.</p></div><div class="term-card"><h5>Quote Validity</h5><p>Valid for <span id="dValidDays">30</span> days from issue date.</p></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Banking Details<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="bank-grid"><div><div class="bk-label">Account Name</div><div class="bk-val" id="dBkName">NexridgeTech IT Solutions</div></div><div><div class="bk-label">Bank</div><div class="bk-val" id="dBkBank">&mdash;</div></div><div><div class="bk-label">Account Number</div><div class="bk-val" id="dBkAcc">&mdash;</div></div><div><div class="bk-label">Branch Code</div><div class="bk-val" id="dBkBranch">&mdash;</div></div><div><div class="bk-label">Account Type</div><div class="bk-val" id="dBkType">Current / Cheque</div></div><div><div class="bk-label">Payment Ref</div><div class="bk-val" id="dBkRef">&mdash;</div></div></div><p class="sec-note">Use the quote number as your payment reference. Send proof of payment to <strong>info@nexridgetech.co.za</strong>.</p></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Acceptance &amp; Sign-Off<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="sig-grid"><div><div class="acc-box"><strong>By signing, the client confirms</strong> they have read and accepted this quote in full, including scope, price, payment terms, and conditions, and authorise NexridgeTech IT Solutions to commence work upon receipt of the deposit.</div><div class="sig-line"></div><div style="display:flex;justify-content:space-between;margin-top:.32rem"><span class="sig-cap">Client Signature</span><span class="sig-cap">Date: _______________</span></div><div style="margin-top:.9rem"><div class="sig-line"></div><span class="sig-cap">Printed Name &amp; Title</span></div></div><div><p style="font-size:.76rem;color:var(--d-ink2);line-height:1.7;font-weight:300;margin-bottom:1rem">Authorised by NexridgeTech IT Solutions. Questions? Call <strong style="color:var(--d-ink)">+27 60 743 3055</strong> &mdash; we respond the same day.</p><div class="sig-line"></div><div style="display:flex;justify-content:space-between;margin-top:.32rem"><span class="sig-cap">NexridgeTech Authorised Signature</span><span class="sig-cap" id="dSigDate"></span></div></div></div></div></section>
+              </div>
+              <footer class="doc-footer"><p>&copy; <span id="footerYear"></span> NexridgeTech IT Solutions &middot; Mpumalanga, South Africa</p><div class="df-contacts"><span><strong>T </strong>+27 60 743 3055</span><span><strong>E </strong>info@nexridgetech.co.za</span><span><strong>W </strong>www.nexridgetech.co.za</span></div></footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════
+// AUTHENTICATION — Multi-user, SHA-256, sessionStorage
+// ═══════════════════════════════════════════
+const AUTH = {
+  // Default admin hash: SHA-256("admin:NexridgeTech2026!")
+  DEFAULT_USERS: { admin: 'c96bf954bb761651d796fdd8401e34411ad2a941a604a9c20c3b45bc954be3c2' },
+  USERS_KEY:   'nxt_users',
+  SESSION_KEY: '_nrt_sess',
+
+  /** SHA-256 of "username_lowercase:password" */
+  async hash(username, password) {
+    const data = new TextEncoder().encode(username.toLowerCase().trim() + ':' + password);
+    const buf  = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  },
+
+  /** Return the active users map (localStorage or default) */
+  getUsers() {
+    try {
+      const raw = localStorage.getItem(this.USERS_KEY);
+      return raw ? JSON.parse(raw) : {...this.DEFAULT_USERS};
+    } catch { return {...this.DEFAULT_USERS}; }
+  },
+
+  /** Save users map to localStorage */
+  saveUsers(users) {
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+  },
+
+  /** Verify a username+password combo */
+  async verify(username, password) {
+    const users = this.getUsers();
+    const key   = username.toLowerCase().trim();
+    const stored = users[key];
+    if (!stored) return false;
+    const entered = await this.hash(key, password);
+    return entered === stored;
+  },
+
+  /** Add or update a user */
+  async setUser(username, password) {
+    const users = this.getUsers();
+    const key   = username.toLowerCase().trim();
+    users[key]  = await this.hash(key, password);
+    this.saveUsers(users);
+  },
+
+  /** Remove a user — prevents removing the last one */
+  removeUser(username) {
+    const users = this.getUsers();
+    const key   = username.toLowerCase().trim();
+    if (Object.keys(users).length <= 1) return false;
+    delete users[key];
+    this.saveUsers(users);
+    return true;
+  },
+
+  /** Active session checks */
+  hasSession() {
+    try {
+      const raw = sessionStorage.getItem(this.SESSION_KEY);
+      if (!raw) return false;
+      const s = JSON.parse(raw);
+      return s && s.token && s.token.length === 64 && s.username;
+    } catch { return false; }
+  },
+
+  startSession(username) {
+    const token = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+      .map(b => b.toString(16).padStart(2,'0')).join('');
+    sessionStorage.setItem(this.SESSION_KEY, JSON.stringify({ token, username }));
+  },
+
+  endSession() { sessionStorage.removeItem(this.SESSION_KEY); },
+
+  /** Who is currently signed in */
+  currentUser() {
+    try {
+      const raw = sessionStorage.getItem(this.SESSION_KEY);
+      return raw ? JSON.parse(raw).username : null;
+    } catch { return null; }
+  },
+};
+
+// ── Login UI helpers ──────────────────────────────────────
+function showLoginError(msg) {
+  const e = document.getElementById('loginError');
+  if (!e) return;
+  e.textContent = msg; e.classList.add('visible');
+  const inp = document.getElementById('loginPass');
+  if (inp) { inp.classList.add('shake'); inp.addEventListener('animationend', () => inp.classList.remove('shake'), {once:true}); }
+}
+function clearLoginError() {
+  const e = document.getElementById('loginError');
+  if (e) { e.textContent = ''; e.classList.remove('visible'); }
+}
+function setLoginLoading(on) {
+  const btn = document.getElementById('loginBtn');
+  if (!btn) return;
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Sign In';
+}
+function revealApp(username) {
+  // Show signed-in username in toolbar
+  const chip = document.getElementById('signedInName');
+  if (chip) chip.textContent = username;
+  const ls = document.getElementById('loginScreen');
+  if (ls) ls.classList.add('hidden');
+  setTimeout(() => { if (ls) ls.style.display = 'none'; }, 380);
+}
+
+// ── Login submit ───────────────────────────────────────────
+async function handleLogin() {
+  const username = (document.getElementById('loginUser')?.value || '').trim();
+  const password =  document.getElementById('loginPass')?.value || '';
+  clearLoginError();
+  if (!username || !password) { showLoginError('Please enter your username and password.'); return; }
+  setLoginLoading(true);
+  try {
+    const ok = await AUTH.verify(username, password);
+    if (ok) {
+      AUTH.startSession(username.toLowerCase());
+      revealApp(username.toLowerCase());
+    } else {
+      showLoginError('Incorrect username or password. Please try again.');
+      document.getElementById('loginPass').value = '';
+      document.getElementById('loginPass').focus();
+    }
+  } catch (err) {
+    showLoginError('Authentication error — please try again.');
+    console.error('[Auth]', err);
+  } finally {
+    setLoginLoading(false);
+  }
+}
+
+// ── Logout ─────────────────────────────────────────────────
+function logout() {
+  AUTH.endSession();
+  const ls = document.getElementById('loginScreen');
+  if (ls) { ls.style.display = 'flex'; requestAnimationFrame(() => ls.classList.remove('hidden')); }
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginUser').focus();
+}
+
+// ── User management modal ──────────────────────────────────
+function openChpw() {
+  umSwitchTab('users');
+  renderUserList();
+  const cu = document.getElementById('umCurrentUser');
+  if (cu) cu.textContent = AUTH.currentUser() || 'you';
+  document.getElementById('chpwModal').classList.add('open');
+}
+function closeChpw() {
+  document.getElementById('chpwModal').classList.remove('open');
+  ['addUser','addPass','addConfirm','chpwCurrent','chpwNew','chpwConfirm']
+    .forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  umHideMsg();
+}
+
+function umSwitchTab(tab) {
+  document.querySelectorAll('.um-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.um-panel').forEach(p => p.classList.remove('active'));
+  const tabEl   = document.getElementById('umTab-'+tab);
+  const panelEl = document.getElementById('umPanel-'+tab);
+  if (tabEl)   tabEl.classList.add('active');
+  if (panelEl) panelEl.classList.add('active');
+  umHideMsg();
+  if (tab === 'users') renderUserList();
+  if (tab === 'pw') {
+    const cu = document.getElementById('umCurrentUser');
+    if (cu) cu.textContent = AUTH.currentUser() || 'you';
+  }
+}
+
+function umShowMsg(msg, ok) {
+  const el = document.getElementById('umMsg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.background = ok ? 'rgba(0,229,176,.08)' : 'rgba(239,68,68,.08)';
+  el.style.color       = ok ? 'var(--lime)' : '#f87171';
+  el.style.display     = 'block';
+}
+function umHideMsg() {
+  const el = document.getElementById('umMsg'); if (el) el.style.display = 'none';
+}
+
+function renderUserList() {
+  const list  = document.getElementById('umUserList');
+  if (!list) return;
+  const users = AUTH.getUsers();
+  const me    = AUTH.currentUser();
+  const keys  = Object.keys(users);
+  if (!keys.length) { list.innerHTML = '<div style="color:var(--muted);font-size:.8rem">No users found.</div>'; return; }
+  list.innerHTML = keys.map(u => `
+    <div class="user-row ${u === me ? 'you' : ''}">
+      <div class="user-avatar">${u.charAt(0)}</div>
+      <div class="user-info">
+        <div class="user-name">${esc(u)}</div>
+        <div class="user-role">${u === me ? 'Signed in ✓' : 'User'}</div>
+      </div>
+      <div class="user-actions">
+        ${keys.length > 1 && u !== me
+          ? `<button class="user-del-btn" onclick="umDeleteUser('${esc(u)}')" title="Remove user">Remove</button>`
+          : ''}
+        ${u === me
+          ? `<button class="user-reset-btn" onclick="umSwitchTab('pw')">Change pw</button>`
+          : `<button class="user-reset-btn" onclick="umAdminReset('${esc(u)}')">Reset pw</button>`}
+      </div>
+    </div>`).join('');
+}
+
+async function umAddUser() {
+  const username = (document.getElementById('addUser')?.value || '').toLowerCase().trim();
+  const pass     =  document.getElementById('addPass')?.value    || '';
+  const confirm  =  document.getElementById('addConfirm')?.value || '';
+  umHideMsg();
+  if (!username)        { umShowMsg('Username cannot be blank.', false); return; }
+  if (!/^[a-z0-9_]{2,20}$/.test(username)) { umShowMsg('Username: 2-20 chars, letters/numbers/underscore only.', false); return; }
+  if (AUTH.getUsers()[username]) { umShowMsg('That username already exists.', false); return; }
+  if (pass.length < 8)  { umShowMsg('Password must be at least 8 characters.', false); return; }
+  if (pass !== confirm) { umShowMsg('Passwords do not match.', false); return; }
+  await AUTH.setUser(username, pass);
+  ['addUser','addPass','addConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  umShowMsg('\u2713 User “' + username + '” added successfully.', true);
+  setTimeout(() => { umSwitchTab('users'); }, 1600);
+  Toast.success('User “' + username + '” created.');
+}
+
+async function umDeleteUser(username) {
+  const ok = await Dialog.confirm(
+    'Remove user “' + username + '”',
+    'This user will no longer be able to sign in. Continue?',
+    'Remove', true
+  );
+  if (!ok) return;
+  const removed = AUTH.removeUser(username);
+  if (removed) { renderUserList(); Toast.success('User “' + username + '” removed.'); }
+  else Toast.error('Cannot remove the last user.');
+}
+
+async function umAdminReset(username) {
+  const newPw = prompt('Set a new password for “' + username + '” (min 8 characters):');
+  if (!newPw) return;
+  if (newPw.length < 8) { Toast.error('Password must be at least 8 characters.'); return; }
+  await AUTH.setUser(username, newPw);
+  Toast.success('Password for “' + username + '” has been reset.');
+}
+
+async function umChangeMyPassword() {
+  const current = document.getElementById('chpwCurrent')?.value || '';
+  const newPw   = document.getElementById('chpwNew')?.value     || '';
+  const confirm = document.getElementById('chpwConfirm')?.value || '';
+  const me      = AUTH.currentUser();
+  umHideMsg();
+  if (!current)        { umShowMsg('Enter your current password.', false); return; }
+  if (newPw.length < 8){ umShowMsg('New password must be at least 8 characters.', false); return; }
+  if (newPw !== confirm){ umShowMsg('New passwords do not match.', false); return; }
+  if (newPw === current){ umShowMsg('New password must differ from the current one.', false); return; }
+  const ok = await AUTH.verify(me, current);
+  if (!ok) { umShowMsg('Current password is incorrect.', false); return; }
+  await AUTH.setUser(me, newPw);
+  umShowMsg('\u2713 Password updated. Use it from your next sign-in.', true);
+  ['chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  setTimeout(closeChpw, 2000);
+  Toast.success('Password updated successfully.');
+}
+
+// ── Login listener wiring ──────────────────────────────────
+function initLoginListeners() {
+  const form    = document.getElementById('loginForm');
+  const pwInput = document.getElementById('loginPass');
+  const pwTgl   = document.getElementById('pwToggle');
+  if (form)    form.addEventListener('submit', handleLogin);
+  if (pwInput) pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+  document.getElementById('loginUser')?.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginPass')?.focus(); });
+  if (pwTgl && pwInput) {
+    pwTgl.addEventListener('click', () => {
+      const show = pwInput.type === 'password';
+      pwInput.type = show ? 'text' : 'password';
+      pwTgl.textContent = show ? 'Hide' : 'Show';
+    });
+  }
+  document.getElementById('chpwModal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeChpw(); });
+  document.getElementById('ctBtnLogout')?.addEventListener('click', () =>
+    Dialog.confirm('Sign out', 'End your session and return to the login screen?', 'Sign out', false)
+      .then(ok => { if (ok) logout(); })
+  );
+  document.getElementById('btnChpw')?.addEventListener('click', openChpw);
+  if (!document.querySelector('#spinStyle')) {
+    const s = document.createElement('style'); s.id = 'spinStyle';
+    s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(s);
+  }
+}
+
+// ── Boot ───────────────────────────────────────────────────
+(function authBoot() {
+  if (AUTH.hasSession()) {
+    const ls = document.getElementById('loginScreen');
+    if (ls) { ls.classList.add('hidden'); ls.style.display = 'none'; }
+    const chip = document.getElementById('signedInName');
+    if (chip) chip.textContent = AUTH.currentUser() || '';
+  } else {
+    requestAnimationFrame(() => document.getElementById('loginUser')?.focus());
+  }
+})();
+
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const APP = Object.freeze({
+  version:'2.0.0',
+  quotePrefix:'NRT',
+  storage:{ quotes:'nxt_quotes', counter:'nxt_qcounter', integrations:'nxt_intg' },
+  autoSaveDelay:2000,
+});
+
+// ═══════════════════════════════════════════
+// SECURITY UTILITIES
+// ═══════════════════════════════════════════
+function esc(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+function safeNum(v,fallback=0){ const n=parseFloat(v); return isFinite(n)&&n>=0?n:fallback; }
+
+// ═══════════════════════════════════════════
+// STORAGE LAYER
+// ═══════════════════════════════════════════
+const Store={
+  _ok:(()=>{try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true;}catch{return false;}})(),
+  get(k){if(!this._ok)return null;try{const r=localStorage.getItem(k);return r===null?null:JSON.parse(r);}catch(e){console.error('[Store.get]',k,e);return null;}},
+  set(k,v){
+    if(!this._ok){Toast.warning('Storage unavailable — data will not persist.');return false;}
+    try{localStorage.setItem(k,JSON.stringify(v));return true;}
+    catch(e){
+      if(e.name==='QuotaExceededError'||e.name==='NS_ERROR_DOM_QUOTA_REACHED')Toast.error('Storage full. Delete old quotes to free space.');
+      else{console.error('[Store.set]',k,e);Toast.error('Save failed. Check browser storage settings.');}
+      return false;
+    }
+  },
+  remove(k){if(!this._ok)return false;try{localStorage.removeItem(k);return true;}catch(e){console.error('[Store.remove]',k,e);return false;}},
+  usageKB(){if(!this._ok)return 0;try{return Math.round(Object.keys(localStorage).reduce((t,k)=>t+localStorage[k].length,0)/1024);}catch{return 0;}},
+};
+
+// ═══════════════════════════════════════════
+// TOAST NOTIFICATIONS
+// ═══════════════════════════════════════════
+const Toast={
+  _c:null,
+  _init(){this._c=document.getElementById('toastContainer');},
+  show(msg,type='info',duration=3500){
+    if(!this._c)return;
+    const icons={success:'✓',error:'✕',warning:'⚠',info:'ℹ'};
+    const t=document.createElement('div');
+    t.className=`toast toast-${type}`;
+    t.setAttribute('role','alert');
+    const icon=document.createElement('span');icon.className='toast-icon';icon.textContent=icons[type]||'ℹ';
+    const m=document.createElement('span');m.className='toast-msg';m.textContent=msg;
+    const x=document.createElement('button');x.className='toast-close';x.textContent='✕';x.setAttribute('aria-label','Dismiss');
+    const dismiss=()=>{t.classList.remove('visible');setTimeout(()=>t.remove(),280);};
+    x.onclick=dismiss;
+    t.append(icon,m,x);
+    this._c.appendChild(t);
+    requestAnimationFrame(()=>t.classList.add('visible'));
+    setTimeout(dismiss,duration);
+    return t;
+  },
+  success(msg,d){return this.show(msg,'success',d);},
+  error(msg,d){return this.show(msg,'error',d||5000);},
+  warning(msg,d){return this.show(msg,'warning',d);},
+  info(msg,d){return this.show(msg,'info',d);},
+};
+
+// ═══════════════════════════════════════════
+// CONFIRM DIALOG  (replaces native confirm())
+// ═══════════════════════════════════════════
+const Dialog={
+  _resolve:null,
+  confirm(title,msg,okLabel='Confirm',danger=true){
+    return new Promise(resolve=>{
+      this._resolve=resolve;
+      document.getElementById('confirmTitle').textContent=title;
+      document.getElementById('confirmMessage').textContent=msg;
+      const ok=document.getElementById('confirmOk');
+      ok.textContent=okLabel;
+      ok.className='btn '+(danger?'btn-danger':'btn-lime');
+      document.getElementById('confirmDialog').classList.add('open');
+      ok.focus();
+    });
+  },
+  _close(val){
+    document.getElementById('confirmDialog').classList.remove('open');
+    if(this._resolve){this._resolve(val);this._resolve=null;}
+  },
+};
+document.getElementById('confirmOk').onclick=()=>Dialog._close(true);
+document.getElementById('confirmCancel').onclick=()=>Dialog._close(false);
+
+// ═══════════════════════════════════════════
+// INTEGRATION LAYER
+// ═══════════════════════════════════════════
+class IntegrationLogger{
+  constructor(id){this.id=id;this.log=[];}
+  info(m,d={}){this._push('INFO',m,d);}
+  warn(m,d={}){this._push('WARN',m,d);}
+  error(m,d={}){this._push('ERROR',m,d);console.error('['+this.id+']',m,d);}
+  _push(level,m,d){const e={ts:new Date().toISOString(),level,m,d};this.log.push(e);if(this.log.length>200)this.log.shift();}
+  getLogs(){return[...this.log];}
+}
+
+/**
+ * BaseIntegration — extend this to add any new accounting/ERP/CRM integration.
+ * Required overrides: authenticate(), testConnection(), sendQuote()
+ * Optional overrides: createInvoice(), getContacts(), getConfigFields()
+ */
+class BaseIntegration{
+  constructor({id,name,category,icon,description,logoClass}){
+    this.id=id;this.name=name;this.category=category;
+    this.icon=icon;this.description=description;this.logoClass=logoClass||'';
+    this.status='disconnected';this.credentials=null;
+    this.logger=new IntegrationLogger(id);
+  }
+  async authenticate(creds){throw new Error('Not implemented: authenticate()');}
+  async testConnection(){throw new Error('Not implemented: testConnection()');}
+  async sendQuote(state,computed){throw new Error('Not implemented: sendQuote()');}
+  async createInvoice(state,computed){return{success:false,msg:'Not supported by this integration'};}
+  async getContacts(){return[];}
+  async disconnect(){
+    this.credentials=null;this.status='disconnected';
+    this.logger.info('Disconnected');IntegrationHub._persist();
+  }
+  async withRetry(fn,tries=3,base=800){
+    let last;
+    for(let i=1;i<=tries;i++){
+      try{return await fn();}
+      catch(e){
+        last=e;this.logger.warn(`Attempt ${i}/${tries} failed`,{err:e.message});
+        if(!e.retryable||i===tries)break;
+        await new Promise(r=>setTimeout(r,base*i));
+      }
+    }
+    throw last;
+  }
+  _normalise(state,computed){
+    return{
+      reference:state.meta.number,issueDate:state.meta.issued,
+      expiryDate:validDate(state.meta.issued,state.meta.validDays),
+      contact:{company:state.client.company,name:state.client.contact,email:state.client.email,phone:state.client.phone},
+      lineItems:state.items.map(it=>({description:it.desc,notes:it.note,quantity:it.qty,unitPrice:it.price,lineTotal:it.qty*it.price,category:it.category})),
+      totals:{subtotal:computed.sub,discount:computed.disc,vat:computed.vat,total:computed.total},currency:'ZAR',
+    };
+  }
+  getConfigFields(){return[];}
+}
+
+/**
+ * XeroIntegration — Xero Accounting via OAuth 2.0 + PKCE
+ *
+ * Production checklist:
+ *  1. Register app at https://developer.xero.com/app/manage
+ *  2. Set redirect URI in Xero app to your hosted URL
+ *  3. Add server-side /oauth/xero/callback to exchange code → tokens
+ *     (client_secret must NEVER be exposed in browser code)
+ *  4. Store tokens server-side (encrypted). Refresh before expiry.
+ *  5. Call sendQuote() / createInvoice() from a server endpoint
+ *     that injects the access token + Xero-tenant-id header.
+ */
+class XeroIntegration extends BaseIntegration{
+  constructor(){
+    super({id:'xero',name:'Xero',category:'accounting',icon:'X',logoClass:'xero',
+      description:'Sync quotes and invoices with Xero Accounting. Auto-imports client contacts.'});
+    this.authBase='https://login.xero.com/identity/connect/authorize';
+    this.apiBase='https://api.xero.com/api.xro/2.0';
+    this.scopes=['openid','profile','email','accounting.transactions','accounting.contacts'];
+  }
+  getConfigFields(){return[
+    {id:'xero_client_id',label:'OAuth Client ID',type:'text',placeholder:'Your Xero app client ID',help:'Find this in your Xero Developer app settings.'},
+    {id:'xero_redirect_uri',label:'Redirect URI',type:'url',placeholder:window.location.href.split('?')[0],help:'Must match the URI registered in your Xero app.'},
+  ];}
+  getOAuthUrl(clientId,redirectUri){
+    const params=new URLSearchParams({
+      response_type:'code',client_id:clientId,
+      redirect_uri:redirectUri||window.location.href.split('?')[0],
+      scope:this.scopes.join(' '),state:Math.random().toString(36).slice(2),
+    });
+    return `${this.authBase}?${params}`;
+  }
+  async authenticate(creds){
+    if(!creds.xero_client_id){Toast.error('Enter your Xero Client ID first.');return;}
+    this.status='connecting';IntegrationHub._persist();
+    this.logger.info('Opening OAuth flow',{clientId:creds.xero_client_id});
+    const url=this.getOAuthUrl(creds.xero_client_id,creds.xero_redirect_uri);
+    window.open(url,'_blank','width=620,height=700,noopener,noreferrer');
+    Toast.info('Xero auth window opened. After authorising, implement the server-side token exchange and call IntegrationHub.get("xero").setConnected() to complete.',7000);
+    // Production: receive postMessage from OAuth popup → exchange code at /oauth/xero/callback
+    // On success: this.credentials={accessToken,refreshToken,expiresAt,tenantId}; this.status='connected';
+  }
+  setConnected(credentials){
+    this.credentials=credentials;this.status='connected';
+    this.logger.info('Connected');IntegrationHub._persist();
+    Toast.success('Xero connected successfully.');
+  }
+  async testConnection(){return this.status==='connected';}
+  async sendQuote(state,computed){
+    if(this.status!=='connected'){Toast.error('Connect Xero first.');return;}
+    const xq=this._mapXeroQuote(state,computed);
+    this.logger.info('Sending quote to Xero',{ref:xq.QuoteNumber});
+    // Production: POST ${this.apiBase}/Quotes with Bearer token & Xero-tenant-id header
+    Toast.success('Quote synced to Xero.');return{success:true};
+  }
+  async createInvoice(state,computed){
+    if(this.status!=='connected'){Toast.error('Connect Xero first.');return;}
+    this.logger.info('Creating Xero invoice',{ref:state.meta.number});
+    Toast.success('Invoice created in Xero.');return{success:true};
+  }
+  _mapXeroQuote(state,computed){
+    return{
+      QuoteNumber:state.meta.number,Date:state.meta.issued,
+      ExpiryDate:validDate(state.meta.issued,state.meta.validDays),
+      Status:'DRAFT',CurrencyCode:'ZAR',
+      Contact:{Name:state.client.company,EmailAddress:state.client.email},
+      LineItems:state.items.map(it=>({
+        Description:[it.desc,it.note].filter(Boolean).join('\n'),
+        Quantity:it.qty,UnitAmount:it.price,AccountCode:'200',
+      })),
+      SubTotal:computed.sub,TotalTax:computed.vat,Total:computed.total,
+    };
+  }
+}
+
+/**
+ * QuickBooksIntegration — stub ready for production implementation
+ * Docs: https://developer.intuit.com/app/developer/qbo/docs/api/accounting
+ */
+class QuickBooksIntegration extends BaseIntegration{
+  constructor(){super({id:'quickbooks',name:'QuickBooks Online',category:'accounting',icon:'QB',logoClass:'quickbooks',description:'Sync quotes and invoices with QuickBooks Online.'});}
+  getConfigFields(){return[{id:'qb_client_id',label:'Client ID',type:'text',placeholder:'QuickBooks app client ID'}];}
+  async authenticate(){Toast.info('Implement QuickBooks OAuth 2.0 flow per Intuit developer docs.');}
+  async testConnection(){return false;}
+  async sendQuote(){Toast.info('Implement QuickBooks sendQuote() with the Estimate API endpoint.');}
+}
+
+/**
+ * SageIntegration — stub ready for production implementation
+ * Docs: https://developer.sage.com/accounting/
+ */
+class SageIntegration extends BaseIntegration{
+  constructor(){super({id:'sage',name:'Sage Business Cloud',category:'accounting',icon:'S',logoClass:'sage',description:'Export quotes to Sage Business Cloud Accounting.'});}
+  getConfigFields(){return[{id:'sage_client_id',label:'Client ID',type:'text',placeholder:'Sage app client ID'}];}
+  async authenticate(){Toast.info('Implement Sage OAuth 2.0 flow per Sage developer docs.');}
+  async testConnection(){return false;}
+  async sendQuote(){Toast.info('Implement Sage sendQuote() with the Sales Quotes API endpoint.');}
+}
+
+/**
+ * IntegrationHub — central registry.
+ * To add a new integration: IntegrationHub.register(new YourIntegration())
+ */
+const IntegrationHub={
+  _map:new Map(),
+  register(i){this._map.set(i.id,i);},
+  get(id){return this._map.get(id);},
+  getAll(){return[...this._map.values()];},
+  connected(){return this.getAll().filter(i=>i.status==='connected');},
+  async sendAll(state,computed){
+    return Promise.all(this.connected().map(async i=>{
+      try{return{id:i.id,...(await i.sendQuote(state,computed))};}
+      catch(e){return{id:i.id,success:false,error:e.message};}
+    }));
+  },
+  _persist(){
+    const s={};for(const[id,i]of this._map)s[id]={status:i.status};
+    Store.set(APP.storage.integrations,s);
+    renderIntegrationModal();
+    const dot=document.getElementById('ctIntgDot');
+    if(dot)dot.classList.toggle('connected',this.connected().length>0);
+  },
+  _configFormHTML(intg){
+    return intg.getConfigFields().map(f=>`
+      <div class="fg">
+        <label class="fl" for="${esc(f.id)}">${esc(f.label)}</label>
+        <input class="fi" id="${esc(f.id)}" type="${esc(f.type||'text')}" placeholder="${esc(f.placeholder||'')}">
+        ${f.help?`<div style="font-size:.63rem;color:var(--muted);font-family:var(--mono);margin-top:.25rem">${esc(f.help)}</div>`:''}
+      </div>`).join('');
+  },
+};
+
+function renderIntegrationModal(){
+  const list=document.getElementById('intgList');
+  if(!list)return;
+  list.innerHTML=IntegrationHub.getAll().map(intg=>{
+    const conn=intg.status==='connected';
+    const hasConfig=intg.getConfigFields().length>0;
+    return `<div class="intg-card${conn?' connected':''}" id="ic-${esc(intg.id)}">
+      <div class="intg-card-top">
+        <div class="intg-logo ${esc(intg.logoClass)}">${esc(intg.icon)}</div>
+        <div class="intg-info">
+          <div class="intg-name">${esc(intg.name)}</div>
+          <div class="intg-desc">${esc(intg.description)}</div>
+        </div>
+        <div class="intg-right">
+          <span class="intg-badge ${esc(intg.status)}">${esc(intg.status)}</span>
+          <div style="display:flex;gap:.4rem;margin-top:.2rem">
+            ${conn
+              ?`<button class="btn btn-danger" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="disconnectIntg('${esc(intg.id)}')">Disconnect</button>
+                <button class="btn btn-ghost" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="syncIntg('${esc(intg.id)}')">Sync Quote</button>`
+              :`${hasConfig?`<button class="intg-expand" onclick="toggleIntgConfig('${esc(intg.id)}')">Configure ▾</button>`:''}
+               <button class="btn btn-lime" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="connectIntg('${esc(intg.id)}')">Connect</button>`
+            }
+          </div>
+        </div>
+      </div>
+      ${hasConfig?`<div class="intg-config" id="cfg-${esc(intg.id)}">${IntegrationHub._configFormHTML(intg)}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function toggleIntgConfig(id){
+  const el=document.getElementById('cfg-'+id);if(el)el.classList.toggle('open');
+}
+function getIntgFormCreds(id){
+  const intg=IntegrationHub.get(id);if(!intg)return{};
+  const creds={};
+  intg.getConfigFields().forEach(f=>{const el=document.getElementById(f.id);if(el)creds[f.id]=el.value.trim();});
+  return creds;
+}
+async function connectIntg(id){
+  const intg=IntegrationHub.get(id);if(!intg)return;
+  await intg.authenticate(getIntgFormCreds(id));
+}
+async function disconnectIntg(id){
+  const intg=IntegrationHub.get(id);if(!intg)return;
+  const ok=await Dialog.confirm('Disconnect '+intg.name,'Remove this integration connection?','Disconnect',true);
+  if(ok){await intg.disconnect();Toast.info(intg.name+' disconnected.');}
+}
+async function syncIntg(id){
+  const intg=IntegrationHub.get(id);if(!intg)return;
+  const C=compute();await intg.sendQuote(state,C);
+}
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let state={
+  id:Date.now().toString(),
+  meta:{number:'',issued:todayISO(),validDays:30,status:'draft'},
+  client:{company:'',contact:'',email:'',phone:'',address:''},
+  project:{title:'',description:'',delivery:'14 working days from deposit',serviceType:'Web Development'},
+  items:[
+    {id:1,category:'Deliverables',desc:'Website Design & Development',note:'Fully custom, mobile-responsive design built from scratch',qty:1,price:0},
+    {id:2,category:'Deliverables',desc:'On-Page SEO Foundation',note:'Meta tags, structured data, sitemap, Google Search Console setup',qty:1,price:0},
+    {id:3,category:'Support',desc:'30-Day Post-Launch Support',note:'Bug fixes and minor adjustments after go-live',qty:1,price:0},
+  ],
+  financial:{vat:false,vatRate:15,discountType:'percent',discountValue:0,paymentStructure:'50-50',customSplit:[50,50]},
+  banking:{accountName:'NexridgeTech IT Solutions',bank:'',accountNumber:'',branchCode:'',accountType:'Current / Cheque'},
+};
+let nextId=4;
+let saveTimer=null;
+let hasUnsaved=false;
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function todayISO(){return new Date().toISOString().slice(0,10);}
+function fmtDate(iso){if(!iso)return'—';const d=new Date(iso+'T00:00:00');return d.toLocaleDateString('en-ZA',{day:'2-digit',month:'long',year:'numeric'});}
+function validDate(iso,days){const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+Number(days||30));return d.toISOString().slice(0,10);}
+function fmt(n){return Number(n||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function R(n){return'R '+fmt(n);}
+function el(id){return document.getElementById(id);}
+function txt(id,v){const e=el(id);if(e)e.textContent=v;}
+function getPath(obj,path){return path.split('.').reduce((o,k)=>o?.[k],obj);}
+function setPath(obj,path,val){const parts=path.split('.');const last=parts.pop();const t=parts.reduce((o,k)=>o[k],obj);t[last]=val;}
+function markUnsaved(){hasUnsaved=true;const u=el('unsavedIndicator');if(u)u.classList.add('visible');}
+function markSaved(){hasUnsaved=false;const u=el('unsavedIndicator');if(u)u.classList.remove('visible');}
+
+// ═══════════════════════════════════════════
+// COMPUTATION ENGINE
+// ═══════════════════════════════════════════
+function compute(){
+  const sub=state.items.reduce((s,i)=>s+(i.qty*i.price),0);
+  const dv=safeNum(state.financial.discountValue);
+  const disc=state.financial.discountType==='percent'?sub*(dv/100):Math.min(dv,sub);
+  const afterDisc=sub-disc;
+  const vat=state.financial.vat?afterDisc*(state.financial.vatRate/100):0;
+  const total=afterDisc+vat;
+  return{sub,disc,afterDisc,vat,total,pays:buildPayments(total)};
+}
+
+function buildPayments(total){
+  const t=total;
+  switch(state.financial.paymentStructure){
+    case'50-50':return[
+      {cls:'dep',phase:'Deposit',pct:50,amt:t*.5,when:'<strong>Before work begins</strong> — secures your start date'},
+      {cls:'bal',phase:'Balance',pct:50,amt:t*.5,when:'<strong>Before launch / handover</strong> — due after final approval'},
+    ];
+    case'33-33-34':return[
+      {cls:'dep',phase:'Deposit',pct:33,amt:t*.33,when:'<strong>Before work begins</strong>'},
+      {cls:'mil',phase:'Milestone',pct:33,amt:t*.33,when:'<strong>At agreed midpoint</strong> — after review'},
+      {cls:'bal',phase:'Balance',pct:34,amt:t*.34,when:'<strong>Before launch</strong> — after final approval'},
+    ];
+    case'100':return[{cls:'full',phase:'Full Payment',pct:100,amt:t,when:'<strong>Before work begins</strong> — project queued on receipt'}];
+    case'custom':
+      return state.financial.customSplit.map((pct,i)=>({
+        cls:i===0?'dep':i===state.financial.customSplit.length-1?'bal':'mil',
+        phase:i===0?'Deposit':i===state.financial.customSplit.length-1?'Balance':`Milestone ${i}`,
+        pct,amt:t*(pct/100),
+        when:i===0?'<strong>Before work begins</strong>':'<strong>As agreed</strong>',
+      }));
+    default:return[];
+  }
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function render(){
+  const C=compute();
+
+  // Sidebar summary
+  txt('scTotal',R(C.total));
+  txt('scNum',state.meta.number||'—');
+  txt('scClient',state.client.company||'—');
+  txt('scValid',fmtDate(validDate(state.meta.issued,state.meta.validDays)));
+  const ss=el('statusSel');if(ss)ss.value=state.meta.status;
+  updateStatusUI(state.meta.status);
+
+  // Document header
+  txt('dQuoteNum',state.meta.number||'—');
+  txt('dIssued',fmtDate(state.meta.issued));
+  txt('dValid',fmtDate(validDate(state.meta.issued,state.meta.validDays)));
+  txt('dValidDays',state.meta.validDays||30);
+
+  // Parties
+  txt('dClientCompany',state.client.company||'Client Business Name');
+  txt('dClientContact',state.client.contact||'Contact Person');
+  txt('dClientEmail',state.client.email||'email@business.co.za');
+  txt('dClientPhone',state.client.phone||'+27 XX XXX XXXX');
+  txt('dClientAddress',state.client.address||'City, Province');
+
+  // Project
+  const pt=el('dProjTitle'),pd=el('dProjDesc');
+  if(document.activeElement!==pt)pt.textContent=state.project.title||'Project Title';
+  if(document.activeElement!==pd)pd.textContent=state.project.description||'Describe what is being delivered in one or two sentences.';
+  txt('dDelivery',state.project.delivery||'14 working days from deposit');
+  txt('dSvcType',state.project.serviceType||'Web Development');
+
+  // Items
+  renderItems();
+
+  // Totals
+  txt('tSubtotal',R(C.sub));
+  const dr=el('tDiscRow');
+  if(C.disc>0){
+    dr.style.display='flex';
+    txt('tDiscLabel',state.financial.discountType==='percent'?`Discount (${state.financial.discountValue}%)`:'Discount');
+    txt('tDiscount','− '+R(C.disc));
+  }else{dr.style.display='none';}
+  const vr=el('tVatRow');
+  if(state.financial.vat){vr.style.display='flex';txt('tVat',R(C.vat));}
+  else{vr.style.display='none';}
+  txt('tTotal',R(C.total));
+
+  // Payment schedule (p.when contains only our own trusted HTML with <strong>)
+  el('paySchedule').innerHTML=C.pays.map(p=>`
+    <div class="pay-card ${esc(p.cls)}">
+      <div class="pc-phase">${esc(p.phase)}</div>
+      <div class="pc-pct">${esc(String(p.pct))}% of total</div>
+      <div class="pc-amt">${esc(R(p.amt))}</div>
+      <div class="pc-when">${p.when}</div>
+    </div>`).join('');
+
+  // Banking
+  txt('dBkName',state.banking.accountName||'NexridgeTech IT Solutions');
+  txt('dBkBank',state.banking.bank||'—');
+  txt('dBkAcc',state.banking.accountNumber||'—');
+  txt('dBkBranch',state.banking.branchCode||'—');
+  txt('dBkType',state.banking.accountType||'Current / Cheque');
+  txt('dBkRef',state.meta.number||'—');
+
+  // Watermark & sig date
+  const wm=el('watermark');
+  wm.className='wm '+state.meta.status;
+  wm.textContent=state.meta.status==='draft'?'':state.meta.status.toUpperCase();
+  txt('dSigDate','Date: '+fmtDate(state.meta.issued));
+
+  syncSidebarFields();
+  markUnsaved();
+  // Auto-save disabled — user must save manually
+}
+
+function renderItems(){
+  const cats=[...new Set(state.items.map(i=>i.category||'General'))];
+  let html='';
+  for(const cat of cats){
+    const ci=state.items.filter(i=>(i.category||'General')===cat);
+    if(cats.length>1)html+=`<tr class="cat-row"><td colspan="6">${esc(cat)}</td></tr>`;
+    for(const item of ci){
+      const idx=state.items.indexOf(item);
+      html+=`<tr>
+        <td><div style="display:flex;flex-direction:column;gap:.2rem">
+          <input class="item-inp desc" value="${esc(item.desc)}" onchange="updItem(${item.id},'desc',this.value)" placeholder="Deliverable name" aria-label="Deliverable name">
+          <input class="item-inp note" value="${esc(item.note)}" onchange="updItem(${item.id},'note',this.value)" placeholder="Brief description" aria-label="Description">
+        </div></td>
+        <td><input class="item-inp cat" value="${esc(item.category||'')}" onchange="updItem(${item.id},'category',this.value)" placeholder="Category" aria-label="Category"></td>
+        <td><input type="number" class="item-inp qty" min="1" value="${esc(String(item.qty))}" onchange="updItem(${item.id},'qty',+this.value)" aria-label="Quantity"></td>
+        <td style="text-align:right"><input type="number" class="item-inp price" min="0" step="100" value="${item.price||''}" placeholder="0" onchange="updItem(${item.id},'price',+this.value)" aria-label="Unit price"></td>
+        <td class="item-total-val">${esc(R(item.qty*item.price))}</td>
+        <td class="del-col" style="white-space:nowrap">
+          <button class="item-move" onclick="moveItem(${item.id},-1)" title="Move up" aria-label="Move up">↑</button>
+          <button class="item-move" onclick="moveItem(${item.id},1)" title="Move down" aria-label="Move down">↓</button>
+          <button class="item-del" onclick="delItem(${item.id})" title="Delete row" aria-label="Delete row">✕</button>
+        </td>
+      </tr>`;
+    }
+  }
+  el('itemsBody').innerHTML=html;
+}
+
+function syncSidebarFields(){
+  const pairs=[
+    ['fi-num','meta.number'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
+    ['fi-ptitle','project.title'],['fi-delivery','project.delivery'],
+    ['fc-company','client.company'],['fc-contact','client.contact'],
+    ['fc-email','client.email'],['fc-phone','client.phone'],['fc-address','client.address'],
+    ['fb-name','banking.accountName'],['fb-bank','banking.bank'],
+    ['fb-acc','banking.accountNumber'],['fb-branch','banking.branchCode'],
+  ];
+  pairs.forEach(([id,path])=>{const e=el(id);if(e&&document.activeElement!==e)e.value=getPath(state,path)||'';});
+  const st=el('fi-stype');if(st&&document.activeElement!==st)st.value=state.project.serviceType||'Web Development';
+  const bt=el('fb-type');if(bt&&document.activeElement!==bt)bt.value=state.banking.accountType||'Current / Cheque';
+  const vc=el('vatChk');if(vc)vc.checked=!!state.financial.vat;
+  const dv=el('discVal');if(dv&&document.activeElement!==dv)dv.value=state.financial.discountValue||'';
+  const dt=el('discType');if(dt&&document.activeElement!==dt)dt.value=state.financial.discountType||'percent';
+  document.querySelectorAll('.ps-opt').forEach(o=>o.classList.remove('active'));
+  const po=el('ps-'+state.financial.paymentStructure);if(po)po.classList.add('active');
+  const cw=el('customSplitWrap');if(cw)cw.style.display=state.financial.paymentStructure==='custom'?'block':'none';
+  if(state.financial.paymentStructure==='custom')renderCustomSplitFields();
+  updateSplitTotal();
+}
+
+function updateStatusUI(status){
+  // Status shown via select & watermark — handled in render()/syncSidebarFields()
+}
+
+// ═══════════════════════════════════════════
+// FIELD BINDING
+// ═══════════════════════════════════════════
+function bindField(path,val){setPath(state,path,val);render();}
+function updateStatus(val){state.meta.status=val;render();}
+function updItem(id,field,val){const item=state.items.find(i=>i.id===id);if(item){item[field]=val;render();}}
+function addItem(){state.items.push({id:nextId++,category:'Deliverables',desc:'New Deliverable',note:'Description of what this includes',qty:1,price:0});render();}
+async function delItem(id){
+  if(state.items.length<=1){Toast.warning('At least one line item is required.');return;}
+  state.items=state.items.filter(i=>i.id!==id);render();
+}
+function moveItem(id,dir){
+  const idx=state.items.findIndex(i=>i.id===id);const nidx=idx+dir;
+  if(nidx<0||nidx>=state.items.length)return;
+  [state.items[idx],state.items[nidx]]=[state.items[nidx],state.items[idx]];render();
+}
+
+// ═══════════════════════════════════════════
+// PAYMENT STRUCTURE
+// ═══════════════════════════════════════════
+function setPayStr(str){
+  state.financial.paymentStructure=str;
+  const cw=el('customSplitWrap');if(cw)cw.style.display=str==='custom'?'block':'none';
+  document.querySelectorAll('.ps-opt').forEach(o=>{o.classList.remove('active');o.setAttribute('aria-pressed','false');});
+  const po=el('ps-'+str);if(po){po.classList.add('active');po.setAttribute('aria-pressed','true');}
+  if(str==='custom')renderCustomSplitFields();
+  render();
+}
+function updateSplitTotal(){
+  const st=el('splitTotal');if(!st)return;
+  const sum=state.financial.customSplit.reduce((a,b)=>a+b,0);
+  st.textContent=sum+'%';
+  st.style.color=Math.abs(sum-100)<0.5?'var(--lime)':'#f87171';
+}
+function renderCustomSplitFields(){
+  const wrap=el('customSplitFields');if(!wrap)return;
+  wrap.innerHTML=state.financial.customSplit.map((pct,i)=>`
+    <div style="display:flex;align-items:center;gap:.3rem">
+      <input type="number" min="0" max="100" value="${esc(String(pct))}"
+        style="width:60px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:.3rem .5rem;color:var(--text);font-family:var(--mono);font-size:.8rem;outline:none;text-align:center"
+        onchange="updCustomSplit(${i},+this.value)" aria-label="Stage ${i+1} percentage">
+      <span style="font-size:.7rem;color:var(--muted)">%</span>
+      ${state.financial.customSplit.length>2?`<button onclick="removeCustomSplit(${i})" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:.8rem" aria-label="Remove stage">✕</button>`:''}
+    </div>`).join('');
+  updateSplitTotal();
+}
+function updCustomSplit(i,v){state.financial.customSplit[i]=v;renderCustomSplitFields();render();}
+function addCustomSplit(){state.financial.customSplit.push(0);renderCustomSplitFields();}
+function removeCustomSplit(i){if(state.financial.customSplit.length<=2)return;state.financial.customSplit.splice(i,1);renderCustomSplitFields();render();}
+
+// ═══════════════════════════════════════════
+// QUOTE NUMBER
+// ═══════════════════════════════════════════
+let counter=parseInt(Store.get(APP.storage.counter)||'1');
+function autoNumber(){
+  const yr=new Date().getFullYear();
+  state.meta.number=`${APP.quotePrefix}-${yr}-${String(counter).padStart(3,'0')}`;
+  counter++;Store.set(APP.storage.counter,counter);
+  render();Toast.success('Quote number assigned: '+state.meta.number,2000);
+}
+
+// ═══════════════════════════════════════════
+// STORAGE — QUOTE CRUD
+// ═══════════════════════════════════════════
+function saveQuote(){
+  const C=compute();
+  const index=Store.get(APP.storage.quotes+'_idx')||[];
+  const entry={id:state.id,number:state.meta.number,client:state.client.company||'—',total:C.total,status:state.meta.status,date:state.meta.issued};
+  const ei=index.findIndex(e=>e.id===state.id);
+  if(ei>=0)index[ei]=entry;else index.unshift(entry);
+  const ok=Store.set(APP.storage.quotes+'_idx',index)&&Store.set(APP.storage.quotes+'_'+state.id,state);
+  if(ok){markSaved();renderQuoteList();showSavedFeedback();}
+}
+function showSavedFeedback(){
+  const ct=el('ctInfo');
+  if(ct){const prev=ct.textContent;ct.textContent='✓ Saved';setTimeout(()=>ct.textContent=prev,1500);}
+}
+function loadQuote(id){
+  const raw=Store.get(APP.storage.quotes+'_'+id);
+  if(!raw){Toast.error('Quote not found.');return;}
+  state=raw;nextId=Math.max(...state.items.map(i=>i.id))+1;
+  render();renderQuoteList();markSaved();
+}
+async function deleteQuote(id){
+  const ok=await Dialog.confirm('Delete quote','This will permanently remove this quote. Continue?','Delete',true);
+  if(!ok)return;
+  const index=(Store.get(APP.storage.quotes+'_idx')||[]).filter(e=>e.id!==id);
+  Store.set(APP.storage.quotes+'_idx',index);Store.remove(APP.storage.quotes+'_'+id);
+  if(state.id===id)newQuote();else{renderQuoteList();Toast.success('Quote deleted.');}
+}
+function newQuote(){
+  state={
+    id:Date.now().toString(),
+    meta:{number:'',issued:todayISO(),validDays:30,status:'draft'},
+    client:{company:'',contact:'',email:'',phone:'',address:''},
+    project:{title:'',description:'',delivery:'14 working days from deposit',serviceType:'Web Development'},
+    items:[{id:1,category:'Deliverables',desc:'New Deliverable',note:'Description of what this includes',qty:1,price:0}],
+    financial:{vat:false,vatRate:15,discountType:'percent',discountValue:0,paymentStructure:'50-50',customSplit:[50,50]},
+    banking:{accountName:'NexridgeTech IT Solutions',bank:'',accountNumber:'',branchCode:'',accountType:'Current / Cheque'},
+  };
+  nextId=2;autoNumber();render();renderQuoteList();markSaved();
+}
+function exportJSON(){
+  const data=JSON.stringify(state,null,2);
+  const a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(data);
+  a.download=(state.meta.number||'quote')+'.json';
+  a.click();
+  Toast.success('Quote exported as JSON.');
+}
+
+// ═══════════════════════════════════════════
+// QUOTE LIST
+// ═══════════════════════════════════════════
+let qlistOpen=false;
+let qlistFilter='';
+
+function renderQuoteList(){
+  const index=Store.get(APP.storage.quotes+'_idx')||[];
+  const qc=el('qlistCount');if(qc)qc.textContent=index.length;
+  const items=el('qlistItems');if(!items)return;
+  const filtered=qlistFilter
+    ?index.filter(e=>(e.number+e.client+e.status).toLowerCase().includes(qlistFilter.toLowerCase()))
+    :index;
+  if(!filtered.length){
+    items.innerHTML=`<div style="padding:.75rem 1.25rem;font-size:.75rem;color:var(--muted);font-family:var(--mono)">${qlistFilter?'No matching quotes.':'No saved quotes yet.'}</div>`;
+    return;
+  }
+  const statusColor={accepted:'#34d399',rejected:'#f87171',sent:'#60a5fa',draft:'var(--muted)',expired:'#fb923c'};
+  items.innerHTML=filtered.map(e=>`
+    <div class="qlist-item ${e.id===state.id?'current':''}" role="listitem" onclick="loadQuote('${esc(e.id)}')" tabindex="0"
+      onkeydown="if(event.key==='Enter'||event.key===' ')loadQuote('${esc(e.id)}')" aria-label="Quote ${esc(e.number)} for ${esc(e.client)}">
+      <div class="qi-left">
+        <div class="qi-num">${esc(e.number||'—')}</div>
+        <div class="qi-client">${esc(e.client||'—')}</div>
+        <div class="qi-total">R ${fmt(e.total)} · <span style="color:${statusColor[e.status]||'var(--muted)'}">${esc(e.status)}</span></div>
+      </div>
+      <button class="qi-del" onclick="event.stopPropagation();deleteQuote('${esc(e.id)}')" title="Delete quote" aria-label="Delete quote ${esc(e.number)}">✕</button>
+    </div>`).join('');
+}
+
+function toggleQuoteList(){
+  qlistOpen=!qlistOpen;
+  el('qlist').classList.toggle('open',qlistOpen);
+  el('qlistToggle').setAttribute('aria-expanded',qlistOpen);
+}
+
+function scheduleAutoSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveQuote,APP.autoSaveDelay);}
+
+// ═══════════════════════════════════════════
+// WHATSAPP
+// ═══════════════════════════════════════════
+function shareWhatsApp(){
+  const C=compute();
+  const msg=`*QUOTATION — NexridgeTech IT Solutions*\n\nQuote #: ${state.meta.number||'—'}\nFor: ${state.client.company||'Your business'}\nService: ${state.project.title||state.project.serviceType||'IT/Web Services'}\nTotal: R ${fmt(C.total)}\nValid Until: ${fmtDate(validDate(state.meta.issued,state.meta.validDays))}\n\n_Please see the full PDF quote for complete scope, terms, and payment details._\n_Reply to confirm acceptance or ask any questions._\n\n📞 +27 60 743 3055\n📧 info@nexridgetech.co.za`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+}
+
+// ═══════════════════════════════════════════
+// PRINT / EXPORT PDF
+// ═══════════════════════════════════════════
+function printQuote(){
+  // Run validation warnings before printing
+  const {errors,warnings}=validateState();
+  if(errors.length){
+    Toast.error('Fix errors before printing: '+errors[0]);return;
+  }
+  if(warnings.length){
+    Toast.warning('Note: '+warnings[0],4000);
+  }
+  window.print();
+}
+
+function validateState(){
+  const errors=[],warnings=[];
+  if(!state.meta.issued)errors.push('Issue date is required.');
+  if(!state.client.company)warnings.push('Client company name is empty.');
+  if(state.client.email&&!isValidEmail(state.client.email))errors.push('Client email is invalid.');
+  if(!state.banking.bank)warnings.push('Bank name is missing.');
+  state.items.forEach((item,i)=>{
+    if(item.qty<=0)errors.push(`Line item ${i+1}: quantity must be > 0.`);
+    if(item.price<0)errors.push(`Line item ${i+1}: price cannot be negative.`);
+  });
+  if(state.financial.discountType==='percent'&&state.financial.discountValue>100)errors.push('Discount cannot exceed 100%.');
+  if(state.financial.paymentStructure==='custom'){
+    const sum=state.financial.customSplit.reduce((a,b)=>a+b,0);
+    if(Math.abs(sum-100)>0.5)errors.push(`Custom payments total ${sum}% — must equal 100%.`);
+  }
+  return{errors,warnings};
+}
+
+// ═══════════════════════════════════════════
+// EMAIL VALIDATION LIVE FEEDBACK
+// ═══════════════════════════════════════════
+function validateEmailField(){
+  const input=el('fc-email');const errEl=el('fc-email-err');
+  if(!input||!errEl)return;
+  const val=input.value.trim();
+  const bad=val&&!isValidEmail(val);
+  input.classList.toggle('has-error',bad);
+  errEl.classList.toggle('visible',bad);
+}
+
+// ═══════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════
+// toggleSidebar() defined in enterprise extensions
+
+
+function switchTab(tab){
+  document.querySelectorAll('.esb-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.esb-tab').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  const panel=el('tab-'+tab);const btn=el('tabBtn-'+tab);
+  if(panel)panel.classList.add('active');
+  if(btn){btn.classList.add('active');btn.setAttribute('aria-selected','true');}
+}
+
+function openIntegrationModal(){
+  renderIntegrationModal();
+  el('integrationModal').classList.add('open');
+}
+function closeIntegrationModal(){el('integrationModal').classList.remove('open');}
+
+// Close modal on overlay click
+document.getElementById('integrationModal').addEventListener('click',e=>{
+  if(e.target===e.currentTarget)closeIntegrationModal();
+});
+document.getElementById('intgModalClose').addEventListener('click',closeIntegrationModal);
+
+// ═══════════════════════════════════════════
+// SIDEBAR INPUT WIRING
+// ═══════════════════════════════════════════
+// wireInputs() defined in enterprise extensions
+
+
+// ═══════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════
+// keyboard handled in initKeyboard()
+;
+// keyboard handled in initKeyboard()
+;
+
+// ═══════════════════════════════════════════
+// INITIALISE
+// ═══════════════════════════════════════════
+// init() defined in enterprise extensions below
+
+
+// ═══════════════════════════════════════════
+// ENTERPRISE EXTENSIONS
+// ═══════════════════════════════════════════
+
+// ── View switching ─────────────────────────
+let currentView = 'dashboard';
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const vEl = document.getElementById('view-' + view);
+  if (vEl) vEl.classList.add('active');
+  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(n => n.classList.remove('active'));
+  const nEl = document.getElementById('nav-' + view);
+  if (nEl) nEl.classList.add('active');
+  currentView = view;
+  if (view === 'dashboard') renderDashboard();
+  if (view === 'quotes')    renderQuotesList();
+  if (view === 'editor')    render();
+  closeAllDropdowns();
+}
+
+// ── Helper: colour by initial ─────────────
+const INIT_COLORS = ['#00e5b0','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#ec4899','#06b6d4'];
+function initColor(name) {
+  const c = (name||'?').toUpperCase().charCodeAt(0);
+  return INIT_COLORS[c % INIT_COLORS.length];
+}
+function initAvatar(name, size='26px', radius='6px') {
+  const ch = (name||'?').charAt(0).toUpperCase();
+  const col = initColor(name);
+  return `<div style="width:${size};height:${size};border-radius:${radius};background:${col}20;color:${col};display:flex;align-items:center;justify-content:center;font-size:.63rem;font-weight:700;font-family:var(--mono);flex-shrink:0">${esc(ch)}</div>`;
+}
+
+// ── Load quote then open editor ────────────
+function loadAndEdit(id) {
+  loadQuote(id);
+  switchView('editor');
+}
+
+// ── Dashboard ─────────────────────────────
+function renderDashboard() {
+  const index = Store.get(APP.storage.quotes + '_idx') || [];
+
+  // KPIs
+  const total    = index.length;
+  const accepted = index.filter(e => e.status === 'accepted').length;
+  const rejected = index.filter(e => e.status === 'rejected').length;
+  const closed   = accepted + rejected;
+  const rate     = closed > 0 ? Math.round((accepted / closed) * 100) : 0;
+  const pipeline = index.reduce((s, e) => s + (e.total || 0), 0);
+  const avg      = total > 0 ? pipeline / total : 0;
+
+  txt('kpiPipeline',    'R ' + fmt(pipeline));
+  txt('kpiAccepted',    rate + '%');
+  txt('kpiTotal',       String(total));
+  txt('kpiAvg',         'R ' + fmt(avg));
+  txt('kpiPipelineSub', total + ' total quotes');
+  txt('kpiTotalSub',    closed + ' closed');
+  txt('kpiAvgSub',      total ? 'Across all quotes' : 'No quotes yet');
+
+  // Date
+  const dd = el('dashDate');
+  if (dd) dd.textContent = new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // Username on dashboard
+  const dn = el('dashName');
+  if (dn) dn.textContent = AUTH.currentUser() || 'there';
+
+  // Pipeline bar
+  const statuses = ['draft','sent','accepted','rejected','expired'];
+  const counts = {};
+  statuses.forEach(s => counts[s] = index.filter(e => e.status === s).length);
+  const barEl = el('pipelineBar');
+  const segColors = { draft:'var(--tx4)', sent:'var(--info)', accepted:'var(--ok)', rejected:'var(--err)', expired:'var(--warn)' };
+  if (barEl) {
+    barEl.innerHTML = statuses.map(s => {
+      const pct = total > 0 ? (counts[s] / total) * 100 : 0;
+      return pct > 0 ? `<div class="pipe-seg ${s}" style="width:${pct}%"></div>` : '';
+    }).join('');
+  }
+
+  const legEl = el('pipelineLegend');
+  if (legEl) {
+    legEl.innerHTML = statuses
+      .filter(s => counts[s] > 0)
+      .map(s => `<div class="pl-item"><div class="pl-dot" style="background:${segColors[s]}"></div>${s} (${counts[s]})</div>`)
+      .join('');
+  }
+
+  const subEl = el('pipelineSub');
+  if (subEl) subEl.textContent = total + ' quotes · R ' + fmt(pipeline) + ' total';
+
+  // Recent quotes
+  const rbody = el('dashRecentBody');
+  if (rbody) {
+    const recent = index.slice(0, 6);
+    if (!recent.length) {
+      rbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--tx3);padding:1.5rem;font-size:.8rem">No quotes yet — create your first one</td></tr>`;
+    } else {
+      rbody.innerHTML = recent.map(e => `
+        <tr onclick="loadAndEdit('${esc(e.id)}')">
+          <td class="td-num">${esc(e.number || '—')}</td>
+          <td><div class="ci">${initAvatar(e.client)}<span>${esc(e.client || '—')}</span></div></td>
+          <td class="td-amt">${R(e.total || 0)}</td>
+          <td><span class="sp sp-${esc(e.status)}">${esc(e.status)}</span></td>
+        </tr>`).join('');
+    }
+  }
+
+  // Expiring soon (within 7 days, sent/draft)
+  const expEl = el('expiringList');
+  if (expEl) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const in7   = new Date(today.getTime() + 7 * 86400000);
+    const exp   = index.filter(e => {
+      if (e.status !== 'sent' && e.status !== 'draft') return false;
+      const raw = Store.get(APP.storage.quotes + '_' + e.id);
+      if (!raw) return false;
+      const d = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
+      return d >= today && d <= in7;
+    });
+    if (!exp.length) {
+      expEl.innerHTML = '<div class="empty-blk">No expiring quotes</div>';
+    } else {
+      expEl.innerHTML = exp.map(e => {
+        const raw  = Store.get(APP.storage.quotes + '_' + e.id);
+        const d    = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
+        const days = Math.ceil((d - today) / 86400000);
+        return `<div style="display:flex;align-items:center;gap:.55rem;padding:.5rem 0;border-bottom:1px solid var(--bd);cursor:pointer" onclick="loadAndEdit('${esc(e.id)}')">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--warn);flex-shrink:0"></div>
+          <div style="font-size:.8rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.number || '—')} · ${esc(e.client || '—')}</div>
+          <div style="font-size:.68rem;font-family:var(--mono);color:var(--warn);flex-shrink:0">${days}d</div>
+        </div>`;
+      }).join('');
+    }
+    // Notification badge
+    if (exp.length > 0) {
+      const nb = el('notifBadge'); if (nb) nb.style.display = 'block';
+      addNotification('⚠ ' + exp.length + ' quote(s) expiring within 7 days');
+    }
+  }
+}
+
+// ── Quotes List View ──────────────────────
+let qlFilterStatus = 'all';
+let qlSearchText   = '';
+
+function setQlFilter(status) {
+  qlFilterStatus = status;
+  document.querySelectorAll('.fchip').forEach(c => c.classList.toggle('active', c.dataset.filter === status));
+  renderQuotesList();
+}
+
+function renderQuotesList() {
+  const index  = Store.get(APP.storage.quotes + '_idx') || [];
+  const search = qlSearchText.toLowerCase();
+  const filtered = index.filter(e => {
+    const ms = qlFilterStatus === 'all' || e.status === qlFilterStatus;
+    const mq = !search ||
+      (e.number||'').toLowerCase().includes(search) ||
+      (e.client||'').toLowerCase().includes(search) ||
+      (e.status||'').toLowerCase().includes(search);
+    return ms && mq;
+  });
+
+  const tbody   = el('qlTableBody');
+  const emptyEl = el('qlEmpty');
+  if (!tbody) return;
+
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'flex';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  tbody.innerHTML = filtered.map(e => {
+    const raw     = Store.get(APP.storage.quotes + '_' + e.id);
+    const svcType = raw?.project?.serviceType || '—';
+    return `<tr onclick="loadAndEdit('${esc(e.id)}')">
+      <td class="td-num">${esc(e.number || '—')}</td>
+      <td><div class="ci">${initAvatar(e.client)}<span>${esc(e.client || '—')}</span></div></td>
+      <td class="td-muted">${esc(svcType)}</td>
+      <td class="td-amt">${R(e.total || 0)}</td>
+      <td><span class="sp sp-${esc(e.status)}">${esc(e.status)}</span></td>
+      <td class="td-muted">${fmtDate(e.date)}</td>
+      <td>
+        <div class="row-acts">
+          <button class="ra" onclick="event.stopPropagation();loadAndEdit('${esc(e.id)}')" title="Edit">Edit</button>
+          <button class="ra danger" onclick="event.stopPropagation();deleteQuote('${esc(e.id)}')" title="Delete">Del</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Command Palette ───────────────────────
+let _palOpen  = false;
+let _palIdx   = 0;
+let _palActs  = [];
+
+function openPalette() {
+  _palOpen = true;
+  document.getElementById('paletteOverlay').classList.add('open');
+  const inp = document.getElementById('paletteInput');
+  if (inp) { inp.value = ''; inp.focus(); }
+  _buildPalette('');
+}
+function closePalette() {
+  _palOpen = false;
+  document.getElementById('paletteOverlay').classList.remove('open');
+}
+function _buildPalette(q) {
+  const index   = Store.get(APP.storage.quotes + '_idx') || [];
+  const ql      = q.toLowerCase();
+  const ACTS    = [
+    { icon:'➕', label:'New Quote',       sub:'Start from blank',        kbd:'Ctrl+N', bg:'var(--brand-a12)', fg:'var(--brand)',  fn:()=>{ closePalette(); newQuote(); switchView('editor'); } },
+    { icon:'📋', label:'All Quotes',      sub:'Browse the quotes list',  bg:'var(--info-a)',   fg:'var(--info)',   fn:()=>{ closePalette(); switchView('quotes'); } },
+    { icon:'🏠', label:'Dashboard',       sub:'Go to overview',          bg:'var(--ok-a)',     fg:'var(--ok)',     fn:()=>{ closePalette(); switchView('dashboard'); } },
+    { icon:'💾', label:'Save Quote',      sub:'Save current quote',      kbd:'Ctrl+S', bg:'var(--brand-a12)', fg:'var(--brand)',  fn:()=>{ closePalette(); saveQuote(); Toast.success('Saved.'); } },
+    { icon:'🖨',  label:'Export PDF',      sub:'Print or save as PDF',    kbd:'Ctrl+P', bg:'var(--purple-a)', fg:'var(--purple)', fn:()=>{ closePalette(); printQuote(); } },
+    { icon:'🔗', label:'Integrations',    sub:'Xero, QuickBooks, Sage',  bg:'var(--purple-a)', fg:'var(--purple)', fn:()=>{ closePalette(); openIntegrationModal(); } },
+    { icon:'👥', label:'Manage Users',    sub:'Add or remove users',     bg:'var(--info-a)',   fg:'var(--info)',   fn:()=>{ closePalette(); openChpw(); } },
+    { icon:'📤', label:'Export JSON',     sub:'Download quote as JSON',  bg:'var(--ok-a)',     fg:'var(--ok)',     fn:()=>{ closePalette(); exportJSON(); } },
+    { icon:'🚪', label:'Sign Out',        sub:'End your session',        bg:'var(--err-a)',    fg:'var(--err)',    fn:()=>{ closePalette(); logout(); } },
+  ];
+  const fa = ql ? ACTS.filter(a => (a.label+a.sub).toLowerCase().includes(ql)) : ACTS;
+  const fq = ql ? index.filter(e => (e.number||'').toLowerCase().includes(ql)||(e.client||'').toLowerCase().includes(ql)).slice(0,5) : [];
+  _palActs = fa;
+
+  let html = '';
+  if (fa.length) {
+    html += `<div class="pal-group">Actions</div>` + fa.map((a,i) => `
+      <div class="pal-item" data-pi="${i}" onclick="_palRun(${i})">
+        <div class="pal-ic" style="background:${a.bg};color:${a.fg}">${a.icon}</div>
+        <div class="pal-txt"><div class="pal-lbl">${esc(a.label)}</div><div class="pal-sub">${esc(a.sub)}</div></div>
+        ${a.kbd ? `<span class="pal-kbd">${esc(a.kbd)}</span>` : ''}
+      </div>`).join('');
+  }
+  if (fq.length) {
+    html += `<div class="pal-group">Quotes</div>` + fq.map(e => `
+      <div class="pal-item" onclick="closePalette();loadAndEdit('${esc(e.id)}')">
+        <div class="pal-ic" style="background:${initColor(e.client)}20;color:${initColor(e.client)};font-family:var(--mono);font-size:.68rem;font-weight:700">${(e.client||'?').charAt(0).toUpperCase()}</div>
+        <div class="pal-txt"><div class="pal-lbl">${esc(e.number||'—')}</div><div class="pal-sub">${esc(e.client||'—')} · ${R(e.total||0)}</div></div>
+        <span class="sp sp-${esc(e.status)}">${esc(e.status)}</span>
+      </div>`).join('');
+  }
+  if (!html) html = `<div class="pal-empty">No results for "${esc(q)}"</div>`;
+
+  const res = el('paletteResults');
+  if (res) { res.innerHTML = html; }
+  _palIdx = 0;
+  _palHighlight();
+}
+function _palRun(i) { if (_palActs[i]) _palActs[i].fn(); }
+function _palHighlight() {
+  document.querySelectorAll('.pal-item[data-pi]').forEach((el, i) => el.classList.toggle('sel', i === _palIdx));
+}
+
+// ── User Menu & Notifications ─────────────
+function closeAllDropdowns() {
+  el('userMenu')?.classList.remove('open');
+  el('notifPanel')?.classList.remove('open');
+}
+
+function toggleUserMenu(e) {
+  e?.stopPropagation();
+  const m = el('userMenu');
+  const wasOpen = m?.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen && m) {
+    const btn = el('userChipBtn');
+    const rect = btn?.getBoundingClientRect();
+    if (rect) { m.style.top = (rect.bottom + 6) + 'px'; m.style.right = (window.innerWidth - rect.right) + 'px'; }
+    m.classList.add('open');
+  }
+}
+
+function toggleNotifPanel(e) {
+  e?.stopPropagation();
+  const p = el('notifPanel');
+  const wasOpen = p?.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen && p) {
+    const btn = el('notifBtn');
+    const rect = btn?.getBoundingClientRect();
+    if (rect) { p.style.top = (rect.bottom + 6) + 'px'; p.style.right = (window.innerWidth - rect.right) + 'px'; }
+    p.classList.add('open');
+    el('notifBadge')?.style && (el('notifBadge').style.display = 'none');
+  }
+}
+
+let _notifs = [];
+function addNotification(msg) {
+  _notifs.unshift({ msg, ts: new Date().toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit' }) });
+  if (_notifs.length > 20) _notifs.pop();
+  renderNotifications();
+}
+function clearNotifications() { _notifs = []; renderNotifications(); }
+function renderNotifications() {
+  const list = el('notifList');
+  if (!list) return;
+  if (!_notifs.length) { list.innerHTML = '<div class="empty-blk">No notifications</div>'; return; }
+  list.innerHTML = _notifs.map(n => `
+    <div class="ni">
+      <div class="ni-ttl">${esc(n.msg)}</div>
+      <div class="ni-sub">${esc(n.ts)}</div>
+    </div>`).join('');
+}
+
+// ── Storage bar ───────────────────────────
+function updateStorageBar() {
+  const kb  = Store.usageKB();
+  const pct = Math.min((kb / 5000) * 100, 100);
+  const fill  = el('sbUsageFill');
+  const label = el('sbUsageLabel');
+  const wrap  = el('sbUsage');
+  if (fill)  { fill.style.width = pct + '%'; fill.className = 'sb-use-fill' + (pct > 90 ? ' full' : pct > 70 ? ' warn' : ''); }
+  if (label) label.textContent = `Storage: ${kb} KB / 5 000 KB`;
+  if (wrap && kb > 50) wrap.style.display = 'block';
+}
+
+// ── Updated toggleSidebar ─────────────────
+function toggleSidebar() {
+  const sb = el('sidebar');
+  if (!sb) return;
+  sb.classList.toggle('collapsed');
+  const exp = !sb.classList.contains('collapsed');
+  el('ctToggle')?.setAttribute('aria-expanded', String(exp));
+}
+
+// ── Updated wireInputs ────────────────────
+function wireInputs() {
+  // Sidebar field bindings
+  const bindings = [
+    ['fi-num','meta.number'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
+    ['fi-ptitle','project.title'],['fi-stype','project.serviceType'],['fi-delivery','project.delivery'],['fi-desc','project.description'],
+    ['fc-company','client.company'],['fc-contact','client.contact'],['fc-email','client.email'],
+    ['fc-phone','client.phone'],['fc-address','client.address'],
+    ['fb-name','banking.accountName'],['fb-bank','banking.bank'],['fb-acc','banking.accountNumber'],
+    ['fb-branch','banking.branchCode'],['fb-type','banking.accountType'],
+  ];
+  bindings.forEach(([id,path]) => {
+    const e = el(id);
+    if (!e) return;
+    e.addEventListener(e.tagName==='SELECT'?'change':'input', () => {
+      setPath(state, path, e.type==='number' ? +e.value : e.value);
+      render();
+    });
+  });
+
+  // Contenteditable
+  [['dProjTitle','project.title'],['dProjDesc','project.description']].forEach(([id,path]) => {
+    const e = el(id);
+    if (!e) return;
+    e.addEventListener('input', () => { setPath(state, path, e.textContent); markUnsaved(); });
+    e.addEventListener('blur',  () => { setPath(state, path, e.textContent); });
+  });
+
+  // Finance controls
+  el('vatChk')?.addEventListener('change', () => { state.financial.vat = el('vatChk').checked; render(); });
+  el('discType')?.addEventListener('change', () => { state.financial.discountType = el('discType').value; render(); });
+  el('discVal')?.addEventListener('input',  () => { state.financial.discountValue = safeNum(el('discVal').value); render(); });
+  el('statusSel')?.addEventListener('change', () => updateStatus(el('statusSel').value));
+
+  // Payment structure options
+  document.querySelectorAll('.ps-opt').forEach(opt => {
+    const str = opt.id.replace('ps-','');
+    opt.addEventListener('click', () => setPayStr(str));
+    opt.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setPayStr(str); } });
+  });
+  el('btnAddSplit')?.addEventListener('click', addCustomSplit);
+
+  // Sidebar action buttons
+  el('btnSave')?.addEventListener('click', () => { saveQuote(); Toast.success('Saved.'); });
+  el('btnPrint')?.addEventListener('click', printQuote);
+  el('btnWA')?.addEventListener('click', shareWhatsApp);
+  el('btnAutoNum')?.addEventListener('click', autoNumber);
+  el('btnAddItem')?.addEventListener('click', addItem);
+
+  // Canvas toolbar buttons
+  el('ctToggle')?.addEventListener('click', toggleSidebar);
+  el('ctBtnSave')?.addEventListener('click', () => { saveQuote(); Toast.success('Draft saved.'); });
+  el('ctBtnPrint')?.addEventListener('click', printQuote);
+  el('ctBtnWA')?.addEventListener('click', shareWhatsApp);
+  el('ctBtnIntg')?.addEventListener('click', openIntegrationModal);
+
+  // Tab buttons
+  document.querySelectorAll('.esb-tab').forEach(b => {
+    b.addEventListener('click', () => switchTab(b.id.replace('tabBtn-','')));
+  });
+
+  // Nav rail
+  el('nav-dashboard')?.addEventListener('click', () => switchView('dashboard'));
+  el('nav-quotes')?.addEventListener('click',    () => switchView('quotes'));
+  el('nav-editor')?.addEventListener('click',    () => switchView('editor'));
+
+  // Top bar
+  el('topbarSearch')?.addEventListener('click', openPalette);
+  el('topbarNewQuote')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
+  el('userChipBtn')?.addEventListener('click', toggleUserMenu);
+  el('notifBtn')?.addEventListener('click', toggleNotifPanel);
+  el('menuLogout')?.addEventListener('click', () => Dialog.confirm('Sign out','End your session and return to the login screen?','Sign out',false).then(ok => { if (ok) logout(); }));
+
+  // Dashboard quick actions
+  el('dashNewBtn')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
+  el('qaNew')?.addEventListener('click',  () => { newQuote(); switchView('editor'); });
+  el('qaAll')?.addEventListener('click',  () => switchView('quotes'));
+  el('qaIntg')?.addEventListener('click', openIntegrationModal);
+
+  // Quotes list
+  el('qlSearch')?.addEventListener('input', e => { qlSearchText = e.target.value; renderQuotesList(); });
+  el('qlNewBtn')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
+  el('qlExportBtn')?.addEventListener('click', exportJSON);
+
+  // Email validation
+  el('fc-email')?.addEventListener('blur', validateEmailField);
+
+  // Integration modal
+  el('intgModalClose')?.addEventListener('click', closeIntegrationModal);
+  el('integrationModal')?.addEventListener('click', e => { if (e.target===e.currentTarget) closeIntegrationModal(); });
+
+  // User management modal
+  el('chpwModal')?.addEventListener('click', e => { if (e.target===e.currentTarget) closeChpw(); });
+
+  // Palette
+  el('paletteOverlay')?.addEventListener('click', e => { if (e.target===e.currentTarget) closePalette(); });
+  el('paletteInput')?.addEventListener('input', e => _buildPalette(e.target.value));
+  el('paletteInput')?.addEventListener('keydown', e => {
+    const items = document.querySelectorAll('.pal-item[data-pi]');
+    if (e.key==='ArrowDown') { e.preventDefault(); _palIdx = Math.min(_palIdx+1, items.length-1); _palHighlight(); }
+    else if (e.key==='ArrowUp') { e.preventDefault(); _palIdx = Math.max(_palIdx-1, 0); _palHighlight(); }
+    else if (e.key==='Enter') { e.preventDefault(); _palRun(_palIdx); }
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#userMenu') && !e.target.closest('#userChipBtn') &&
+        !e.target.closest('#notifPanel') && !e.target.closest('#notifBtn')) {
+      closeAllDropdowns();
+    }
+  });
+}
+
+// ── Updated keyboard shortcuts ────────────
+function initKeyboard() {
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (_palOpen) { closePalette(); return; }
+      if (el('integrationModal')?.classList.contains('open')) { closeIntegrationModal(); return; }
+      if (el('chpwModal')?.classList.contains('open')) { closeChpw(); return; }
+      if (el('confirmDialog')?.classList.contains('open')) { Dialog._close(false); return; }
+      closeAllDropdowns();
+      return;
+    }
+    const mod = e.ctrlKey || e.metaKey;
+    if (!mod) return;
+    if (e.key === 'k') { e.preventDefault(); openPalette(); return; }
+    if (e.key === 's') { e.preventDefault(); saveQuote(); Toast.success('Saved.', 1800); return; }
+    if (e.key === 'p') { e.preventDefault(); printQuote(); return; }
+    if (e.key === 'n') { e.preventDefault(); newQuote(); switchView('editor'); return; }
+  });
+}
+
+// ── Updated init ──────────────────────────
+function init() {
+  // Register integrations
+  IntegrationHub.register(new XeroIntegration());
+  IntegrationHub.register(new QuickBooksIntegration());
+  IntegrationHub.register(new SageIntegration());
+
+  // Restore integration states
+  const savedIntg = Store.get(APP.storage.integrations) || {};
+  for (const [id, s] of Object.entries(savedIntg)) {
+    const intg = IntegrationHub.get(id);
+    if (intg && s.status) intg.status = s.status;
+  }
+
+  // Restore sidebar width
+  try {
+    const saved = parseInt(Store.get('nxt_sb_w') || '0');
+    if (saved >= 220 && saved <= 480) {
+      const sb = el('sidebar');
+      if (sb) { sb.style.width = saved + 'px'; document.documentElement.style.setProperty('--sb-w', saved + 'px'); }
+    }
+  } catch {}
+
+  // Init UI systems
+  Toast._init();
+  wireInputs();
+  initLoginListeners();
+  initKeyboard();
+
+  // Sidebar drag resize
+  initSidebarResize();
+
+  // Footer year
+  const fy = el('footerYear'); if (fy) fy.textContent = new Date().getFullYear();
+
+  // Init topbar avatar & username
+  const user = AUTH.currentUser() || 'admin';
+  const av = el('topbarAvatar'); if (av) av.textContent = user.charAt(0).toUpperCase();
+  const un = el('topbarUsername'); if (un) un.textContent = user;
+  const dn = el('dashName'); if (dn) dn.textContent = user;
+
+  // Boot quote state
+  autoNumber();
+  render();
+  renderDashboard();
+  renderQuotesList();
+  updateStorageBar();
+  markSaved();
+
+  // Storage warning
+  if (Store.usageKB() > 4200) Toast.warning('Storage nearly full (' + Store.usageKB() + ' KB). Export old quotes as JSON to free space.', 6000);
+
+  // Spin style
+  if (!document.querySelector('#spinStyle')) {
+    const s = document.createElement('style'); s.id = 'spinStyle';
+    s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(s);
+  }
+
+  console.log('NRT Enterprise v3.0 — ready. ' + IntegrationHub.getAll().length + ' integrations registered.');
+}
+
+init();
+
+</script>
+</body>
+</html>

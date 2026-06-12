@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="NRT Enterprise — Professional Quotation Platform">
 <title>NRT Enterprise</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -679,11 +680,88 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 }
 @media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr}.fg-row{grid-template-columns:1fr}
   .pay-schedule{flex-direction:column}.pay-card{min-width:100%}.tb-search{display:none}}
+/* SETUP / CONFIG SCREEN */
+.setup-screen{
+  position:fixed;inset:0;z-index:calc(var(--z-login) + 1);
+  background:radial-gradient(ellipse at 30% 40%,rgba(0,229,176,.07) 0%,transparent 55%),var(--bg-0);
+  display:none;align-items:center;justify-content:center;padding:1.5rem;
+  transition:opacity .35s ease,visibility .35s ease;
+}
+.setup-screen.visible{display:flex}
+.setup-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.setup-card{
+  width:100%;max-width:460px;background:var(--bg-1);border:1px solid var(--bd2);
+  border-radius:20px;padding:2.5rem 2.25rem;box-shadow:var(--sh-xl);position:relative;overflow:hidden;
+}
+.setup-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brand-a20),transparent)}
+.setup-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--brand-a12);
+  border:1px solid var(--brand-a20);border-radius:100px;padding:.3rem .75rem;
+  font-size:.65rem;font-family:var(--mono);color:var(--brand);letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:1.25rem}
+.setup-h{font-size:1.35rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.35rem}
+.setup-sub{font-size:.83rem;color:var(--tx2);line-height:1.6;margin-bottom:1.625rem}
+.setup-step{display:flex;gap:.75rem;margin-bottom:.875rem;padding:.875rem;
+  background:var(--bg-2);border:1px solid var(--bd);border-radius:10px}
+.setup-step-num{width:22px;height:22px;border-radius:50%;background:var(--brand-a12);
+  border:1px solid var(--brand-a20);display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;color:var(--brand);font-family:var(--mono);flex-shrink:0;margin-top:.1rem}
+.setup-step-text{font-size:.8rem;color:var(--tx2);line-height:1.55}
+.setup-step-text strong{color:var(--tx);font-weight:600}
+.setup-step-text a{color:var(--brand);text-decoration:none}
+.setup-step-text a:hover{text-decoration:underline}
+.setup-err{font-size:.76rem;color:var(--err);background:var(--err-a);border:1px solid rgba(239,68,68,.2);
+  border-radius:8px;padding:.55rem .825rem;margin-bottom:.875rem;display:none}
+.setup-err.visible{display:block}
+.setup-link{font-size:.73rem;color:var(--tx3);text-align:center;margin-top:1.25rem;font-family:var(--mono)}
+.setup-link a{color:var(--brand);text-decoration:none}
+.setup-link a:hover{text-decoration:underline}
+
 </style>
 </head>
 <body>
 
 <div id="toastContainer" class="toast-container" aria-live="polite" role="status"></div>
+
+<!-- SUPABASE SETUP SCREEN -->
+<div class="setup-screen" id="setupScreen" role="main" aria-label="Connect to Supabase">
+  <div class="setup-card">
+    <div class="setup-badge">&#9881; First-time Setup</div>
+    <div class="setup-h">Connect NRT Enterprise</div>
+    <div class="setup-sub">Link your Supabase project to enable secure authentication. This only takes a minute.</div>
+
+    <div class="setup-step">
+      <div class="setup-step-num">1</div>
+      <div class="setup-step-text"><strong>Create a free Supabase project</strong> at <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> if you haven't already.</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-num">2</div>
+      <div class="setup-step-text"><strong>Open Project Settings &rarr; API</strong> and copy your <em>Project URL</em> and <em>anon / public</em> key.</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-num">3</div>
+      <div class="setup-step-text"><strong>Add your first user</strong> in the Supabase dashboard under <em>Authentication &rarr; Users &rarr; Add User</em>.</div>
+    </div>
+
+    <div id="setupErr" class="setup-err" role="alert"></div>
+
+    <div class="fg" style="margin-top:1.25rem">
+      <label class="fl req" for="setupUrl">Supabase Project URL</label>
+      <input class="fi" type="url" id="setupUrl" placeholder="https://xxxxxxxxxxxx.supabase.co" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="fg">
+      <label class="fl req" for="setupKey">Supabase Anon Key</label>
+      <input class="fi" type="text" id="setupKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." autocomplete="off" spellcheck="false" style="font-family:var(--mono);font-size:.72rem">
+    </div>
+
+    <button class="login-btn" id="setupSaveBtn" style="margin-top:.25rem">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Save &amp; Connect
+    </button>
+
+    <div class="setup-link">Already configured? <a href="#" onclick="showLoginScreen();return false">Sign in</a></div>
+  </div>
+</div>
 
 <!-- LOGIN -->
 <div class="login-screen" id="loginScreen" role="main">
@@ -701,7 +779,7 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
     <div class="login-sub">Access your workspace. Session ends when you close this tab.</div>
     <div id="loginError" class="login-err" role="alert"></div>
     <form id="loginForm" onsubmit="return false" autocomplete="on" novalidate>
-      <div class="login-field"><label class="login-label" for="loginUser">Username</label><input class="login-input" type="text" id="loginUser" name="username" placeholder="Enter username" autocomplete="username" required></div>
+      <div class="login-field"><label class="login-label" for="loginUser">Email Address</label><input class="login-input" type="email" id="loginUser" name="email" placeholder="you@example.com" autocomplete="email" required></div>
       <div class="login-field"><label class="login-label" for="loginPass">Password</label>
         <div class="pw-wrap"><input class="login-input" type="password" id="loginPass" name="password" placeholder="Enter password" autocomplete="current-password" required>
           <button type="button" class="pw-eye" id="pwToggle" aria-label="Show password"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
@@ -764,7 +842,7 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
     <div id="umMsg" style="font-size:.71rem;font-family:var(--mono);margin-bottom:.8rem;padding:.42rem .65rem;border-radius:6px;display:none"></div>
     <div class="um-tabs">
       <button class="um-tab active" id="umTab-users" onclick="umSwitchTab('users')">Users</button>
-      <button class="um-tab" id="umTab-add" onclick="umSwitchTab('add')">Add User</button>
+      <button class="um-tab" id="umTab-add" onclick="umSwitchTab('add')">Invite User</button>
       <button class="um-tab" id="umTab-pw" onclick="umSwitchTab('pw')">Change Password</button>
     </div>
     <div class="um-panel active" id="umPanel-users">
@@ -772,12 +850,12 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
       <div style="font-size:.65rem;color:var(--tx3);font-family:var(--mono);line-height:1.5;margin-top:.45rem">&#9888; Last user cannot be deleted. To reset: F12 &rarr; Application &rarr; localStorage &rarr; delete <code style="background:var(--bg-h);padding:.08rem .28rem;border-radius:3px">nxt_users</code></div>
     </div>
     <div class="um-panel" id="umPanel-add">
-      <div class="fg"><label class="fl req" for="addUser">Username</label><input class="fi" type="text" id="addUser" placeholder="e.g. dakalo" autocomplete="off"></div>
+      <div class="fg"><label class="fl req" for="addUser">Email Address</label><input class="fi" type="email" id="addUser" placeholder="colleague@example.com" autocomplete="off"></div>
       <div class="fg"><label class="fl req" for="addPass">Password</label><input class="fi" type="password" id="addPass" placeholder="Min 8 characters" autocomplete="new-password"></div>
       <div class="fg"><label class="fl req" for="addConfirm">Confirm Password</label><input class="fi" type="password" id="addConfirm" placeholder="Repeat password" autocomplete="new-password"></div>
       <div style="display:flex;gap:.45rem;justify-content:flex-end;margin-top:.45rem">
         <button class="btn btn-ghost" onclick="umSwitchTab('users')">Cancel</button>
-        <button class="btn btn-brand" onclick="umAddUser()">Add User</button>
+        <button class="btn btn-brand" onclick="umAddUser()">Send Invite</button>
       </div>
     </div>
     <div class="um-panel" id="umPanel-pw">
@@ -1042,96 +1120,213 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 'use strict';
 
 // ═══════════════════════════════════════════
-// AUTHENTICATION — Multi-user, SHA-256, sessionStorage
+// SUPABASE AUTH — production-grade, token-refreshing
 // ═══════════════════════════════════════════
-const AUTH = {
-  // Default admin hash: SHA-256("admin:NexridgeTech2026!")
-  DEFAULT_USERS: { admin: 'c96bf954bb761651d796fdd8401e34411ad2a941a604a9c20c3b45bc954be3c2' },
-  USERS_KEY:   'nxt_users',
-  SESSION_KEY: '_nrt_sess',
+const SUPABASE = {
+  _client:  null,
+  _session: null,
+  CFG_KEY:  'nxt_supabase_cfg',
+  EMAIL_KEY:'_nrt_email',
 
-  /** SHA-256 of "username_lowercase:password" */
-  async hash(username, password) {
-    const data = new TextEncoder().encode(username.toLowerCase().trim() + ':' + password);
-    const buf  = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  /** Load saved config and init client. Returns true if configured. */
+  loadConfig() {
+    const cfg = Store.get(this.CFG_KEY);
+    if (cfg?.url && cfg?.anonKey) {
+      this._initClient(cfg.url, cfg.anonKey);
+      return true;
+    }
+    return false;
   },
 
-  /** Return the active users map (localStorage or default) */
-  getUsers() {
+  /** Save new config and (re)init client */
+  saveConfig(url, anonKey) {
+    Store.set(this.CFG_KEY, { url: url.trim(), anonKey: anonKey.trim() });
+    this._initClient(url.trim(), anonKey.trim());
+  },
+
+  clearConfig() { Store.remove(this.CFG_KEY); this._client = null; },
+
+  isConfigured() { return !!this._client; },
+
+  _initClient(url, anonKey) {
     try {
-      const raw = localStorage.getItem(this.USERS_KEY);
-      return raw ? JSON.parse(raw) : {...this.DEFAULT_USERS};
-    } catch { return {...this.DEFAULT_USERS}; }
+      this._client = window.supabase.createClient(url, anonKey, {
+        auth: {
+          persistSession:     true,
+          autoRefreshToken:   true,
+          detectSessionInUrl: false,
+          storageKey:         'nrt_sb_session',
+        },
+      });
+      // Listen for auth changes (token refresh, sign-out)
+      this._client.auth.onAuthStateChange((event, session) => {
+        this._session = session;
+        if (event === 'SIGNED_OUT') _handleSignedOut();
+        if (event === 'TOKEN_REFRESHED') console.log('[Auth] Token refreshed');
+      });
+    } catch (err) {
+      console.error('[SUPABASE] Init failed:', err);
+      this._client = null;
+    }
   },
 
-  /** Save users map to localStorage */
-  saveUsers(users) {
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-  },
-
-  /** Verify a username+password combo */
-  async verify(username, password) {
-    const users = this.getUsers();
-    const key   = username.toLowerCase().trim();
-    const stored = users[key];
-    if (!stored) return false;
-    const entered = await this.hash(key, password);
-    return entered === stored;
-  },
-
-  /** Add or update a user */
-  async setUser(username, password) {
-    const users = this.getUsers();
-    const key   = username.toLowerCase().trim();
-    users[key]  = await this.hash(key, password);
-    this.saveUsers(users);
-  },
-
-  /** Remove a user — prevents removing the last one */
-  removeUser(username) {
-    const users = this.getUsers();
-    const key   = username.toLowerCase().trim();
-    if (Object.keys(users).length <= 1) return false;
-    delete users[key];
-    this.saveUsers(users);
-    return true;
-  },
-
-  /** Active session checks */
-  hasSession() {
+  /** Check for an existing valid session */
+  async getSession() {
+    if (!this._client) return null;
     try {
-      const raw = sessionStorage.getItem(this.SESSION_KEY);
-      if (!raw) return false;
-      const s = JSON.parse(raw);
-      return s && s.token && s.token.length === 64 && s.username;
-    } catch { return false; }
+      const { data, error } = await this._client.auth.getSession();
+      if (error) throw error;
+      this._session = data.session;
+      return data.session;
+    } catch (err) {
+      console.error('[SUPABASE] getSession:', err);
+      return null;
+    }
   },
 
-  startSession(username) {
-    const token = Array.from(crypto.getRandomValues(new Uint8Array(32)))
-      .map(b => b.toString(16).padStart(2,'0')).join('');
-    sessionStorage.setItem(this.SESSION_KEY, JSON.stringify({ token, username }));
+  /** Sign in with email + password */
+  async signIn(email, password) {
+    if (!this._client) throw new Error('Supabase is not configured.');
+    const { data, error } = await this._client.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+    if (error) {
+      // Map Supabase error messages to friendly text
+      const msg = error.message || '';
+      if (msg.includes('Invalid login'))        throw new Error('Incorrect email or password.');
+      if (msg.includes('Email not confirmed'))  throw new Error('Please verify your email address first — check your inbox.');
+      if (msg.includes('Too many requests'))    throw new Error('Too many attempts. Please wait a moment and try again.');
+      if (msg.includes('User not found'))       throw new Error('No account found with that email address.');
+      throw new Error(msg || 'Sign-in failed. Please try again.');
+    }
+    this._session = data.session;
+    sessionStorage.setItem(this.EMAIL_KEY, data.user.email);
+    return data;
   },
 
-  endSession() { sessionStorage.removeItem(this.SESSION_KEY); },
-
-  /** Who is currently signed in */
-  currentUser() {
-    try {
-      const raw = sessionStorage.getItem(this.SESSION_KEY);
-      return raw ? JSON.parse(raw).username : null;
-    } catch { return null; }
+  /** Sign out */
+  async signOut() {
+    if (!this._client) return;
+    sessionStorage.removeItem(this.EMAIL_KEY);
+    await this._client.auth.signOut();
   },
+
+  /** Update password for the currently signed-in user */
+  async updatePassword(newPassword) {
+    if (!this._client) throw new Error('Supabase is not configured.');
+    const { data, error } = await this._client.auth.updateUser({ password: newPassword });
+    if (error) {
+      const msg = error.message || '';
+      if (msg.includes('same password')) throw new Error('New password must differ from the current one.');
+      if (msg.includes('at least'))      throw new Error('Password must be at least 6 characters.');
+      throw new Error(msg || 'Password update failed.');
+    }
+    return data;
+  },
+
+  /** Invite a new user — they receive a confirmation email to set their password */
+  async inviteUser(email) {
+    if (!this._client) throw new Error('Supabase is not configured.');
+    // signUp sends a confirmation / magic-link email
+    const { data, error } = await this._client.auth.signUp({
+      email: email.trim().toLowerCase(),
+      password: _randomPassword(),
+      options: { emailRedirectTo: window.location.href.split('?')[0] },
+    });
+    if (error) {
+      const msg = error.message || '';
+      if (msg.includes('already registered')) throw new Error('That email is already registered.');
+      throw new Error(msg || 'Invite failed.');
+    }
+    return data;
+  },
+
+  /** Currently signed-in email (sync, from sessionStorage) */
+  currentUser() { return sessionStorage.getItem(this.EMAIL_KEY) || null; },
+
+  /** True if sessionStorage has a user email (fast sync check) */
+  hasSession() { return !!sessionStorage.getItem(this.EMAIL_KEY); },
 };
 
-// ── Login UI helpers ──────────────────────────────────────
+function _randomPassword() {
+  const a = new Uint8Array(24);
+  try { crypto.getRandomValues(a); } catch {}
+  return btoa(String.fromCharCode(...a)).slice(0, 20) + 'Aa1!';
+}
+
+function _handleSignedOut() {
+  sessionStorage.removeItem(SUPABASE.EMAIL_KEY);
+  const ls = document.getElementById('loginScreen');
+  if (ls) { ls.style.display = 'flex'; requestAnimationFrame(() => ls.classList.remove('hidden')); }
+  document.getElementById('loginUser').value  = '';
+  document.getElementById('loginPass').value  = '';
+  document.getElementById('loginUser').focus?.();
+}
+
+// ── Setup screen helpers ──────────────────
+function showSetupScreen() {
+  const ss = document.getElementById('setupScreen');
+  if (ss) ss.classList.add('visible');
+  const ls = document.getElementById('loginScreen');
+  if (ls) ls.style.display = 'none';
+  // Pre-fill if config exists
+  const cfg = Store.get(SUPABASE.CFG_KEY);
+  if (cfg) {
+    const u = document.getElementById('setupUrl'); if (u) u.value = cfg.url || '';
+    const k = document.getElementById('setupKey'); if (k) k.value = cfg.anonKey || '';
+  }
+}
+
+function showLoginScreen() {
+  const ss = document.getElementById('setupScreen');
+  if (ss) ss.classList.remove('visible');
+  const ls = document.getElementById('loginScreen');
+  if (ls) { ls.style.display = 'flex'; requestAnimationFrame(() => ls.classList.remove('hidden')); }
+  document.getElementById('loginUser')?.focus();
+}
+
+async function handleSetupSave() {
+  const urlEl = document.getElementById('setupUrl');
+  const keyEl = document.getElementById('setupKey');
+  const errEl = document.getElementById('setupErr');
+  const btn   = document.getElementById('setupSaveBtn');
+  const showErr = msg => { if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); } };
+  const hideErr = ()  => { if (errEl) errEl.classList.remove('visible'); };
+
+  hideErr();
+  const url    = urlEl?.value.trim() || '';
+  const anonKey = keyEl?.value.trim() || '';
+
+  if (!url)     { showErr('Project URL is required.'); urlEl?.focus(); return; }
+  if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+    showErr('URL should look like: https://xxxxxxxxxxxx.supabase.co'); urlEl?.focus(); return;
+  }
+  if (!anonKey) { showErr('Anon key is required.'); keyEl?.focus(); return; }
+  if (!anonKey.startsWith('eyJ')) {
+    showErr('Anon key should start with "eyJ…" — check Project Settings → API.'); keyEl?.focus(); return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connecting…';
+
+  try {
+    SUPABASE.saveConfig(url, anonKey);
+    // Test connection by attempting to get session
+    await SUPABASE.getSession();
+    Toast.success('Supabase connected successfully.');
+    showLoginScreen();
+  } catch (err) {
+    showErr('Connection failed: ' + (err.message || 'Check your URL and key.'));
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Save &amp; Connect';
+  }
+}
+
+// ── Login form ────────────────────────────
 function showLoginError(msg) {
   const e = document.getElementById('loginError');
   if (!e) return;
   e.textContent = msg; e.classList.add('visible');
   const inp = document.getElementById('loginPass');
-  if (inp) { inp.classList.add('shake'); inp.addEventListener('animationend', () => inp.classList.remove('shake'), {once:true}); }
+  if (inp) { inp.classList.add('shake'); inp.addEventListener('animationend', () => inp.classList.remove('shake'), { once: true }); }
 }
 function clearLoginError() {
   const e = document.getElementById('loginError');
@@ -1142,59 +1337,63 @@ function setLoginLoading(on) {
   if (!btn) return;
   btn.disabled = on;
   btn.innerHTML = on
-    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in…'
-    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Sign In';
+    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in\u2026'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Sign In';
 }
-function revealApp(username) {
-  // Show signed-in username in toolbar
-  const chip = document.getElementById('signedInName');
-  if (chip) chip.textContent = username;
+
+function revealApp(email) {
+  // Update topbar
+  const av = document.getElementById('topbarAvatar');
+  const un = document.getElementById('topbarUsername');
+  const dn = document.getElementById('dashName');
+  const dn2= document.getElementById('umCurrentUser');
+  const displayName = email ? email.split('@')[0] : 'user';
+  if (av) av.textContent = displayName.charAt(0).toUpperCase();
+  if (un) un.textContent = displayName;
+  if (dn) dn.textContent = displayName;
+  if (dn2) dn2.textContent = email || displayName;
+  // Hide login
   const ls = document.getElementById('loginScreen');
   if (ls) ls.classList.add('hidden');
   setTimeout(() => { if (ls) ls.style.display = 'none'; }, 380);
 }
 
-// ── Login submit ───────────────────────────────────────────
 async function handleLogin() {
-  const username = (document.getElementById('loginUser')?.value || '').trim();
-  const password =  document.getElementById('loginPass')?.value || '';
+  const email    = document.getElementById('loginUser')?.value || '';
+  const password = document.getElementById('loginPass')?.value || '';
   clearLoginError();
-  if (!username || !password) { showLoginError('Please enter your username and password.'); return; }
+  if (!email.trim())    { showLoginError('Please enter your email address.'); return; }
+  if (!password)        { showLoginError('Please enter your password.'); return; }
+  if (!SUPABASE.isConfigured()) {
+    showLoginError('Supabase is not configured. ');
+    showSetupScreen();
+    return;
+  }
   setLoginLoading(true);
   try {
-    const ok = await AUTH.verify(username, password);
-    if (ok) {
-      AUTH.startSession(username.toLowerCase());
-      revealApp(username.toLowerCase());
-    } else {
-      showLoginError('Incorrect username or password. Please try again.');
-      document.getElementById('loginPass').value = '';
-      document.getElementById('loginPass').focus();
-    }
+    const data = await SUPABASE.signIn(email, password);
+    revealApp(data.user.email);
+    renderDashboard();
   } catch (err) {
-    showLoginError('Authentication error — please try again.');
-    console.error('[Auth]', err);
+    showLoginError(err.message || 'Sign-in failed.');
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
   } finally {
     setLoginLoading(false);
   }
 }
 
-// ── Logout ─────────────────────────────────────────────────
 function logout() {
-  AUTH.endSession();
-  const ls = document.getElementById('loginScreen');
-  if (ls) { ls.style.display = 'flex'; requestAnimationFrame(() => ls.classList.remove('hidden')); }
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginUser').focus();
+  SUPABASE.signOut().catch(console.error);
+  _handleSignedOut();
 }
 
-// ── User management modal ──────────────────────────────────
+// ── User Management (Supabase-backed) ────────
 function openChpw() {
   umSwitchTab('users');
   renderUserList();
   const cu = document.getElementById('umCurrentUser');
-  if (cu) cu.textContent = AUTH.currentUser() || 'you';
+  if (cu) cu.textContent = SUPABASE.currentUser() || 'you';
   document.getElementById('chpwModal').classList.add('open');
 }
 function closeChpw() {
@@ -1207,15 +1406,13 @@ function closeChpw() {
 function umSwitchTab(tab) {
   document.querySelectorAll('.um-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.um-panel').forEach(p => p.classList.remove('active'));
-  const tabEl   = document.getElementById('umTab-'+tab);
-  const panelEl = document.getElementById('umPanel-'+tab);
-  if (tabEl)   tabEl.classList.add('active');
-  if (panelEl) panelEl.classList.add('active');
+  document.getElementById('umTab-'+tab)?.classList.add('active');
+  document.getElementById('umPanel-'+tab)?.classList.add('active');
   umHideMsg();
   if (tab === 'users') renderUserList();
   if (tab === 'pw') {
     const cu = document.getElementById('umCurrentUser');
-    if (cu) cu.textContent = AUTH.currentUser() || 'you';
+    if (cu) cu.textContent = SUPABASE.currentUser() || 'you';
   }
 }
 
@@ -1224,115 +1421,121 @@ function umShowMsg(msg, ok) {
   if (!el) return;
   el.textContent = msg;
   el.style.background = ok ? 'rgba(0,229,176,.08)' : 'rgba(239,68,68,.08)';
-  el.style.color       = ok ? 'var(--lime)' : '#f87171';
+  el.style.color       = ok ? 'var(--brand)'        : '#f87171';
   el.style.display     = 'block';
 }
-function umHideMsg() {
-  const el = document.getElementById('umMsg'); if (el) el.style.display = 'none';
-}
+function umHideMsg() { const el = document.getElementById('umMsg'); if (el) el.style.display = 'none'; }
 
 function renderUserList() {
-  const list  = document.getElementById('umUserList');
+  const list = document.getElementById('umUserList');
   if (!list) return;
-  const users = AUTH.getUsers();
-  const me    = AUTH.currentUser();
-  const keys  = Object.keys(users);
-  if (!keys.length) { list.innerHTML = '<div style="color:var(--muted);font-size:.8rem">No users found.</div>'; return; }
-  list.innerHTML = keys.map(u => `
-    <div class="user-row ${u === me ? 'you' : ''}">
-      <div class="user-avatar">${u.charAt(0)}</div>
+  const email = SUPABASE.currentUser() || '—';
+  const init  = email.charAt(0).toUpperCase();
+  list.innerHTML = `
+    <div class="user-row you">
+      <div class="user-avatar">${esc(init)}</div>
       <div class="user-info">
-        <div class="user-name">${esc(u)}</div>
-        <div class="user-role">${u === me ? 'Signed in ✓' : 'User'}</div>
+        <div class="user-name">${esc(email)}</div>
+        <div class="user-role">Signed in &check;</div>
       </div>
       <div class="user-actions">
-        ${keys.length > 1 && u !== me
-          ? `<button class="user-del-btn" onclick="umDeleteUser('${esc(u)}')" title="Remove user">Remove</button>`
-          : ''}
-        ${u === me
-          ? `<button class="user-reset-btn" onclick="umSwitchTab('pw')">Change pw</button>`
-          : `<button class="user-reset-btn" onclick="umAdminReset('${esc(u)}')">Reset pw</button>`}
+        <button class="uab brand" onclick="umSwitchTab('pw')">Change pw</button>
       </div>
-    </div>`).join('');
+    </div>
+    <div style="margin-top:.625rem;padding:.75rem;background:var(--bg-2);border:1px solid var(--bd);border-radius:8px;font-size:.73rem;color:var(--tx3);line-height:1.6">
+      <strong style="color:var(--tx)">&#128100; Adding or removing users</strong><br>
+      Manage all users in your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener" style="color:var(--brand)">Supabase dashboard</a> under <em>Authentication &rarr; Users</em>.<br>
+      Use the <strong>Invite User</strong> tab to send a sign-up email directly from here.
+    </div>`;
 }
 
 async function umAddUser() {
-  const username = (document.getElementById('addUser')?.value || '').toLowerCase().trim();
-  const pass     =  document.getElementById('addPass')?.value    || '';
-  const confirm  =  document.getElementById('addConfirm')?.value || '';
+  const emailEl = document.getElementById('addUser');
+  const email   = emailEl?.value.trim() || '';
   umHideMsg();
-  if (!username)        { umShowMsg('Username cannot be blank.', false); return; }
-  if (!/^[a-z0-9_]{2,20}$/.test(username)) { umShowMsg('Username: 2-20 chars, letters/numbers/underscore only.', false); return; }
-  if (AUTH.getUsers()[username]) { umShowMsg('That username already exists.', false); return; }
-  if (pass.length < 8)  { umShowMsg('Password must be at least 8 characters.', false); return; }
-  if (pass !== confirm) { umShowMsg('Passwords do not match.', false); return; }
-  await AUTH.setUser(username, pass);
-  ['addUser','addPass','addConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
-  umShowMsg('\u2713 User “' + username + '” added successfully.', true);
-  setTimeout(() => { umSwitchTab('users'); }, 1600);
-  Toast.success('User “' + username + '” created.');
-}
+  if (!email)              { umShowMsg('Enter an email address.', false); return; }
+  if (!isValidEmail(email)){ umShowMsg('Enter a valid email address.', false); return; }
 
-async function umDeleteUser(username) {
-  const ok = await Dialog.confirm(
-    'Remove user “' + username + '”',
-    'This user will no longer be able to sign in. Continue?',
-    'Remove', true
-  );
-  if (!ok) return;
-  const removed = AUTH.removeUser(username);
-  if (removed) { renderUserList(); Toast.success('User “' + username + '” removed.'); }
-  else Toast.error('Cannot remove the last user.');
-}
+  const btn = document.querySelector('#umPanel-add .btn-brand');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-async function umAdminReset(username) {
-  const newPw = prompt('Set a new password for “' + username + '” (min 8 characters):');
-  if (!newPw) return;
-  if (newPw.length < 8) { Toast.error('Password must be at least 8 characters.'); return; }
-  await AUTH.setUser(username, newPw);
-  Toast.success('Password for “' + username + '” has been reset.');
+  try {
+    await SUPABASE.inviteUser(email);
+    if (emailEl) emailEl.value = '';
+    umShowMsg('\u2713 Invite sent to ' + email + '. They\u2019ll receive an email to set their password.', true);
+    setTimeout(() => umSwitchTab('users'), 2400);
+    Toast.success('Invite sent to ' + email + '.');
+  } catch (err) {
+    umShowMsg(err.message || 'Invite failed.', false);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Send Invite'; }
+  }
 }
 
 async function umChangeMyPassword() {
   const current = document.getElementById('chpwCurrent')?.value || '';
   const newPw   = document.getElementById('chpwNew')?.value     || '';
   const confirm = document.getElementById('chpwConfirm')?.value || '';
-  const me      = AUTH.currentUser();
+  const email   = SUPABASE.currentUser() || '';
   umHideMsg();
-  if (!current)        { umShowMsg('Enter your current password.', false); return; }
-  if (newPw.length < 8){ umShowMsg('New password must be at least 8 characters.', false); return; }
-  if (newPw !== confirm){ umShowMsg('New passwords do not match.', false); return; }
-  if (newPw === current){ umShowMsg('New password must differ from the current one.', false); return; }
-  const ok = await AUTH.verify(me, current);
-  if (!ok) { umShowMsg('Current password is incorrect.', false); return; }
-  await AUTH.setUser(me, newPw);
-  umShowMsg('\u2713 Password updated. Use it from your next sign-in.', true);
-  ['chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
-  setTimeout(closeChpw, 2000);
-  Toast.success('Password updated successfully.');
+
+  if (!current)          { umShowMsg('Enter your current password to verify.', false); return; }
+  if (newPw.length < 8)  { umShowMsg('New password must be at least 8 characters.', false); return; }
+  if (newPw !== confirm) { umShowMsg('New passwords do not match.', false); return; }
+  if (newPw === current) { umShowMsg('New password must differ from current.', false); return; }
+
+  // Re-authenticate first to verify current password
+  const btn = document.querySelector('#umPanel-pw .btn-brand');
+  if (btn) { btn.disabled = true; btn.textContent = 'Verifying…'; }
+  try {
+    await SUPABASE.signIn(email, current);
+    await SUPABASE.updatePassword(newPw);
+    ['chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+    umShowMsg('\u2713 Password updated. Use your new password next time you sign in.', true);
+    setTimeout(closeChpw, 2200);
+    Toast.success('Password updated successfully.');
+  } catch (err) {
+    umShowMsg(err.message || 'Update failed.', false);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Update Password'; }
+  }
 }
 
-// ── Login listener wiring ──────────────────────────────────
+// ── Login listeners ───────────────────────
 function initLoginListeners() {
   const form    = document.getElementById('loginForm');
   const pwInput = document.getElementById('loginPass');
   const pwTgl   = document.getElementById('pwToggle');
-  if (form)    form.addEventListener('submit', handleLogin);
-  if (pwInput) pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-  document.getElementById('loginUser')?.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginPass')?.focus(); });
+  const emailIn = document.getElementById('loginUser');
+
+  form?.addEventListener('submit', handleLogin);
+  pwInput?.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+  emailIn?.addEventListener('keydown', e => { if (e.key === 'Enter') pwInput?.focus(); });
+
   if (pwTgl && pwInput) {
     pwTgl.addEventListener('click', () => {
       const show = pwInput.type === 'password';
       pwInput.type = show ? 'text' : 'password';
-      pwTgl.textContent = show ? 'Hide' : 'Show';
+      pwTgl.innerHTML = show
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
     });
   }
-  document.getElementById('chpwModal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeChpw(); });
-  document.getElementById('ctBtnLogout')?.addEventListener('click', () =>
-    Dialog.confirm('Sign out', 'End your session and return to the login screen?', 'Sign out', false)
-      .then(ok => { if (ok) logout(); })
-  );
-  document.getElementById('btnChpw')?.addEventListener('click', openChpw);
+
+  // Setup screen
+  document.getElementById('setupSaveBtn')?.addEventListener('click', handleSetupSave);
+  ['setupUrl','setupKey'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleSetupSave();
+    });
+  });
+
+  // User management modal close on overlay click
+  document.getElementById('chpwModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeChpw();
+  });
+
+  // Spin keyframe
   if (!document.querySelector('#spinStyle')) {
     const s = document.createElement('style'); s.id = 'spinStyle';
     s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
@@ -1340,17 +1543,34 @@ function initLoginListeners() {
   }
 }
 
-// ── Boot ───────────────────────────────────────────────────
-(function authBoot() {
-  if (AUTH.hasSession()) {
+// ── Async boot — check Supabase session ───
+(async function authBoot() {
+  const configured = SUPABASE.loadConfig();
+
+  if (!configured) {
+    // First time — show setup
+    showSetupScreen();
+    return;
+  }
+
+  // Show a brief loading state on the login card while we check
+  const session = await SUPABASE.getSession();
+
+  if (session?.user) {
+    const email = session.user.email;
+    sessionStorage.setItem(SUPABASE.EMAIL_KEY, email);
+    // Hide login, reveal app immediately
     const ls = document.getElementById('loginScreen');
     if (ls) { ls.classList.add('hidden'); ls.style.display = 'none'; }
-    const chip = document.getElementById('signedInName');
-    if (chip) chip.textContent = AUTH.currentUser() || '';
+    revealApp(email);
   } else {
+    // No valid session — show login
+    const ls = document.getElementById('loginScreen');
+    if (ls && ls.style.display === 'none') ls.style.display = 'flex';
     requestAnimationFrame(() => document.getElementById('loginUser')?.focus());
   }
 })();
+
 
 // ═══════════════════════════════════════════
 // CONFIG
@@ -2209,7 +2429,7 @@ function renderDashboard() {
 
   // Username on dashboard
   const dn = el('dashName');
-  if (dn) dn.textContent = AUTH.currentUser() || 'there';
+  if (dn) dn.textContent = (SUPABASE.currentUser()||'').split('@')[0] || 'there';
 
   // Pipeline bar
   const statuses = ['draft','sent','accepted','rejected','expired'];
@@ -2643,7 +2863,7 @@ function init() {
   const fy = el('footerYear'); if (fy) fy.textContent = new Date().getFullYear();
 
   // Init topbar avatar & username
-  const user = AUTH.currentUser() || 'admin';
+  const user = SUPABASE.currentUser() || 'user';
   const av = el('topbarAvatar'); if (av) av.textContent = user.charAt(0).toUpperCase();
   const un = el('topbarUsername'); if (un) un.textContent = user;
   const dn = el('dashName'); if (dn) dn.textContent = user;

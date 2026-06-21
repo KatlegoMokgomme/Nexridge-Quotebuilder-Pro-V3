@@ -11,25 +11,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg-0:#020409;--bg-1:#060c17;--bg-2:#0a1220;--bg-3:#0f1a2e;--bg-4:#152034;
+  --bg-0:#010307;--bg-1:#050b15;--bg-2:#08111d;--bg-3:#0d1828;--bg-4:#122030;
   --bg-h:rgba(255,255,255,.04);--bg-a:rgba(255,255,255,.07);
-  --brand:#00e5b0;--brand-2:#00c99a;--brand-3:#009e7a;
-  --brand-a8:rgba(0,229,176,.08);--brand-a12:rgba(0,229,176,.12);--brand-a20:rgba(0,229,176,.20);
-  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.13);--bd-brand:rgba(0,229,176,.18);
-  --tx:rgba(255,255,255,.92);--tx2:rgba(255,255,255,.58);--tx3:rgba(255,255,255,.32);--tx4:rgba(255,255,255,.14);
-  --ok:#10b981;--ok-a:rgba(16,185,129,.12);
-  --warn:#f59e0b;--warn-a:rgba(245,158,11,.12);
-  --err:#ef4444;--err-a:rgba(239,68,68,.12);
-  --info:#3b82f6;--info-a:rgba(59,130,246,.12);
+  --brand:#00e5b0;--brand-2:#00d4a3;--brand-3:#00b88d;
+  --brand-a6:rgba(0,229,176,.06);--brand-a8:rgba(0,229,176,.08);--brand-a12:rgba(0,229,176,.12);--brand-a20:rgba(0,229,176,.20);--brand-a30:rgba(0,229,176,.30);
+  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.13);--bd3:rgba(255,255,255,.20);--bd-brand:rgba(0,229,176,.22);
+  --tx:rgba(255,255,255,.93);--tx2:rgba(255,255,255,.60);--tx3:rgba(255,255,255,.34);--tx4:rgba(255,255,255,.14);
+  --ok:#10b981;--ok-2:#059669;--ok-a:rgba(16,185,129,.12);--ok-a20:rgba(16,185,129,.20);
+  --warn:#f59e0b;--warn-a:rgba(245,158,11,.12);--warn-a20:rgba(245,158,11,.20);
+  --err:#ef4444;--err-a:rgba(239,68,68,.12);--err-a20:rgba(239,68,68,.20);
+  --info:#3b82f6;--info-2:#2563eb;--info-a:rgba(59,130,246,.12);--info-a20:rgba(59,130,246,.20);
   --purple:#8b5cf6;--purple-a:rgba(139,92,246,.12);
-  --d-ink:#0f172a;--d-ink2:#334155;--d-ink3:#64748b;
-  --d-line:#e2e8f0;--d-line2:#cbd5e1;--d-bg:#f8fafc;--d-bg2:#f1f5f9;
+  --d-ink:#0d1b2a;--d-ink2:#2d4059;--d-ink3:#5a7083;
+  --d-line:#dde6ef;--d-line2:#b8c8d8;--d-bg:#f5f8fc;--d-bg2:#eaf0f7;
   --sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
-  --nav-w:60px;--top-h:54px;--sb-w:300px;
+  --nav-w:60px;--top-h:56px;--sb-w:300px;
   --z-sb:100;--z-modal:200;--z-toast:300;--z-pal:400;--z-login:500;
-  --sh-sm:0 1px 4px rgba(0,0,0,.4);--sh-md:0 4px 20px rgba(0,0,0,.5);
-  --sh-lg:0 12px 48px rgba(0,0,0,.65);--sh-xl:0 24px 80px rgba(0,0,0,.75);
-  --glow:0 0 20px rgba(0,229,176,.22),0 0 60px rgba(0,229,176,.08);
+  --sh-xs:0 1px 3px rgba(0,0,0,.35);
+  --sh-sm:0 2px 8px rgba(0,0,0,.45);--sh-md:0 6px 24px rgba(0,0,0,.55);
+  --sh-lg:0 16px 56px rgba(0,0,0,.70);--sh-xl:0 28px 90px rgba(0,0,0,.80);
+  --glow:0 0 24px rgba(0,229,176,.28),0 0 72px rgba(0,229,176,.10);
+  --glow-sm:0 0 12px rgba(0,229,176,.20),0 0 32px rgba(0,229,176,.07);
+  --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -50,23 +53,27 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
   transition:opacity .38s ease,visibility .38s ease}
 .login-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .login-card{width:100%;max-width:420px;background:var(--bg-1);border:1px solid var(--bd2);
-  border-radius:20px;padding:2.75rem 2.25rem;box-shadow:var(--sh-xl);position:relative;overflow:hidden}
+  border-radius:20px;padding:2.75rem 2.25rem;box-shadow:var(--sh-xl),0 0 0 1px rgba(255,255,255,.04);position:relative;overflow:hidden}
 .login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--brand-a20),transparent)}
+  background:linear-gradient(90deg,transparent 0%,var(--brand-a30) 40%,var(--brand-a30) 60%,transparent 100%)}
+.login-card::after{content:'';position:absolute;top:0;left:0;right:0;height:120px;
+  background:radial-gradient(ellipse at 50% -20px,rgba(0,229,176,.08) 0%,transparent 70%);pointer-events:none}
 .login-brand{display:flex;align-items:center;gap:.75rem;margin-bottom:2.5rem}
-.login-brand-icon{width:40px;height:40px;background:var(--brand);border-radius:10px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--glow)}
-.login-brand-icon svg{width:19px;height:19px;color:var(--bg-0)}
-.login-brand-name{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
-.login-brand-name em{color:var(--brand);font-style:normal}
+.login-brand-icon{width:44px;height:44px;
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-3) 100%);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:var(--glow),0 4px 16px rgba(0,0,0,.4)}
+.login-brand-icon svg{width:21px;height:21px;color:var(--bg-0)}
+.login-brand-name{font-size:1.08rem;font-weight:700;letter-spacing:-.025em}
+.login-brand-name em{color:var(--brand);font-style:normal;font-weight:800}
 .login-brand-tag{font-size:.6rem;font-family:var(--mono);color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-top:.1rem}
-.login-h{font-size:1.45rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.3rem}
+.login-h{font-size:1.5rem;font-weight:800;letter-spacing:-.035em;margin-bottom:.3rem}
 .login-sub{font-size:.83rem;color:var(--tx2);margin-bottom:1.875rem;line-height:1.6}
 .login-field{margin-bottom:.875rem}
-.login-label{display:block;font-size:.65rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:.4rem}
+.login-label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:.4rem}
 .login-input{width:100%;background:var(--bg-2);border:1px solid var(--bd);border-radius:10px;
   padding:.72rem 1rem;color:var(--tx);font-size:.88rem;outline:none;transition:all .18s}
-.login-input:focus{border-color:var(--brand-a20);background:var(--bg-3);box-shadow:0 0 0 3px var(--brand-a8)}
+.login-input:focus{border-color:var(--bd-brand);background:var(--bg-3);box-shadow:0 0 0 3px var(--brand-a8)}
 .login-input.shake{animation:shake .38s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .pw-wrap{position:relative}
@@ -74,14 +81,17 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .pw-eye{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);
   background:none;border:none;color:var(--tx3);cursor:pointer;padding:.25rem;transition:color .15s;border-radius:4px}
 .pw-eye:hover{color:var(--brand)}
-.login-err{font-size:.76rem;color:var(--err);background:var(--err-a);border:1px solid rgba(239,68,68,.2);
+.login-err{font-size:.76rem;color:var(--err);background:var(--err-a);border:1px solid rgba(239,68,68,.22);
   border-radius:8px;padding:.55rem .825rem;margin-bottom:.875rem;display:none}
 .login-err.visible{display:block}
-.login-btn{width:100%;background:var(--brand);color:var(--bg-0);border:none;border-radius:10px;
-  padding:.8rem;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;margin-top:.25rem;
-  display:flex;align-items:center;justify-content:center;gap:.5rem}
-.login-btn:hover:not(:disabled){background:var(--brand-2);box-shadow:var(--glow)}
-.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-3) 100%);
+  color:var(--bg-0);border:none;border-radius:10px;
+  padding:.8rem;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .22s;margin-top:.25rem;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;letter-spacing:-.01em;
+  box-shadow:0 2px 12px rgba(0,0,0,.25),var(--glow-sm)}
+.login-btn:hover:not(:disabled){box-shadow:0 4px 20px rgba(0,0,0,.3),var(--glow);transform:translateY(-1px)}
+.login-btn:active:not(:disabled){transform:translateY(0)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .login-foot{font-size:.67rem;color:var(--tx3);text-align:center;margin-top:1.625rem;
   padding-top:1.125rem;border-top:1px solid var(--bd);font-family:var(--mono)}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -90,53 +100,63 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
 /* TOP BAR */
-.topbar{height:var(--top-h);flex-shrink:0;background:var(--bg-1);border-bottom:1px solid var(--bd);
-  display:flex;align-items:center;padding:0 1rem 0 .5rem;gap:.625rem;z-index:50}
-.tb-brand{display:flex;align-items:center;gap:.55rem;padding:.2rem .625rem;
+.topbar{height:var(--top-h);flex-shrink:0;
+  background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg-1) 100%);
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;padding:0 1rem 0 .5rem;gap:.625rem;z-index:50;
+  box-shadow:0 1px 0 rgba(255,255,255,.03),0 4px 16px rgba(0,0,0,.3)}
+.tb-brand{display:flex;align-items:center;gap:.6rem;padding:.2rem .625rem;
   min-width:var(--nav-w);flex-shrink:0}
-.tb-logo{width:28px;height:28px;background:var(--brand);border-radius:7px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tb-logo svg{width:13px;height:13px;color:var(--bg-0)}
-.tb-name{font-size:.85rem;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
-.tb-name em{color:var(--brand);font-style:normal}
+.tb-logo{width:30px;height:30px;background:linear-gradient(135deg,var(--brand),var(--brand-3));
+  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:var(--glow-sm);transition:box-shadow .2s}
+.tb-logo:hover{box-shadow:var(--glow)}
+.tb-logo svg{width:14px;height:14px;color:var(--bg-0)}
+.tb-name{font-size:.88rem;font-weight:700;letter-spacing:-.025em;white-space:nowrap}
+.tb-name em{color:var(--brand);font-style:normal;font-weight:800}
 .tb-divider{width:1px;height:22px;background:var(--bd);flex-shrink:0}
-.tb-search{flex:1;max-width:460px;background:var(--bg-2);border:1px solid var(--bd);
-  border-radius:8px;display:flex;align-items:center;gap:.45rem;padding:.38rem .7rem;
-  cursor:pointer;transition:all .18s}
-.tb-search:hover{border-color:var(--bd2);background:var(--bg-3)}
+.tb-search{flex:1;max-width:480px;background:var(--bg-3);border:1px solid var(--bd);
+  border-radius:9px;display:flex;align-items:center;gap:.45rem;padding:.4rem .75rem;
+  cursor:pointer;transition:all .2s}
+.tb-search:hover{border-color:var(--bd-brand);background:var(--bg-4);box-shadow:0 0 0 3px var(--brand-a6)}
 .tb-search-icon{color:var(--tx3);flex-shrink:0;width:13px;height:13px}
 .tb-search-ph{font-size:.8rem;color:var(--tx3);flex:1}
-.tb-search-kbd{font-family:var(--mono);font-size:.57rem;background:var(--bg-3);border:1px solid var(--bd2);
+.tb-search-kbd{font-family:var(--mono);font-size:.57rem;background:var(--bg-2);border:1px solid var(--bd2);
   border-radius:4px;padding:.12rem .38rem;color:var(--tx3);flex-shrink:0}
 .tb-spacer{flex:1}
-.tb-actions{display:flex;align-items:center;gap:.25rem}
+.tb-actions{display:flex;align-items:center;gap:.3rem}
 .tb-btn{background:none;border:none;cursor:pointer;color:var(--tx2);padding:.42rem .5rem;
-  border-radius:7px;transition:all .15s;position:relative;display:flex;align-items:center;justify-content:center}
-.tb-btn:hover{background:var(--bg-h);color:var(--tx)}
+  border-radius:8px;transition:all .15s;position:relative;display:flex;align-items:center;justify-content:center}
+.tb-btn:hover{background:var(--bg-h);color:var(--tx);box-shadow:0 0 0 1px var(--bd)}
 .nb{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--err);
-  border-radius:50%;border:1.5px solid var(--bg-1)}
-.user-chip{display:flex;align-items:center;gap:.45rem;padding:.28rem .575rem .28rem .35rem;
-  background:var(--bg-2);border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:all .15s}
-.user-chip:hover{background:var(--bg-3);border-color:var(--bd2)}
-.ua{width:26px;height:26px;border-radius:6px;background:var(--brand-a12);border:1px solid var(--brand-a20);
-  display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;
-  color:var(--brand);font-family:var(--mono);text-transform:uppercase;flex-shrink:0}
-.uc-name{font-size:.77rem;font-weight:600}
+  border-radius:50%;border:1.5px solid var(--bg-1);box-shadow:0 0 4px var(--err)}
+.user-chip{display:flex;align-items:center;gap:.45rem;padding:.3rem .6rem .3rem .4rem;
+  background:var(--bg-3);border:1px solid var(--bd);border-radius:9px;cursor:pointer;transition:all .18s}
+.user-chip:hover{background:var(--bg-4);border-color:var(--bd-brand);box-shadow:0 0 0 3px var(--brand-a6)}
+.ua{width:28px;height:28px;border-radius:7px;
+  background:linear-gradient(135deg,var(--brand-a20),var(--brand-a8));
+  border:1px solid var(--brand-a30);
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;
+  color:var(--brand);font-family:var(--mono);text-transform:uppercase;flex-shrink:0;
+  box-shadow:var(--glow-sm)}
+.uc-name{font-size:.78rem;font-weight:600}
 .uc-role{font-size:.6rem;color:var(--tx3);font-family:var(--mono)}
 
 /* BODY */
-.app-body{display:flex;flex:1;overflow:hidden}
+.app-body{display:flex;flex:1;overflow:hidden;position:relative}
 
-/* NAV RAIL */
-.nav-rail{width:var(--nav-w);flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--bd);
+/* NAV RAIL (Desktop) */
+.nav-rail{width:var(--nav-w);flex-shrink:0;
+  background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg-1) 100%);
+  border-right:1px solid var(--bd);
   display:flex;flex-direction:column;align-items:center;padding:.5rem 0;gap:.12rem;z-index:var(--z-sb)}
 .nav-item{width:42px;height:42px;border-radius:10px;background:none;border:none;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.13rem;
-  transition:all .16s;color:var(--tx3);position:relative}
-.nav-item:hover{background:var(--bg-h);color:var(--tx2)}
-.nav-item.active{background:var(--brand-a12);color:var(--brand)}
+  transition:all .18s;color:var(--tx3);position:relative}
+.nav-item:hover{background:var(--bg-h);color:var(--tx2);box-shadow:0 0 0 1px var(--bd)}
+.nav-item.active{background:var(--brand-a12);color:var(--brand);box-shadow:0 0 12px var(--brand-a6),0 0 0 1px var(--brand-a20)}
 .nav-item.active::before{content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);
-  width:2px;height:20px;background:var(--brand);border-radius:0 2px 2px 0}
+  width:2px;height:22px;background:var(--brand);border-radius:0 2px 2px 0;box-shadow:0 0 6px var(--brand)}
 .nav-item svg{width:17px;height:17px;flex-shrink:0}
 .nav-lbl{font-size:.45rem;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
 .nav-tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
@@ -147,6 +167,12 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .nav-div{width:26px;height:1px;background:var(--bd);margin:.18rem 0;flex-shrink:0}
 .nav-sp{flex:1}
 
+/* MOBILE NAV */
+.mobile-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: var(--bg-1); border-top: 1px solid var(--bd); z-index: var(--z-sb); justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
+.mobile-nav .nav-item { width: auto; flex: 1; border-radius: 0; height: 100%; }
+.mobile-nav .nav-item::before { display: none; }
+.mobile-nav .nav-tip { display: none; }
+
 /* MAIN */
 .main{flex:1;overflow:hidden;display:flex;flex-direction:column}
 .view{display:none;flex:1;overflow:hidden}
@@ -154,42 +180,55 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 
 /* DASHBOARD */
 .dash-scroll{flex:1;overflow-y:auto;padding:1.625rem 1.875rem;
+  background:radial-gradient(ellipse at 60% -10%,rgba(0,229,176,.025) 0%,transparent 55%);
   scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
-.dash-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.625rem;flex-wrap:wrap;gap:.875rem}
-.dash-greeting{font-size:1.45rem;font-weight:700;letter-spacing:-.03em}
-.dash-greeting span{color:var(--brand)}
-.dash-dt{font-size:.75rem;color:var(--tx3);font-family:var(--mono);margin-top:.18rem}
+.dash-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:.875rem}
+.dash-greeting{font-size:1.6rem;font-weight:800;letter-spacing:-.04em;line-height:1.1}
+.dash-greeting span{color:var(--brand);text-shadow:0 0 20px rgba(0,229,176,.35)}
+.dash-dt{font-size:.75rem;color:var(--tx3);font-family:var(--mono);margin-top:.25rem;letter-spacing:.04em}
 
 /* KPI grid */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.375rem}
-.kpi{background:var(--bg-1);border:1px solid var(--bd);border-radius:13px;padding:1.125rem 1.25rem;
-  position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s;cursor:default}
-.kpi:hover{border-color:var(--bd2);box-shadow:var(--sh-sm)}
-.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:13px 13px 0 0}
-.kpi.c-brand::after{background:var(--brand)}.kpi.c-ok::after{background:var(--ok)}
-.kpi.c-info::after{background:var(--info)}.kpi.c-warn::after{background:var(--warn)}
-.kpi-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
-.kpi.c-brand .kpi-ic{background:var(--brand-a12);color:var(--brand)}
-.kpi.c-ok .kpi-ic{background:var(--ok-a);color:var(--ok)}
-.kpi.c-info .kpi-ic{background:var(--info-a);color:var(--info)}
-.kpi.c-warn .kpi-ic{background:var(--warn-a);color:var(--warn)}
-.kpi-ic svg{width:16px;height:16px}
-.kpi-val{font-size:1.55rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.22rem}
-.kpi-lbl{font-size:.7rem;color:var(--tx3);font-weight:500}
-.kpi-sub{font-size:.65rem;color:var(--tx3);font-family:var(--mono);margin-top:.25rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.5rem}
+.kpi{background:var(--bg-1);border:1px solid var(--bd);border-radius:14px;padding:1.25rem 1.375rem;
+  position:relative;overflow:hidden;transition:all .22s;cursor:default}
+.kpi:hover{border-color:var(--bd2);box-shadow:var(--sh-md);transform:translateY(-1px)}
+.kpi::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .22s;pointer-events:none}
+.kpi:hover::before{opacity:1}
+.kpi.c-brand::before{background:radial-gradient(ellipse at 0% 0%,var(--brand-a6) 0%,transparent 70%)}
+.kpi.c-ok::before{background:radial-gradient(ellipse at 0% 0%,var(--ok-a) 0%,transparent 70%)}
+.kpi.c-info::before{background:radial-gradient(ellipse at 0% 0%,var(--info-a) 0%,transparent 70%)}
+.kpi.c-warn::before{background:radial-gradient(ellipse at 0% 0%,var(--warn-a) 0%,transparent 70%)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.kpi.c-brand::after{background:linear-gradient(90deg,var(--brand),var(--brand-3))}
+.kpi.c-ok::after{background:linear-gradient(90deg,var(--ok),var(--ok-2))}
+.kpi.c-info::after{background:linear-gradient(90deg,var(--info),var(--info-2))}
+.kpi.c-warn::after{background:linear-gradient(90deg,var(--warn),#d97706)}
+.kpi-ic{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;position:relative;z-index:1}
+.kpi.c-brand .kpi-ic{background:var(--brand-a12);color:var(--brand);box-shadow:0 0 12px var(--brand-a12)}
+.kpi.c-ok .kpi-ic{background:var(--ok-a);color:var(--ok);box-shadow:0 0 12px var(--ok-a)}
+.kpi.c-info .kpi-ic{background:var(--info-a);color:var(--info);box-shadow:0 0 12px var(--info-a)}
+.kpi.c-warn .kpi-ic{background:var(--warn-a);color:var(--warn);box-shadow:0 0 12px var(--warn-a)}
+.kpi-ic svg{width:17px;height:17px}
+.kpi-val{font-size:1.65rem;font-weight:800;letter-spacing:-.045em;line-height:1;margin-bottom:.22rem;position:relative;z-index:1}
+.kpi-lbl{font-size:.72rem;color:var(--tx3);font-weight:500;position:relative;z-index:1}
+.kpi-sub{font-size:.63rem;color:var(--tx3);font-family:var(--mono);margin-top:.3rem;position:relative;z-index:1}
 
 /* Dashboard 2-col */
 .dash-grid{display:grid;grid-template-columns:1fr 320px;gap:1.125rem;margin-bottom:1.125rem}
-.dc{background:var(--bg-1);border:1px solid var(--bd);border-radius:13px;padding:1.25rem}
+.dc{background:var(--bg-1);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;
+  transition:border-color .2s;position:relative;overflow:hidden}
+.dc:hover{border-color:var(--bd2)}
 .dc-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.125rem}
-.dc-title{font-size:.87rem;font-weight:600}
+.dc-title{font-size:.87rem;font-weight:700;letter-spacing:-.02em}
 .dc-sub{font-size:.7rem;color:var(--tx3);font-family:var(--mono);margin-top:.12rem}
-.dc-act{font-size:.7rem;color:var(--brand);cursor:pointer;background:none;border:none;font-family:var(--sans);transition:color .15s}
-.dc-act:hover{color:var(--brand-2)}
+.dc-act{font-size:.7rem;color:var(--brand);cursor:pointer;background:none;border:none;
+  font-family:var(--sans);transition:color .15s;padding:.2rem .4rem;border-radius:5px}
+.dc-act:hover{color:var(--brand-2);background:var(--brand-a6)}
 
 /* Pipeline */
-.pipe-bar{height:9px;border-radius:100px;overflow:hidden;display:flex;gap:2px;margin:1rem 0 .75rem}
-.pipe-seg{height:100%;border-radius:100px;transition:width .5s ease;min-width:3px}
+.pipe-bar{height:10px;border-radius:100px;overflow:hidden;display:flex;gap:2px;margin:1rem 0 .75rem;
+  background:var(--bg-3);box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+.pipe-seg{height:100%;border-radius:100px;transition:width .5s cubic-bezier(.34,1.56,.64,1);min-width:3px}
 .pipe-seg.draft{background:var(--tx4)}.pipe-seg.sent{background:var(--info)}
 .pipe-seg.accepted{background:var(--ok)}.pipe-seg.rejected{background:var(--err)}
 .pipe-seg.expired{background:var(--warn)}
@@ -198,16 +237,19 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .pl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
 /* Status pills */
-.sp{display:inline-flex;align-items:center;padding:.18rem .5rem;border-radius:100px;
-  font-size:.6rem;font-family:var(--mono);letter-spacing:.07em;text-transform:uppercase;font-weight:500;white-space:nowrap}
-.sp-draft{background:var(--bg-h);color:var(--tx3)}
-.sp-sent{background:var(--info-a);color:var(--info)}
-.sp-accepted{background:var(--ok-a);color:var(--ok)}
-.sp-rejected{background:var(--err-a);color:var(--err)}
-.sp-expired{background:var(--warn-a);color:var(--warn)}
+.sp{display:inline-flex;align-items:center;padding:.2rem .55rem;border-radius:100px;
+  font-size:.6rem;font-family:var(--mono);letter-spacing:.07em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.sp-draft{background:var(--bg-h);color:var(--tx3);border:1px solid var(--bd)}
+.sp-sent{background:var(--info-a);color:var(--info);border:1px solid var(--info-a20)}
+.sp-accepted{background:var(--ok-a);color:var(--ok);border:1px solid var(--ok-a20)}
+.sp-rejected{background:var(--err-a);color:var(--err);border:1px solid var(--err-a20)}
+.sp-expired{background:var(--warn-a);color:var(--warn);border:1px solid var(--warn-a20)}
+
+/* Responsive Table Wrapper */
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--bd) transparent; }
 
 /* Data table */
-.dtable{width:100%;border-collapse:collapse}
+.dtable{width:100%;border-collapse:collapse; min-width: 500px;}
 .dtable th{padding:.45rem .75rem;text-align:left;font-size:.62rem;font-family:var(--mono);
   letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd);font-weight:500}
 .dtable td{padding:.65rem .75rem;font-size:.8rem;border-bottom:1px solid var(--bd);vertical-align:middle}
@@ -215,28 +257,23 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .dtable tbody tr:hover td{background:var(--bg-h)}
 .dtable tbody tr:last-child td{border-bottom:none}
 .ci{display:flex;align-items:center;gap:.55rem}
-.cinit{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;font-size:.65rem;font-weight:700;font-family:var(--mono);
-  text-transform:uppercase;flex-shrink:0}
 .td-num{font-family:var(--mono);font-size:.72rem;color:var(--brand)}
 .td-amt{font-family:var(--mono);font-weight:600}
 .td-muted{color:var(--tx3)}
 
 /* Quick actions */
 .qa-list{display:flex;flex-direction:column;gap:.4rem}
-.qa{background:var(--bg-2);border:1px solid var(--bd);border-radius:9px;padding:.65rem .875rem;
-  display:flex;align-items:center;gap:.65rem;cursor:pointer;transition:all .16s;text-align:left;width:100%}
-.qa:hover{background:var(--bg-3);border-color:var(--bd2)}
-.qa-ic{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qa{background:var(--bg-2);border:1px solid var(--bd);border-radius:10px;padding:.7rem .9rem;
+  display:flex;align-items:center;gap:.65rem;cursor:pointer;transition:all .18s;text-align:left;width:100%;position:relative;overflow:hidden}
+.qa:hover{background:var(--bg-3);border-color:var(--bd2);box-shadow:var(--sh-sm);transform:translateX(2px)}
+.qa-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .18s}
+.qa:hover .qa-ic{transform:scale(1.08)}
 .qa-lbl{font-size:.8rem;font-weight:600}
 .qa-sub{font-size:.66rem;color:var(--tx3);margin-top:.08rem}
 
 /* Expiring card */
 .exp-item{display:flex;align-items:center;gap:.625rem;padding:.55rem 0;border-bottom:1px solid var(--bd)}
 .exp-item:last-child{border-bottom:none}
-.exp-dot{width:8px;height:8px;border-radius:50%;background:var(--warn);flex-shrink:0}
-.exp-lbl{font-size:.8rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.exp-days{font-size:.68rem;font-family:var(--mono);color:var(--warn);flex-shrink:0}
 .empty-blk{padding:1.25rem 0;text-align:center;color:var(--tx3);font-size:.8rem}
 
 /* QUOTES VIEW */
@@ -256,7 +293,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 .fchip:hover{border-color:var(--bd2);color:var(--tx)}
 .fchip.active{background:var(--brand-a12);border-color:var(--brand-a20);color:var(--brand)}
 .qscroll{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
-table.qtable{width:100%;border-collapse:collapse}
+table.qtable{width:100%;border-collapse:collapse; min-width: 700px;}
 table.qtable th{position:sticky;top:0;background:var(--bg-1);z-index:1;
   padding:.55rem .875rem;text-align:left;font-size:.6rem;font-family:var(--mono);
   letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);
@@ -280,8 +317,9 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 
 /* EDITOR VIEW */
 .editor-view{display:flex;overflow:hidden;flex:1}
+.esb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;backdrop-filter:blur(2px);}
 .esb{width:var(--sb-w);flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--bd);
-  display:flex;flex-direction:column;overflow:hidden;transition:width .3s ease;position:relative}
+  display:flex;flex-direction:column;overflow:hidden;transition:width .3s ease, transform .3s ease;position:relative}
 .esb.collapsed{width:0;border:none}
 .sb-rh{position:absolute;right:-3px;top:0;bottom:0;width:6px;cursor:col-resize;z-index:10;
   display:flex;align-items:center;justify-content:center}
@@ -316,11 +354,12 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
 .fl{display:block;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);margin-bottom:.32rem}
 .fl.req::after{content:' *';color:var(--err);opacity:.8}
-.fi,.fs,.ft{width:100%;background:var(--bg-2);border:1px solid var(--bd);border-radius:7px;
+.fi,.fs,.ft{width:100%;background:var(--bg-2);border:1px solid var(--bd);border-radius:8px;
   padding:.545rem .8rem;color:var(--tx);font-size:.8rem;outline:none;-webkit-appearance:none;
   transition:border-color .16s,background .16s,box-shadow .16s}
-.fi:focus,.fs:focus,.ft:focus{border-color:var(--brand-a20);background:rgba(0,229,176,.025);box-shadow:0 0 0 3px var(--brand-a8)}
-.fi.has-error,.fs.has-error{border-color:rgba(239,68,68,.45)}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--bd-brand);background:var(--bg-3);box-shadow:0 0 0 3px var(--brand-a8)}
+.fi:hover:not(:focus),.fs:hover:not(:focus){border-color:var(--bd2)}
+.fi.has-error,.fs.has-error{border-color:rgba(239,68,68,.45);box-shadow:0 0 0 3px var(--err-a)}
 .field-error{font-size:.61rem;color:var(--err);font-family:var(--mono);margin-top:.22rem;display:none}
 .field-error.visible{display:block}
 .fs option{background:var(--bg-2)}
@@ -338,19 +377,23 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .disc-row .fi{flex:1}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.38rem;border-radius:7px;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;border-radius:8px;
   font-family:var(--sans);font-size:.78rem;font-weight:600;cursor:pointer;border:none;
-  padding:.5rem .9rem;transition:all .16s;min-height:34px;text-decoration:none;white-space:nowrap}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-brand{background:var(--brand);color:var(--bg-0)}
-.btn-brand:hover:not(:disabled){background:var(--brand-2);box-shadow:var(--glow)}
+  padding:.52rem .95rem;transition:all .18s;min-height:34px;text-decoration:none;white-space:nowrap;
+  letter-spacing:-.01em;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,transparent 100%);pointer-events:none;border-radius:inherit}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.btn-brand{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-3) 100%);color:var(--bg-0);box-shadow:0 1px 3px rgba(0,0,0,.3),var(--glow-sm)}
+.btn-brand:hover:not(:disabled){background:linear-gradient(135deg,#1affbc 0%,var(--brand) 100%);box-shadow:0 2px 12px rgba(0,0,0,.3),var(--glow);transform:translateY(-1px)}
+.btn-brand:active:not(:disabled){transform:translateY(0);box-shadow:var(--glow-sm)}
 .btn-ghost{background:var(--bg-2);color:var(--tx);border:1px solid var(--bd)}
-.btn-ghost:hover:not(:disabled){background:var(--bg-3);border-color:var(--bd2)}
-.btn-wa{background:#25d366;color:#fff;border:none}
-.btn-wa:hover:not(:disabled){background:#1fba5a}
+.btn-ghost:hover:not(:disabled){background:var(--bg-3);border-color:var(--bd2);box-shadow:var(--sh-xs);transform:translateY(-1px)}
+.btn-ghost:active:not(:disabled){transform:translateY(0)}
 .btn-danger{background:var(--err-a);color:var(--err);border:1px solid rgba(239,68,68,.2)}
-.btn-danger:hover:not(:disabled){background:rgba(239,68,68,.18)}
-.btn-sm{font-size:.72rem;padding:.35rem .7rem;min-height:30px}
+.btn-danger:hover:not(:disabled){background:var(--err-a20);border-color:rgba(239,68,68,.35);transform:translateY(-1px)}
+.btn-lime{background:var(--ok-a);color:var(--ok);border:1px solid rgba(16,185,129,.2)}
+.btn-lime:hover:not(:disabled){background:var(--ok-a20);transform:translateY(-1px)}
+.btn-sm{font-size:.72rem;padding:.35rem .75rem;min-height:30px}
 .btn-icon{padding:.48rem .6rem;flex:0}
 .btn-flex{flex:1}
 .esb-foot{border-top:1px solid var(--bd);padding:.65rem 1rem;display:flex;gap:.35rem;flex-shrink:0;flex-wrap:wrap}
@@ -361,18 +404,19 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .sb-use-lbl{font-size:.57rem;font-family:var(--mono);color:var(--tx3);margin-top:.22rem}
 
 /* CANVAS */
-.canvas-area{flex:1;overflow-y:auto;padding:1.125rem;background:#0a1120;
+.canvas-area{flex:1;overflow-y:auto;padding:1.25rem 1.125rem;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,229,176,.025) 0%,transparent 60%),#060e1a;
   scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
-.cbar{max-width:860px;margin:0 auto .75rem;display:flex;align-items:center;
+.cbar{max-width:870px;margin:0 auto .875rem;display:flex;align-items:center;
   justify-content:space-between;gap:.55rem;flex-wrap:wrap}
 .cbar-l{display:flex;align-items:center;gap:.55rem}
 .cbar-r{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
 .intg-dot{width:7px;height:7px;border-radius:50%;background:var(--tx4);display:inline-block;flex-shrink:0}
-.intg-dot.connected{background:var(--brand);box-shadow:0 0 4px rgba(0,229,176,.5)}
+.intg-dot.connected{background:var(--brand);box-shadow:0 0 6px rgba(0,229,176,.6)}
 
 /* QUOTE DOCUMENT */
-.quote-doc{max-width:860px;margin:0 auto;background:#fff;border-radius:13px;
-  box-shadow:0 16px 80px rgba(0,0,0,.7);overflow:hidden;position:relative;font-family:var(--sans)}
+.quote-doc{max-width:870px;margin:0 auto;background:#fff;border-radius:14px;
+  box-shadow:0 24px 96px rgba(0,0,0,.80),0 0 0 1px rgba(255,255,255,.06);overflow:hidden;position:relative;font-family:var(--sans)}
 .wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-38deg);
   font-size:7rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;
   pointer-events:none;z-index:1;opacity:.042;display:none;user-select:none}
@@ -415,7 +459,7 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .proj-meta{display:flex;gap:1.625rem;margin-top:.8rem;flex-wrap:wrap}
 .pm-cell-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.18rem}
 .pm-cell-val{font-size:.82rem;font-weight:600;color:var(--d-ink)}
-.items-tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+.items-tbl{width:100%;border-collapse:collapse;font-size:.8rem;min-width:600px;}
 .items-tbl thead tr{background:var(--d-bg2);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .items-tbl th{padding:.55rem .7rem;text-align:left;font-family:var(--mono);font-size:.53rem;
   letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);border-bottom:1px solid var(--d-line);font-weight:500}
@@ -480,12 +524,33 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.75rem;margin-top:.5rem}
 .bk-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-ink3);margin-bottom:.18rem}
 .bk-val{font-size:.83rem;font-weight:600;color:var(--d-ink)}
-.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.25rem;margin-top:.5rem}
-.acc-box{background:#f0fdf9;border:1px solid #a7f3d0;border-radius:8px;padding:.8rem .9rem;
-  margin-bottom:.875rem;font-size:.76rem;color:#065f46;line-height:1.65;font-weight:300}
-.acc-box strong{color:#047857;font-weight:600}
-.sig-line{border-bottom:1.5px solid var(--d-line2);margin-bottom:.32rem;height:40px}
-.sig-cap{font-family:var(--mono);font-size:.57rem;color:var(--d-ink3);letter-spacing:.1em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr 110px;gap:1.5rem;margin-top:.5rem;align-items:end}
+/* sig-section-print: visible on screen as a clean preview box */
+.sig-section-print{border:1px solid var(--d-line);border-radius:10px;overflow:hidden;margin-top:.25rem}
+.sig-section-header{background:#020409;color:rgba(255,255,255,.85);padding:.42rem .875rem;
+  font-family:var(--mono);font-size:.53rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sig-section-body{padding:.875rem;background:#fff}
+.sig-acceptance-text{font-size:.75rem;color:var(--d-ink2);line-height:1.65;margin-bottom:.875rem;
+  padding:.6rem .75rem;background:#f0fdf9;border-left:3px solid #00c99a;border-radius:0 6px 6px 0;font-weight:300}
+.sig-acceptance-text strong{color:#047857;font-weight:600}
+.sig-col-label{font-family:var(--mono);font-size:.53rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--d-ink3);margin-bottom:.45rem;display:block}
+.sig-name-value{font-size:.85rem;font-weight:700;color:var(--d-ink);
+  padding:.2rem 0 .4rem;border-bottom:1.5px solid var(--d-line2);min-height:28px;margin-bottom:.18rem}
+.sig-name-cap{font-family:var(--mono);font-size:.55rem;color:var(--d-ink3);letter-spacing:.08em}
+.sig-line{border-bottom:1.5px solid var(--d-line2);margin-bottom:.32rem;height:44px;display:block}
+.sig-cap{font-family:var(--mono);font-size:.57rem;color:var(--d-ink3);letter-spacing:.1em;text-transform:uppercase;display:block}
+.sig-date-line{border-bottom:1.5px solid var(--d-line2);height:28px;margin-bottom:.18rem;display:block}
+.sig-stamp-box{width:100px;height:72px;border:1.5px dashed var(--d-line2);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:var(--mono);font-size:.55rem;color:var(--d-line2);letter-spacing:.06em;
+  text-transform:uppercase;line-height:1.45}
+.sig-id-row{display:flex;align-items:center;gap:.55rem;margin-top:.6rem;padding-top:.5rem;
+  border-top:1px solid var(--d-line)}
+.sig-id-label{font-family:var(--mono);font-size:.58rem;color:var(--d-ink3);font-weight:600;white-space:nowrap}
+.sig-id-value{font-size:.78rem;font-weight:700;color:var(--d-ink)}
+.sig-id-line{flex:1;border-bottom:1px solid var(--d-line2);height:20px}
 .doc-footer{background:#020409;padding:1rem 2.75rem;display:flex;justify-content:space-between;
   align-items:center;gap:1.75rem;flex-wrap:wrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .doc-footer p{font-size:.65rem;color:rgba(255,255,255,.28);font-family:var(--mono)}
@@ -621,65 +686,253 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 .ni-ttl{font-size:.8rem;font-weight:500;margin-bottom:.18rem}
 .ni-sub{font-size:.68rem;color:var(--tx3)}
 
-/* PRINT */
+/* PRINT — Professional A4 Invoice */
 @media print{
-  :root{--d-ink:#000!important;--d-ink2:#222!important;--d-ink3:#444!important;
-    --d-line:#cbd5e1!important;--d-line2:#64748b!important;--d-bg:#f8fafc!important;--d-bg2:#f1f5f9!important}
-  html,body{height:auto!important;overflow:visible!important;background:#fff!important;font-size:10pt!important}
+  :root{
+    --d-ink:#0a0f1e!important;--d-ink2:#1e293b!important;--d-ink3:#4b6278!important;
+    --d-line:#dde6ef!important;--d-line2:#b8ccd8!important;
+    --d-bg:#f4f7fa!important;--d-bg2:#eaf0f7!important;
+    --d-acc:#004d3e!important;--d-acc2:#00c49a!important
+  }
+  @page{size:A4;margin:14mm 16mm 12mm 16mm}
+  html,body{height:auto!important;overflow:visible!important;background:#fff!important;
+    font-size:9pt!important;color:var(--d-ink)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .app{display:block!important;height:auto!important}
-  .topbar,.nav-rail,.esb,.cbar,.toast-container,.modal-ov,.confirm-ov,.pal-ov,.chpw-modal,
-  .user-menu,.notif-panel,.add-row-btn,.item-move,.item-del,.sb-rh{display:none!important}
+  .topbar,.nav-rail,.mobile-nav,.esb,.cbar,.toast-container,.modal-ov,.confirm-ov,.pal-ov,.chpw-modal,
+  .user-menu,.notif-panel,.add-row-btn,.item-move,.item-del,.sb-rh,.sec-toggle,.sig-screen-display{display:none!important}
   .canvas-area{padding:0!important;overflow:visible!important;background:#fff!important}
-  .quote-doc{max-width:100%!important;width:100%!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
-  .sec{break-inside:avoid!important;padding:.5rem 0!important}
-  .pay-schedule,.sig-grid,.terms-grid,.bank-grid,.parties{break-inside:avoid!important}
-  .sec-toggle{display:none!important}
+  .quote-doc{max-width:100%!important;width:100%!important;border-radius:0!important;
+    box-shadow:none!important;margin:0!important;padding:0!important}
+
+  /* ── HEADER ─────────────────────────────── */
+  .dh{
+    background:#fff!important;padding:0 0 .9rem 0!important;
+    display:grid!important;grid-template-columns:1fr auto!important;
+    align-items:start!important;gap:1.5rem!important;
+    border-bottom:3px solid var(--d-acc)!important;
+    margin-bottom:.8rem!important
+  }
+  .dh-brand{display:flex!important;flex-direction:column!important;gap:.15rem!important}
+  .dh-logo-wrap{display:flex!important;align-items:center!important;gap:.5rem!important;margin-bottom:.3rem!important}
+  .dh-logo{width:32px!important;height:32px!important;background:var(--d-acc)!important;
+    border-radius:7px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-shrink:0!important;print-color-adjust:exact!important}
+  .dh-logo svg{width:16px!important;height:16px!important;color:#fff!important}
+  .dh-name{color:var(--d-ink)!important;font-size:1.5rem!important;font-weight:800!important;
+    letter-spacing:-.03em!important;line-height:1!important}
+  .dh-name em{color:var(--d-acc)!important;font-style:normal!important;print-color-adjust:exact!important}
+  .dh-sub{color:var(--d-ink3)!important;font-size:.62rem!important;margin-top:.1rem!important;letter-spacing:.01em!important}
+
+  .dh-meta{text-align:right!important}
+  .dm-title{color:var(--d-acc)!important;font-size:1.75rem!important;font-weight:900!important;
+    letter-spacing:.12em!important;margin:0 0 .45rem 0!important;line-height:1!important;
+    print-color-adjust:exact!important}
+  .dm-divider{display:none!important}
+  .dm-grid{display:flex!important;flex-direction:column!important;gap:.25rem!important;align-items:flex-end!important}
+  .dm-item{display:flex!important;gap:.6rem!important;align-items:baseline!important}
+  .dm-label{color:var(--d-ink3)!important;font-size:.6rem!important;font-weight:600!important;
+    text-transform:uppercase!important;letter-spacing:.08em!important;min-width:70px!important;text-align:right!important}
+  .dm-val{color:var(--d-ink)!important;font-size:.78rem!important;font-weight:700!important}
+
+  /* ── PARTIES ─────────────────────────────── */
+  .parties{
+    display:grid!important;grid-template-columns:1fr 1fr!important;
+    gap:1rem!important;padding:.7rem 0!important;
+    border-bottom:1px solid var(--d-line)!important;margin-bottom:.5rem!important
+  }
+  .party{padding:.55rem .7rem!important;border-radius:6px!important;background:var(--d-bg)!important;border:1px solid var(--d-line)!important;print-color-adjust:exact!important}
+  .party::before{display:block!important;color:var(--d-acc)!important;font-size:.55rem!important;
+    font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase!important;
+    margin-bottom:.3rem!important;print-color-adjust:exact!important}
+  .party:first-child::before{content:'ISSUED BY'!important}
+  .party:last-child::before{content:'BILLED TO'!important}
+  .party strong{display:block!important;color:var(--d-ink)!important;font-size:.85rem!important;
+    font-weight:700!important;margin-bottom:.22rem!important}
+  .party p{color:var(--d-ink2)!important;font-size:.68rem!important;line-height:1.55!important}
+
+  /* ── LINE ITEMS TABLE ─────────────────────── */
+  .doc-body{padding:0!important}
+  .sec{break-inside:avoid!important;padding:.55rem 0!important;border-bottom:1px solid var(--d-line)!important}
+  .sec:last-child{border-bottom:none!important}
+  .sec-label{color:var(--d-acc)!important;font-size:.62rem!important;font-weight:800!important;
+    letter-spacing:.1em!important;text-transform:uppercase!important;
+    margin-bottom:.4rem!important;padding-bottom:.22rem!important;
+    border-bottom:1px solid var(--d-line)!important;print-color-adjust:exact!important}
+  .sec-label::after{display:none!important}
   .sec-content{max-height:none!important;opacity:1!important}
-  .doc-body{padding:0 1rem!important}
-  .dh{padding:1rem 1.25rem!important}
-  .party{padding:.7rem 1rem!important}
-  .party p{line-height:1.35!important}
-  .items-tbl{font-size:.76rem!important}
-  .items-tbl th{padding:.33rem .52rem!important;background:#f1f5f9!important}
-  .items-tbl td{padding:.33rem .52rem!important}
+
+  .items-tbl{font-size:.7rem!important;width:100%!important}
+  .items-tbl th{padding:.3rem .45rem!important;
+    background:var(--d-acc)!important;color:#fff!important;
+    font-size:.58rem!important;font-weight:700!important;letter-spacing:.08em!important;text-transform:uppercase!important;
+    print-color-adjust:exact!important}
+  .items-tbl th:first-child{border-radius:4px 0 0 4px!important}
+  .items-tbl th:last-child{border-radius:0 4px 4px 0!important}
+  .items-tbl td{padding:.32rem .45rem!important;border-bottom:1px solid var(--d-line)!important;color:var(--d-ink)!important;vertical-align:top!important}
+  .items-tbl tr:nth-child(even) td{background:var(--d-bg)!important;print-color-adjust:exact!important}
   .items-tbl th:nth-child(2),.items-tbl td:nth-child(2){display:none!important}
+  .cat-row td{background:var(--d-bg2)!important;font-size:.58rem!important;font-weight:700!important;
+    color:var(--d-ink3)!important;letter-spacing:.08em!important;text-transform:uppercase!important;
+    print-color-adjust:exact!important}
   thead{display:table-header-group!important}
-  .item-inp{border:none!important;background:none!important;padding:0!important}
-  [contenteditable]{background:none!important;box-shadow:none!important}
-  .pay-card{padding:.38rem .6rem!important;min-width:105px!important}
-  .bank-grid{grid-template-columns:repeat(3,1fr)!important;gap:.38rem!important}
-  .terms-grid{grid-template-columns:1fr 1fr!important;gap:.33rem!important}
-  .term-card{padding:.33rem .52rem!important}
-  .term-card p{font-size:.63rem!important;line-height:1.3!important}
-  .sig-grid{gap:.825rem!important}
-  .acc-box{padding:.38rem!important}
-  .doc-footer{background:#fff!important;padding:.575rem 1rem!important;border-top:1px solid #ddd!important}
-  .doc-footer p,.df-contacts span{color:#444!important}
-  .df-contacts span strong{color:#000!important}
+
+  /* ── TOTALS ──────────────────────────────── */
+  .totals-wrap{display:flex!important;justify-content:flex-end!important}
+  .totals-inner{width:220px!important;margin-top:.4rem!important}
+  .tot-row{display:flex!important;justify-content:space-between!important;padding:.18rem 0!important;font-size:.72rem!important}
+  .tl{color:var(--d-ink3)!important}.tv{color:var(--d-ink)!important;font-weight:600!important}
+  .tot-divider{border-top:1px solid var(--d-line2)!important;margin:.25rem 0!important}
+  .tot-row.grand{
+    background:var(--d-acc)!important;color:#fff!important;
+    padding:.4rem .6rem!important;border-radius:6px!important;margin-top:.3rem!important;
+    print-color-adjust:exact!important
+  }
+  .tot-row.grand .tl{color:rgba(255,255,255,.75)!important;font-size:.62rem!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:.08em!important}
+  .tot-row.grand .tv{color:#fff!important;font-size:1.05rem!important;font-weight:800!important}
+
+  /* ── PAYMENT SCHEDULE ────────────────────── */
+  .pay-schedule{display:flex!important;gap:.4rem!important;flex-wrap:wrap!important;margin-top:.35rem!important}
+  .pay-card{padding:.4rem .55rem!important;min-width:auto!important;flex:1!important;
+    border:1px solid var(--d-line)!important;border-radius:5px!important;
+    background:var(--d-bg)!important;print-color-adjust:exact!important}
+  .pay-card::before{display:none!important}
+  .pc-phase{color:var(--d-acc)!important;font-size:.6rem!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.08em!important;print-color-adjust:exact!important}
+  .pc-pct{color:var(--d-ink3)!important;font-size:.6rem!important}
+  .pc-amt{color:var(--d-ink)!important;font-size:.88rem!important;font-weight:800!important;margin:.1rem 0!important}
+  .pc-when{color:var(--d-ink3)!important;font-size:.6rem!important;line-height:1.35!important}
+  .sec-note{display:none!important}
+
+  /* ── BANKING ─────────────────────────────── */
+  .bank-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:.4rem!important}
+  .bk-label{color:var(--d-ink3)!important;font-size:.55rem!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:.08em!important}
+  .bk-val{color:var(--d-ink)!important;font-size:.72rem!important;font-weight:600!important;margin-top:.1rem!important}
+
+  /* ── TERMS ───────────────────────────────── */
+  .terms-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:.35rem!important}
+  .term-card{padding:.38rem .5rem!important;border:1px solid var(--d-line)!important;
+    border-left:3px solid var(--d-acc)!important;border-radius:0 4px 4px 0!important;
+    background:transparent!important;print-color-adjust:exact!important}
+  .term-card h5{color:var(--d-acc)!important;font-size:.62rem!important;font-weight:700!important;margin-bottom:.12rem!important;print-color-adjust:exact!important}
+  .term-card p{color:var(--d-ink2)!important;font-size:.62rem!important;line-height:1.45!important}
+
+  /* ── INCLUSIONS / EXCLUSIONS ─────────────── */
+  .ie-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:.6rem!important}
+  .ie-col h4{font-size:.63rem!important;font-weight:700!important;margin-bottom:.3rem!important;color:var(--d-ink)!important;display:flex!important;align-items:center!important;gap:.3rem!important}
+  .ie-list li{font-size:.65rem!important;color:var(--d-ink2)!important;padding:.12rem 0!important;display:flex!important;align-items:baseline!important;gap:.3rem!important}
+  .ie-dot{width:5px!important;height:5px!important;border-radius:50%!important;flex-shrink:0!important;display:inline-block!important;print-color-adjust:exact!important}
+  .ie-dot.g{background:#059669!important}.ie-dot.r{background:#dc2626!important}
+
+  /* ── CLIENT ACCEPTANCE / SIGNATURE ──────── */
+  .sig-section-print{
+    break-inside:avoid!important;margin-top:.5rem!important;
+    border:2px solid var(--d-acc)!important;border-radius:8px!important;
+    overflow:hidden!important;print-color-adjust:exact!important
+  }
+  .sig-section-header{
+    background:var(--d-acc)!important;color:#fff!important;
+    padding:.4rem .8rem!important;font-size:.62rem!important;font-weight:800!important;
+    letter-spacing:.1em!important;text-transform:uppercase!important;
+    print-color-adjust:exact!important
+  }
+  .sig-section-body{padding:.6rem .8rem!important;background:#fff!important}
+  .sig-acceptance-text{
+    font-size:.63rem!important;color:var(--d-ink2)!important;
+    line-height:1.55!important;margin-bottom:.6rem!important;
+    padding:.4rem .55rem!important;background:var(--d-bg)!important;
+    border-left:3px solid var(--d-acc2)!important;border-radius:0 4px 4px 0!important;
+    print-color-adjust:exact!important
+  }
+  .sig-grid{
+    display:grid!important;grid-template-columns:1fr 1fr 120px!important;
+    gap:.8rem!important;margin-top:.5rem!important;align-items:end!important
+  }
+  .sig-col-label{
+    font-size:.55rem!important;font-weight:700!important;color:var(--d-ink3)!important;
+    text-transform:uppercase!important;letter-spacing:.1em!important;margin-bottom:.5rem!important
+  }
+  .sig-name-block{margin-bottom:.5rem!important}
+  .sig-name-value{
+    font-size:.8rem!important;font-weight:700!important;color:var(--d-ink)!important;
+    padding:.3rem 0!important;border-bottom:1.5px solid var(--d-ink)!important;
+    min-height:24px!important;margin-bottom:.18rem!important
+  }
+  .sig-name-cap{font-size:.6rem!important;color:var(--d-ink3)!important}
+  .sig-line{
+    border:none!important;border-bottom:1.5px solid var(--d-ink)!important;
+    height:36px!important;margin-bottom:.18rem!important;display:block!important
+  }
+  .sig-cap{font-size:.6rem!important;color:var(--d-ink3)!important;display:block!important}
+  .sig-date-line{
+    border:none!important;border-bottom:1.5px solid var(--d-ink)!important;
+    height:24px!important;margin-bottom:.18rem!important;display:block!important
+  }
+  .sig-stamp-box{
+    width:100px!important;height:70px!important;
+    border:1.5px dashed var(--d-line2)!important;border-radius:6px!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    font-size:.55rem!important;color:var(--d-line2)!important;
+    text-transform:uppercase!important;letter-spacing:.06em!important;
+    text-align:center!important;line-height:1.4!important
+  }
+  .sig-id-row{
+    display:flex!important;align-items:center!important;gap:.5rem!important;
+    margin-top:.35rem!important;padding-top:.35rem!important;
+    border-top:1px solid var(--d-line)!important
+  }
+  .sig-id-label{font-size:.58rem!important;color:var(--d-ink3)!important;font-weight:600!important;white-space:nowrap!important}
+  .sig-id-line{flex:1!important;border:none!important;border-bottom:1px solid var(--d-ink)!important;height:18px!important}
+  .sig-id-value{font-size:.72rem!important;font-weight:700!important;color:var(--d-ink)!important}
+
+  /* ── FOOTER ──────────────────────────────── */
+  .doc-footer{
+    background:var(--d-bg)!important;border-top:2px solid var(--d-acc)!important;
+    padding:.6rem .8rem!important;margin-top:.5rem!important;
+    display:flex!important;justify-content:space-between!important;align-items:center!important;
+    print-color-adjust:exact!important
+  }
+  .doc-footer p{color:var(--d-ink3)!important;font-size:.6rem!important}
+  .df-contacts{display:flex!important;gap:1.2rem!important}
+  .df-contacts span{color:var(--d-ink3)!important;font-size:.6rem!important;display:flex!important;align-items:center!important;gap:.2rem!important}
+  .df-contacts span strong{color:var(--d-acc)!important;print-color-adjust:exact!important}
+
+  /* ── INPUT / EDITABLE OVERRIDES ──────────── */
+  .item-inp{border:none!important;background:none!important;padding:0!important;color:var(--d-ink)!important;font-weight:inherit!important;width:100%!important}
+  .item-inp.desc{font-weight:600!important;font-size:.72rem!important}
+  .item-inp.note{color:var(--d-ink3)!important;font-size:.62rem!important}
+  [contenteditable]{background:none!important;box-shadow:none!important;color:var(--d-ink)!important}
   .wm{display:none!important}
-  .wm.sent,.wm.accepted,.wm.rejected,.wm.expired{display:block!important}
-  @page{size:A4;margin:12mm 10mm}
+  .wm.sent,.wm.accepted,.wm.rejected,.wm.expired{display:block!important;opacity:.04!important;color:var(--d-ink)!important}
+  .price-col,.total-col{text-align:right!important}
+  .del-col{display:none!important}
 }
 
 /* RESPONSIVE */
 @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
   .nav-rail{display:none}
+  .mobile-nav{display:flex}
+  .app-body{padding-bottom:60px}
   .dash-grid{grid-template-columns:1fr}
-  .esb{position:fixed;left:0;top:var(--top-h);bottom:0;z-index:var(--z-sb);
-    transform:translateX(0);transition:transform .3s ease;width:var(--sb-w)!important}
+  .esb{position:fixed;left:0;top:var(--top-h);bottom:60px;z-index:var(--z-sb);
+    transform:translateX(0);width:var(--sb-w)!important}
   .esb.collapsed{transform:translateX(-100%)}
+  .esb-overlay.active{display:block}
   .parties{grid-template-columns:1fr}
   .party:first-child{border-right:none;border-bottom:1px solid var(--d-line)}
   .party{padding:1.1rem 1.5rem}
   .doc-body{padding:0 1.5rem}
   .dh{padding:1.625rem 1.5rem;flex-direction:column;gap:.75rem}
   .ie-grid,.sig-grid{grid-template-columns:1fr}
-  .toast-container{right:.75rem;bottom:.75rem;left:.75rem}
+  .toast-container{right:.75rem;bottom:calc(.75rem + 60px);left:.75rem}
   .toast{max-width:100%}
 }
-@media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr}.fg-row{grid-template-columns:1fr}
-  .pay-schedule{flex-direction:column}.pay-card{min-width:100%}.tb-search{display:none}}
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .fg-row{grid-template-columns:1fr}
+  .pay-schedule{flex-direction:column}
+  .pay-card{min-width:100%}
+  .tb-search{display:none}
+  .cbar{flex-direction:column; align-items:flex-start}
+}
 /* SETUP / CONFIG SCREEN */
 .setup-screen{
   position:fixed;inset:0;z-index:calc(var(--z-login) + 1);
@@ -723,7 +976,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
 
 <div id="toastContainer" class="toast-container" aria-live="polite" role="status"></div>
 
-<!-- SUPABASE SETUP SCREEN -->
 <div class="setup-screen" id="setupScreen" role="main" aria-label="Connect to Supabase">
   <div class="setup-card">
     <div class="setup-badge">&#9881; First-time Setup</div>
@@ -763,7 +1015,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen" role="main">
   <div class="login-card">
     <div class="login-brand">
@@ -791,7 +1042,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- COMMAND PALETTE -->
 <div class="pal-ov" id="paletteOverlay" role="dialog" aria-modal="true" aria-label="Command palette">
   <div class="pal-box">
     <div class="pal-inp-wrap">
@@ -808,7 +1058,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- CONFIRM -->
 <div class="confirm-ov" id="confirmDialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
   <div class="confirm-box">
     <div class="confirm-title" id="confirmTitle">Are you sure?</div>
@@ -820,7 +1069,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- INTEGRATION MODAL -->
 <div class="modal-ov" id="integrationModal" role="dialog" aria-modal="true" aria-labelledby="intgModalTitle">
   <div class="modal">
     <div class="modal-hd">
@@ -832,7 +1080,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- USER MANAGEMENT -->
 <div class="chpw-modal" id="chpwModal" role="dialog" aria-modal="true">
   <div class="chpw-box">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.125rem">
@@ -871,7 +1118,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   </div>
 </div>
 
-<!-- USER MENU -->
 <div class="user-menu" id="userMenu">
   <div class="um-item" onclick="openChpw()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Manage Users</div>
   <div class="um-item" onclick="openIntegrationModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</div>
@@ -879,13 +1125,11 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
   <div class="um-item danger" id="menuLogout"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</div>
 </div>
 
-<!-- NOTIFICATIONS -->
 <div class="notif-panel" id="notifPanel">
   <div class="notif-hd"><span class="notif-title">Notifications</span><button class="notif-clear" onclick="clearNotifications()">Clear all</button></div>
   <div id="notifList"><div class="empty-blk">No notifications</div></div>
 </div>
 
-<!-- APP SHELL -->
 <div class="app">
   <header class="topbar">
     <div class="tb-brand">
@@ -935,10 +1179,24 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
         <span class="nav-lbl">Users</span><span class="nav-tip">Manage Users</span>
       </button>
     </nav>
+    
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <button class="nav-item active" onclick="switchView('dashboard')" aria-label="Dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span class="nav-lbl">Dash</span>
+      </button>
+      <button class="nav-item" onclick="switchView('quotes')" aria-label="All Quotes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="nav-lbl">Quotes</span>
+      </button>
+      <button class="nav-item" onclick="switchView('editor')" aria-label="Quote Editor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="nav-lbl">Editor</span>
+      </button>
+    </nav>
 
     <main class="main" id="quoteMain">
 
-      <!-- DASHBOARD -->
       <div class="view active" id="view-dashboard">
         <div class="dash-scroll">
           <div class="dash-hd">
@@ -946,10 +1204,10 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
             <button class="btn btn-brand" id="dashNewBtn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Quote</button>
           </div>
           <div class="kpi-grid">
-            <div class="kpi c-brand"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="kpi-val" id="kpiPipeline">R 0</div><div class="kpi-lbl">Total Pipeline</div><div class="kpi-sub" id="kpiPipelineSub">All active quotes</div></div>
+            <div class="kpi c-brand"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="kpi-val" id="kpiPipeline">0</div><div class="kpi-lbl">Total Pipeline</div><div class="kpi-sub" id="kpiPipelineSub">All active quotes</div></div>
             <div class="kpi c-ok"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="kpi-val" id="kpiAccepted">0%</div><div class="kpi-lbl">Acceptance Rate</div><div class="kpi-sub" id="kpiAcceptedSub">Accepted vs closed</div></div>
             <div class="kpi c-info"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="kpi-val" id="kpiTotal">0</div><div class="kpi-lbl">Total Quotes</div><div class="kpi-sub" id="kpiTotalSub">All time</div></div>
-            <div class="kpi c-warn"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-val" id="kpiAvg">R 0</div><div class="kpi-lbl">Avg Quote Value</div><div class="kpi-sub" id="kpiAvgSub">Per quote</div></div>
+            <div class="kpi c-warn"><div class="kpi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-val" id="kpiAvg">0</div><div class="kpi-lbl">Avg Quote Value</div><div class="kpi-sub" id="kpiAvgSub">Per quote</div></div>
           </div>
           <div class="dash-grid">
             <div class="dc">
@@ -957,7 +1215,9 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
               <div class="pipe-bar" id="pipelineBar"></div>
               <div class="pipe-legend" id="pipelineLegend"></div>
               <div style="margin-top:1.125rem"><div class="dc-title" style="margin-bottom:.75rem;font-size:.82rem">Recent Quotes</div>
-                <table class="dtable"><thead><tr><th>Quote #</th><th>Client</th><th>Value</th><th>Status</th></tr></thead><tbody id="dashRecentBody"></tbody></table>
+                <div class="table-responsive">
+                  <table class="dtable"><thead><tr><th>Quote #</th><th>Client</th><th>Value</th><th>Status</th></tr></thead><tbody id="dashRecentBody"></tbody></table>
+                </div>
               </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem">
@@ -974,7 +1234,6 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
         </div>
       </div>
 
-      <!-- QUOTES LIST -->
       <div class="view" id="view-quotes">
         <div class="vhd"><div class="v-title">Quotes</div>
           <div class="v-actions">
@@ -991,10 +1250,12 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
           <button class="fchip" data-filter="rejected" onclick="setQlFilter('rejected')">Rejected</button>
         </div>
         <div class="qscroll">
-          <table class="qtable" aria-label="Quotes list">
-            <thead><tr><th>Quote #</th><th>Client</th><th>Service</th><th>Value</th><th>Status</th><th>Issued</th><th style="width:100px"></th></tr></thead>
-            <tbody id="qlTableBody"></tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="qtable" aria-label="Quotes list">
+              <thead><tr><th>Quote #</th><th>Client</th><th>Service</th><th>Value</th><th>Status</th><th>Issued</th><th style="width:100px"></th></tr></thead>
+              <tbody id="qlTableBody"></tbody>
+            </table>
+          </div>
           <div id="qlEmpty" class="empty-st" style="display:none">
             <div class="empty-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div class="empty-ttl">No quotes found</div>
@@ -1003,14 +1264,14 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
         </div>
       </div>
 
-      <!-- EDITOR -->
       <div class="view" id="view-editor">
         <div class="editor-view">
+          <div class="esb-overlay" id="esbOverlay"></div>
           <aside class="esb" id="sidebar" aria-label="Quote configuration">
             <div class="sb-rh" id="sbResizeHandle" aria-hidden="true"></div>
             <div class="esb-hd">
               <div class="esb-num" id="scNum">New Quote</div>
-              <div class="esb-total" id="scTotal">R 0.00</div>
+              <div class="esb-total" id="scTotal">0.00</div>
               <div class="esb-meta"><span>Client: <em id="scClient" style="color:rgba(255,255,255,.5);font-style:normal">—</em></span><span>Valid: <em id="scValid" style="color:rgba(255,255,255,.5);font-style:normal">—</em></span></div>
               <div class="esb-srow">
                 <select id="statusSel" class="esb-ssel" aria-label="Quote status"><option value="draft">Draft</option><option value="sent">Sent</option><option value="accepted">Accepted</option><option value="rejected">Rejected</option><option value="expired">Expired</option></select>
@@ -1025,7 +1286,15 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
             </div>
             <div class="esb-body">
               <div class="esb-panel active" id="tab-info" role="tabpanel" aria-labelledby="tabBtn-info">
-                <div class="fg"><label class="fl req" for="fi-num">Quote Number</label><div style="display:flex;gap:.38rem;align-items:center"><input class="fi" id="fi-num" placeholder="NRT-2026-001"><button class="btn btn-ghost" style="flex-shrink:0;padding:.48rem .55rem;font-size:.67rem" id="btnAutoNum">Auto</button></div></div>
+                <div class="fg">
+                  <label class="fl req" for="fi-doctype">Document Type</label>
+                  <select class="fs" id="fi-doctype">
+                    <option value="quote">Quotation</option>
+                    <option value="invoice">Tax Invoice</option>
+                  </select>
+                </div>
+                <div class="fg"><label class="fl req" for="fi-num">Quote / Invoice Number</label><div style="display:flex;gap:.38rem;align-items:center"><input class="fi" id="fi-num" placeholder="NRT-2026-001"><button class="btn btn-ghost" style="flex-shrink:0;padding:.48rem .55rem;font-size:.67rem" id="btnAutoNum">Auto</button></div></div>
+                <div class="fg"><label class="fl" for="fi-po">PO Number</label><input class="fi" id="fi-po" placeholder="Optional"></div>
                 <div class="fg-row"><div class="fg"><label class="fl req" for="fi-issued">Date Issued</label><input class="fi" type="date" id="fi-issued"></div><div class="fg"><label class="fl" for="fi-valid">Valid (days)</label><input class="fi" type="number" id="fi-valid" min="7" max="365" placeholder="30"></div></div>
                 <div class="fg"><label class="fl" for="fi-ptitle">Project Title</label><input class="fi" id="fi-ptitle" placeholder="e.g. Business Website"></div>
                 <div class="fg"><label class="fl" for="fi-stype">Service Type</label><select class="fs" id="fi-stype"><option>Web Development</option><option>IT Infrastructure</option><option>Network Systems</option><option>Custom Application</option><option>IT Support Retainer</option><option>Cloud &amp; Hosting</option><option>Cybersecurity</option><option>Software Integration</option><option>Data &amp; Analytics</option><option>Other</option></select></div>
@@ -1038,8 +1307,18 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
                 <div class="fg"><label class="fl" for="fc-email">Email Address</label><input class="fi" type="email" id="fc-email" placeholder="name@business.co.za" aria-describedby="fc-email-err"><div class="field-error" id="fc-email-err" role="alert">Please enter a valid email address.</div></div>
                 <div class="fg"><label class="fl" for="fc-phone">Phone Number</label><input class="fi" type="tel" id="fc-phone" placeholder="+27 XX XXX XXXX"></div>
                 <div class="fg"><label class="fl" for="fc-address">Address / City</label><input class="fi" id="fc-address" placeholder="City, Province"></div>
+                <div style="margin:.6rem 0 .3rem;padding:.45rem .55rem;background:var(--brand-a6);border:1px solid var(--brand-a12);border-radius:8px">
+                  <div style="font-size:.63rem;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;font-family:var(--mono)">&#9998; Acceptance &amp; Signature</div>
+                  <div class="fg" style="margin-bottom:.45rem"><label class="fl" for="fc-signame">Authorised Signatory Name</label><input class="fi" id="fc-signame" placeholder="Full name of person signing"></div>
+                  <div class="fg" style="margin-bottom:.45rem"><label class="fl" for="fc-sigdesig">Designation / Title</label><input class="fi" id="fc-sigdesig" placeholder="e.g. Director, CEO, Manager"></div>
+                  <div class="fg" style="margin-bottom:0"><label class="fl" for="fc-sigid">ID / Passport Number <span style="color:var(--tx3);font-weight:400">(optional)</span></label><input class="fi" id="fc-sigid" placeholder="e.g. 8001015009087"></div>
+                </div>
               </div>
               <div class="esb-panel" id="tab-finance" role="tabpanel" aria-labelledby="tabBtn-finance">
+                <div class="fg-row">
+                  <div class="fg"><label class="fl" for="ff-currency">Currency</label><select class="fs" id="ff-currency"><option value="ZAR">ZAR (R)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select></div>
+                  <div class="fg"><label class="fl" for="ff-latefee">Late Fee (%) / mo</label><input class="fi" type="number" id="ff-latefee" min="0" max="100" placeholder="0"></div>
+                </div>
                 <div class="fg"><label class="fl">Payment Structure</label>
                   <div class="ps-grid" role="group">
                     <div class="ps-opt active" id="ps-50-50" role="button" tabindex="0" aria-pressed="true"><div class="ps-label">Standard</div><div class="ps-val">50 / 50</div></div>
@@ -1049,8 +1328,13 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
                   </div>
                   <div id="customSplitWrap" style="display:none;margin-top:.6rem"><div style="font-size:.66rem;color:var(--tx3);margin-bottom:.38rem;font-family:var(--mono)">Must total 100% <span id="splitTotal" style="margin-left:.35rem;color:var(--brand);font-weight:600"></span></div><div style="display:flex;gap:.38rem;flex-wrap:wrap" id="customSplitFields"></div><button id="btnAddSplit" style="margin-top:.32rem;background:none;border:1px dashed var(--brand-a20);color:var(--brand);font-size:.66rem;font-family:var(--mono);border-radius:6px;padding:.25rem .6rem;cursor:pointer">+ Add Stage</button></div>
                 </div>
-                <div class="fg"><label class="fl">Discount</label><div class="disc-row"><select class="fs" id="discType"><option value="percent">%</option><option value="fixed">R</option></select><input class="fi" type="number" min="0" id="discVal" placeholder="0"></div></div>
-                <div class="fg" style="display:flex;align-items:center;gap:.6rem"><input type="checkbox" id="vatChk" style="accent-color:var(--brand);width:16px;height:16px;cursor:pointer"><label for="vatChk" style="font-size:.8rem;cursor:pointer;font-weight:500">Include 15% VAT</label></div>
+                <div class="fg"><label class="fl">Discount</label><div class="disc-row"><select class="fs" id="discType"><option value="percent">%</option><option value="fixed">Fixed</option></select><input class="fi" type="number" min="0" id="discVal" placeholder="0"></div></div>
+                <div class="fg" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+                  <input type="checkbox" id="taxChk" style="accent-color:var(--brand);width:16px;height:16px;cursor:pointer">
+                  <label for="taxChk" style="font-size:.8rem;cursor:pointer;font-weight:500">Apply Tax</label>
+                  <input class="fi" id="ff-taxname" placeholder="Name (e.g. VAT)" style="width:110px;padding:.3rem .5rem">
+                  <input class="fi" type="number" id="ff-taxrate" placeholder="%" style="width:60px;padding:.3rem .5rem">
+                </div>
               </div>
               <div class="esb-panel" id="tab-bank" role="tabpanel" aria-labelledby="tabBtn-bank">
                 <div class="fg"><label class="fl req" for="fb-name">Account Name</label><input class="fi" id="fb-name" placeholder="NexridgeTech IT Solutions"></div>
@@ -1061,6 +1345,7 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
             </div>
             <div class="esb-foot">
               <button class="btn btn-ghost btn-sm" id="btnWA"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.087.536 4.048 1.478 5.757L.057 23.882a.5.5 0 0 0 .606.606l6.116-1.421A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.918a9.906 9.906 0 0 1-5.048-1.374l-.361-.215-3.742.869.935-3.641-.236-.375A9.867 9.867 0 0 1 2.082 12C2.082 6.52 6.52 2.082 12 2.082S21.918 6.52 21.918 12 17.48 21.918 12 21.918z"/></svg>WhatsApp</button>
+              <button class="btn btn-ghost btn-sm" id="btnEmail"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</button>
               <button class="btn btn-ghost btn-sm" id="btnSave"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save</button>
               <button class="btn btn-brand btn-sm btn-flex" id="btnPrint"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Export PDF</button>
             </div>
@@ -1076,6 +1361,7 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
               <div class="cbar-r">
                 <button class="btn btn-ghost btn-sm" id="ctBtnIntg"><span class="intg-dot" id="ctIntgDot"></span> Integrations</button>
                 <button class="btn btn-ghost btn-sm" id="ctBtnWA">Share</button>
+                <button class="btn btn-ghost btn-sm" id="ctBtnEmail">Email</button>
                 <button class="btn btn-ghost btn-sm" id="ctBtnSave">Save Draft</button>
                 <button class="btn btn-brand btn-sm" id="ctBtnPrint">Export PDF</button>
               </div>
@@ -1084,13 +1370,16 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
             <div class="quote-doc" id="quoteDoc">
               <div class="wm" id="watermark" aria-hidden="true"></div>
               <header class="dh">
-                <div class="dh-brand"><div class="dh-name">Nexridge<em>Tech</em></div><div class="dh-sub">IT Solutions &middot; South Africa</div></div>
+                <div class="dh-brand"><div class="dh-name">Nexridge<em>Tech</em></div><div class="dh-sub">IT Solutions</div></div>
                 <div class="dh-meta">
-                  <div class="dm-label">Document</div><div class="dm-title">QUOTATION</div><div class="dm-divider"></div>
+                  <div class="dm-label">Document</div>
+                  <div class="dm-title" id="dDocTypeTitle">QUOTATION</div>
+                  <div class="dm-divider"></div>
                   <div class="dm-grid">
-                    <div><div class="dm-label">Quote Number</div><div class="dm-val" id="dQuoteNum">&mdash;</div></div>
+                    <div><div class="dm-label" id="dNumLabel">Quote Number</div><div class="dm-val" id="dQuoteNum">&mdash;</div></div>
+                    <div id="dPoBlock"><div class="dm-label">PO Number</div><div class="dm-val" id="dPoNum">&mdash;</div></div>
                     <div><div class="dm-label">Date Issued</div><div class="dm-val" id="dIssued">&mdash;</div></div>
-                    <div><div class="dm-label">Valid Until</div><div class="dm-val" id="dValid">&mdash;</div></div>
+                    <div><div class="dm-label" id="dValidLabel">Valid Until</div><div class="dm-val" id="dValid">&mdash;</div></div>
                   </div>
                 </div>
               </header>
@@ -1100,12 +1389,100 @@ table.qtable tbody tr:hover .row-acts{opacity:1}
               </div>
               <div class="doc-body">
                 <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Project Overview<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><span class="proj-title" contenteditable="true" id="dProjTitle">Project Title</span><span class="proj-desc" contenteditable="true" id="dProjDesc">Describe what is being delivered.</span><div class="proj-meta"><div class="pm-cell"><div class="pm-cell-label">Delivery</div><div class="pm-cell-val" id="dDelivery">14 working days</div></div><div class="pm-cell"><div class="pm-cell-label">Service</div><div class="pm-cell-val" id="dSvcType">Web Development</div></div><div class="pm-cell"><div class="pm-cell-label">Revisions</div><div class="pm-cell-val">2 rounds included</div></div></div></div></section>
-                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Scope of Work<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><table class="items-tbl" aria-label="Line items"><thead><tr><th style="width:40%">Deliverable</th><th style="width:16%">Category</th><th style="width:7%">Qty</th><th class="price-col" style="width:13%">Unit Price</th><th class="total-col" style="width:12%">Total</th><th class="del-col"></th></tr></thead><tbody id="itemsBody"></tbody></table><button class="add-row-btn" id="btnAddItem">+ Add Line Item</button><div class="totals-wrap"><div class="totals-inner"><div class="tot-row"><span class="tl">Subtotal</span><span class="tv" id="tSubtotal">R 0.00</span></div><div class="tot-row disc-row-ui" id="tDiscRow" style="display:none"><span class="tl" id="tDiscLabel">Discount</span><span class="tv" id="tDiscount">&minus;R 0.00</span></div><div class="tot-row" id="tVatRow" style="display:none"><span class="tl">VAT (15%)</span><span class="tv" id="tVat">R 0.00</span></div><div class="tot-divider"></div><div class="tot-row grand"><span class="tl">Total Due</span><span class="tv" id="tTotal">R 0.00</span></div></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Scope of Work<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div>
+                  <div class="sec-content">
+                    <div class="table-responsive">
+                      <table class="items-tbl" aria-label="Line items"><thead><tr><th style="width:40%">Deliverable</th><th style="width:16%">Category</th><th style="width:7%">Qty</th><th class="price-col" style="width:13%">Unit Price</th><th class="total-col" style="width:12%">Total</th><th class="del-col"></th></tr></thead><tbody id="itemsBody"></tbody></table>
+                    </div>
+                    <button class="add-row-btn" id="btnAddItem">+ Add Line Item</button>
+                    <div class="totals-wrap">
+                      <div class="totals-inner">
+                        <div class="tot-row"><span class="tl">Subtotal</span><span class="tv" id="tSubtotal">0.00</span></div>
+                        <div class="tot-row disc-row-ui" id="tDiscRow" style="display:none"><span class="tl" id="tDiscLabel">Discount</span><span class="tv" id="tDiscount">&minus;0.00</span></div>
+                        <div class="tot-row" id="tTaxRow" style="display:none"><span class="tl" id="tTaxLabel">Tax</span><span class="tv" id="tTaxAmount">0.00</span></div>
+                        <div class="tot-divider"></div>
+                        <div class="tot-row grand"><span class="tl">Total Due</span><span class="tv" id="tTotal">0.00</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
                 <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Payment Schedule<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="pay-schedule" id="paySchedule"></div><p class="sec-note">&#9888; Work begins only on receipt of deposit. Timeline starts from the date payment clears.</p></div></section>
                 <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Inclusions &amp; Exclusions<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="ie-grid"><div class="ie-col"><h4><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Included</h4><ul class="ie-list"><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Custom design &mdash; no templates</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Mobile-responsive layout</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">2 rounds of revisions</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Basic on-page SEO</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">Contact form with email notification</span></li><li><span class="ie-dot g" aria-hidden="true"></span><span contenteditable="true">30-day post-launch warranty</span></li></ul></div><div class="ie-col"><h4><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Not Included</h4><ul class="ie-list"><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Copywriting or content</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Photography or stock images</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Domain registration</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Ongoing hosting</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Additional pages beyond scope</span></li><li><span class="ie-dot r" aria-hidden="true"></span><span contenteditable="true">Third revision round or new features</span></li></ul></div></div></div></section>
-                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Terms &amp; Conditions<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="terms-grid"><div class="term-card"><h5>Revisions</h5><p>2 rounds included. Additional rounds billed at R450/hour.</p></div><div class="term-card"><h5>Client Delays</h5><p>Late feedback extends the delivery timeline.</p></div><div class="term-card"><h5>Intellectual Property</h5><p>All IP transfers on receipt of final payment.</p></div><div class="term-card"><h5>Cancellation</h5><p>Cancellation after work begins forfeits the deposit.</p></div><div class="term-card"><h5>Warranty</h5><p>30-day post-launch warranty on delivered scope only.</p></div><div class="term-card"><h5>Quote Validity</h5><p>Valid for <span id="dValidDays">30</span> days from issue date.</p></div></div></div></section>
-                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Banking Details<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="bank-grid"><div><div class="bk-label">Account Name</div><div class="bk-val" id="dBkName">NexridgeTech IT Solutions</div></div><div><div class="bk-label">Bank</div><div class="bk-val" id="dBkBank">&mdash;</div></div><div><div class="bk-label">Account Number</div><div class="bk-val" id="dBkAcc">&mdash;</div></div><div><div class="bk-label">Branch Code</div><div class="bk-val" id="dBkBranch">&mdash;</div></div><div><div class="bk-label">Account Type</div><div class="bk-val" id="dBkType">Current / Cheque</div></div><div><div class="bk-label">Payment Ref</div><div class="bk-val" id="dBkRef">&mdash;</div></div></div><p class="sec-note">Use the quote number as your payment reference. Send proof of payment to <strong>info@nexridgetech.co.za</strong>.</p></div></section>
-                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Acceptance &amp; Sign-Off<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="sig-grid"><div><div class="acc-box"><strong>By signing, the client confirms</strong> they have read and accepted this quote in full, including scope, price, payment terms, and conditions, and authorise NexridgeTech IT Solutions to commence work upon receipt of the deposit.</div><div class="sig-line"></div><div style="display:flex;justify-content:space-between;margin-top:.32rem"><span class="sig-cap">Client Signature</span><span class="sig-cap">Date: _______________</span></div><div style="margin-top:.9rem"><div class="sig-line"></div><span class="sig-cap">Printed Name &amp; Title</span></div></div><div><p style="font-size:.76rem;color:var(--d-ink2);line-height:1.7;font-weight:300;margin-bottom:1rem">Authorised by NexridgeTech IT Solutions. Questions? Call <strong style="color:var(--d-ink)">+27 60 743 3055</strong> &mdash; we respond the same day.</p><div class="sig-line"></div><div style="display:flex;justify-content:space-between;margin-top:.32rem"><span class="sig-cap">NexridgeTech Authorised Signature</span><span class="sig-cap" id="dSigDate"></span></div></div></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Terms &amp; Conditions<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="terms-grid" id="termsGrid"></div></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Banking Details<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div><div class="sec-content"><div class="bank-grid"><div><div class="bk-label">Account Name</div><div class="bk-val" id="dBkName">NexridgeTech IT Solutions</div></div><div><div class="bk-label">Bank</div><div class="bk-val" id="dBkBank">&mdash;</div></div><div><div class="bk-label">Account Number</div><div class="bk-val" id="dBkAcc">&mdash;</div></div><div><div class="bk-label">Branch Code</div><div class="bk-val" id="dBkBranch">&mdash;</div></div><div><div class="bk-label">Account Type</div><div class="bk-val" id="dBkType">Current / Cheque</div></div><div><div class="bk-label">Payment Ref</div><div class="bk-val" id="dBkRef">&mdash;</div></div></div><p class="sec-note">Use the quote/invoice number as your payment reference. Send proof of payment to <strong>info@nexridgetech.co.za</strong>.</p></div></section>
+                <section class="sec"><div class="sec-label" style="cursor:pointer" onclick="toggleSection(this)">Acceptance &amp; Sign-Off<button class="sec-toggle" tabindex="-1" aria-label="Toggle">&#9660;</button></div>
+                  <div class="sec-content">
+                    <!-- ─── PRINT: Professional signature block ─────────────── -->
+                    <div class="sig-section-print">
+                      <div class="sig-section-header">Client Acceptance &amp; Authorisation</div>
+                      <div class="sig-section-body">
+                        <p class="sig-acceptance-text">By signing below, the authorised signatory confirms they have read, understood, and accept this document in full — including scope of work, pricing, payment schedule, terms &amp; conditions — and hereby authorise <strong>NexridgeTech IT Solutions (NRT)</strong> to commence work upon clearance of the deposit payment.</p>
+
+                        <!-- Client name / designation / ID pre-populated row -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.6rem;padding-bottom:.55rem;border-bottom:1px solid var(--d-line)">
+                          <div>
+                            <div class="sig-col-label">Authorised Signatory</div>
+                            <div class="sig-name-value" id="dSigClientName">___________________________</div>
+                            <div class="sig-name-cap">Full name (printed)</div>
+                          </div>
+                          <div>
+                            <div class="sig-col-label">Designation / Title</div>
+                            <div class="sig-name-value" id="dSigClientDesig">___________________________</div>
+                            <div class="sig-name-cap">Position held</div>
+                          </div>
+                        </div>
+
+                        <!-- Signature grid: client sig | NRT sig | stamp -->
+                        <div class="sig-grid">
+                          <div>
+                            <div class="sig-col-label">Client Signature</div>
+                            <div class="sig-line"></div>
+                            <span class="sig-cap">Sign above</span>
+                            <div style="margin-top:.55rem">
+                              <div class="sig-col-label">Date Signed</div>
+                              <div class="sig-date-line"></div>
+                              <span class="sig-cap">DD / MM / YYYY</span>
+                            </div>
+                          </div>
+                          <div>
+                            <div class="sig-col-label">NRT Authorised Signature</div>
+                            <div class="sig-line"></div>
+                            <span class="sig-cap" id="dSigDate">NexridgeTech IT Solutions</span>
+                            <div style="margin-top:.55rem">
+                              <div class="sig-col-label">Date</div>
+                              <div class="sig-date-line"></div>
+                              <span class="sig-cap">DD / MM / YYYY</span>
+                            </div>
+                          </div>
+                          <div style="display:flex;flex-direction:column;align-items:center">
+                            <div class="sig-col-label" style="text-align:center">Company Stamp</div>
+                            <div class="sig-stamp-box">Stamp<br>Here</div>
+                          </div>
+                        </div>
+
+                        <!-- ID / passport row -->
+                        <div class="sig-id-row">
+                          <span class="sig-id-label">Client ID / Passport No.:</span>
+                          <span class="sig-id-value" id="dSigClientId"></span>
+                          <div class="sig-id-line" id="dSigIdLine"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ─── SCREEN: Compact display ─────────────────────────── -->
+                    <div class="sig-screen-display" style="margin-top:.5rem;padding:.65rem .75rem;background:var(--d-bg);border:1px solid var(--d-line);border-radius:8px;display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                      <div>
+                        <div style="font-size:.6rem;font-weight:700;color:var(--d-ink3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">Client Details for Acceptance</div>
+                        <div style="font-size:.75rem;font-weight:600;color:var(--d-ink)" id="dSigDisplayName">—</div>
+                        <div style="font-size:.65rem;color:var(--d-ink3)" id="dSigDisplayDesig">—</div>
+                      </div>
+                      <div>
+                        <div style="font-size:.6rem;font-weight:700;color:var(--d-ink3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem">Authorised by NRT</div>
+                        <p style="font-size:.72rem;color:var(--d-ink2);line-height:1.6">NexridgeTech IT Solutions &mdash; <strong style="color:var(--d-ink)">+27 60 743 3055</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
               </div>
               <footer class="doc-footer"><p>&copy; <span id="footerYear"></span> NexridgeTech IT Solutions &middot; Mpumalanga, South Africa</p><div class="df-contacts"><span><strong>T </strong>+27 60 743 3055</span><span><strong>E </strong>info@nexridgetech.co.za</span><span><strong>W </strong>www.nexridgetech.co.za</span></div></footer>
             </div>
@@ -1128,7 +1505,6 @@ const SUPABASE = {
   CFG_KEY:  'nxt_supabase_cfg',
   EMAIL_KEY:'_nrt_email',
 
-  /** Load saved config and init client. Returns true if configured. */
   loadConfig() {
     const cfg = Store.get(this.CFG_KEY);
     if (cfg?.url && cfg?.anonKey) {
@@ -1138,14 +1514,12 @@ const SUPABASE = {
     return false;
   },
 
-  /** Save new config and (re)init client */
   saveConfig(url, anonKey) {
     Store.set(this.CFG_KEY, { url: url.trim(), anonKey: anonKey.trim() });
     this._initClient(url.trim(), anonKey.trim());
   },
 
   clearConfig() { Store.remove(this.CFG_KEY); this._client = null; },
-
   isConfigured() { return !!this._client; },
 
   _initClient(url, anonKey) {
@@ -1158,7 +1532,6 @@ const SUPABASE = {
           storageKey:         'nrt_sb_session',
         },
       });
-      // Listen for auth changes (token refresh, sign-out)
       this._client.auth.onAuthStateChange((event, session) => {
         this._session = session;
         if (event === 'SIGNED_OUT') _handleSignedOut();
@@ -1170,7 +1543,6 @@ const SUPABASE = {
     }
   },
 
-  /** Check for an existing valid session */
   async getSession() {
     if (!this._client) return null;
     try {
@@ -1184,12 +1556,10 @@ const SUPABASE = {
     }
   },
 
-  /** Sign in with email + password */
   async signIn(email, password) {
     if (!this._client) throw new Error('Supabase is not configured.');
     const { data, error } = await this._client.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     if (error) {
-      // Map Supabase error messages to friendly text
       const msg = error.message || '';
       if (msg.includes('Invalid login'))        throw new Error('Incorrect email or password.');
       if (msg.includes('Email not confirmed'))  throw new Error('Please verify your email address first — check your inbox.');
@@ -1202,14 +1572,12 @@ const SUPABASE = {
     return data;
   },
 
-  /** Sign out */
   async signOut() {
     if (!this._client) return;
     sessionStorage.removeItem(this.EMAIL_KEY);
     await this._client.auth.signOut();
   },
 
-  /** Update password for the currently signed-in user */
   async updatePassword(newPassword) {
     if (!this._client) throw new Error('Supabase is not configured.');
     const { data, error } = await this._client.auth.updateUser({ password: newPassword });
@@ -1222,10 +1590,8 @@ const SUPABASE = {
     return data;
   },
 
-  /** Invite a new user — they receive a confirmation email to set their password */
   async inviteUser(email) {
     if (!this._client) throw new Error('Supabase is not configured.');
-    // signUp sends a confirmation / magic-link email
     const { data, error } = await this._client.auth.signUp({
       email: email.trim().toLowerCase(),
       password: _randomPassword(),
@@ -1239,10 +1605,7 @@ const SUPABASE = {
     return data;
   },
 
-  /** Currently signed-in email (sync, from sessionStorage) */
   currentUser() { return sessionStorage.getItem(this.EMAIL_KEY) || null; },
-
-  /** True if sessionStorage has a user email (fast sync check) */
   hasSession() { return !!sessionStorage.getItem(this.EMAIL_KEY); },
 };
 
@@ -1261,13 +1624,11 @@ function _handleSignedOut() {
   document.getElementById('loginUser').focus?.();
 }
 
-// ── Setup screen helpers ──────────────────
 function showSetupScreen() {
   const ss = document.getElementById('setupScreen');
   if (ss) ss.classList.add('visible');
   const ls = document.getElementById('loginScreen');
   if (ls) ls.style.display = 'none';
-  // Pre-fill if config exists
   const cfg = Store.get(SUPABASE.CFG_KEY);
   if (cfg) {
     const u = document.getElementById('setupUrl'); if (u) u.value = cfg.url || '';
@@ -1284,32 +1645,21 @@ function showLoginScreen() {
 }
 
 async function handleSetupSave() {
-  const urlEl = document.getElementById('setupUrl');
-  const keyEl = document.getElementById('setupKey');
-  const errEl = document.getElementById('setupErr');
-  const btn   = document.getElementById('setupSaveBtn');
+  const urlEl = document.getElementById('setupUrl'), keyEl = document.getElementById('setupKey');
+  const errEl = document.getElementById('setupErr'), btn   = document.getElementById('setupSaveBtn');
   const showErr = msg => { if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); } };
   const hideErr = ()  => { if (errEl) errEl.classList.remove('visible'); };
-
   hideErr();
-  const url    = urlEl?.value.trim() || '';
-  const anonKey = keyEl?.value.trim() || '';
+  const url = urlEl?.value.trim() || '', anonKey = keyEl?.value.trim() || '';
 
-  if (!url)     { showErr('Project URL is required.'); urlEl?.focus(); return; }
-  if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
-    showErr('URL should look like: https://xxxxxxxxxxxx.supabase.co'); urlEl?.focus(); return;
-  }
+  if (!url) { showErr('Project URL is required.'); urlEl?.focus(); return; }
+  if (!url.startsWith('https://') || !url.includes('.supabase.co')) { showErr('URL should look like: https://xxxxxxxxxxxx.supabase.co'); urlEl?.focus(); return; }
   if (!anonKey) { showErr('Anon key is required.'); keyEl?.focus(); return; }
-  if (!anonKey.startsWith('eyJ')) {
-    showErr('Anon key should start with "eyJ…" — check Project Settings → API.'); keyEl?.focus(); return;
-  }
+  if (!anonKey.startsWith('eyJ')) { showErr('Anon key should start with "eyJ…"'); keyEl?.focus(); return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Connecting…';
-
+  btn.disabled = true; btn.textContent = 'Connecting…';
   try {
     SUPABASE.saveConfig(url, anonKey);
-    // Test connection by attempting to get session
     await SUPABASE.getSession();
     Toast.success('Supabase connected successfully.');
     showLoginScreen();
@@ -1320,21 +1670,15 @@ async function handleSetupSave() {
   }
 }
 
-// ── Login form ────────────────────────────
 function showLoginError(msg) {
-  const e = document.getElementById('loginError');
-  if (!e) return;
+  const e = document.getElementById('loginError'); if (!e) return;
   e.textContent = msg; e.classList.add('visible');
   const inp = document.getElementById('loginPass');
   if (inp) { inp.classList.add('shake'); inp.addEventListener('animationend', () => inp.classList.remove('shake'), { once: true }); }
 }
-function clearLoginError() {
-  const e = document.getElementById('loginError');
-  if (e) { e.textContent = ''; e.classList.remove('visible'); }
-}
+function clearLoginError() { const e = document.getElementById('loginError'); if (e) { e.textContent = ''; e.classList.remove('visible'); } }
 function setLoginLoading(on) {
-  const btn = document.getElementById('loginBtn');
-  if (!btn) return;
+  const btn = document.getElementById('loginBtn'); if (!btn) return;
   btn.disabled = on;
   btn.innerHTML = on
     ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Signing in\u2026'
@@ -1342,33 +1686,22 @@ function setLoginLoading(on) {
 }
 
 function revealApp(email) {
-  // Update topbar
-  const av = document.getElementById('topbarAvatar');
-  const un = document.getElementById('topbarUsername');
-  const dn = document.getElementById('dashName');
-  const dn2= document.getElementById('umCurrentUser');
   const displayName = email ? email.split('@')[0] : 'user';
-  if (av) av.textContent = displayName.charAt(0).toUpperCase();
-  if (un) un.textContent = displayName;
-  if (dn) dn.textContent = displayName;
-  if (dn2) dn2.textContent = email || displayName;
-  // Hide login
+  if (el('topbarAvatar')) el('topbarAvatar').textContent = displayName.charAt(0).toUpperCase();
+  if (el('topbarUsername')) el('topbarUsername').textContent = displayName;
+  if (el('dashName')) el('dashName').textContent = displayName;
+  if (el('umCurrentUser')) el('umCurrentUser').textContent = email || displayName;
   const ls = document.getElementById('loginScreen');
   if (ls) ls.classList.add('hidden');
   setTimeout(() => { if (ls) ls.style.display = 'none'; }, 380);
 }
 
 async function handleLogin() {
-  const email    = document.getElementById('loginUser')?.value || '';
-  const password = document.getElementById('loginPass')?.value || '';
+  const email = document.getElementById('loginUser')?.value || '', password = document.getElementById('loginPass')?.value || '';
   clearLoginError();
-  if (!email.trim())    { showLoginError('Please enter your email address.'); return; }
-  if (!password)        { showLoginError('Please enter your password.'); return; }
-  if (!SUPABASE.isConfigured()) {
-    showLoginError('Supabase is not configured. ');
-    showSetupScreen();
-    return;
-  }
+  if (!email.trim()) { showLoginError('Please enter your email address.'); return; }
+  if (!password) { showLoginError('Please enter your password.'); return; }
+  if (!SUPABASE.isConfigured()) { showLoginError('Supabase is not configured. '); showSetupScreen(); return; }
   setLoginLoading(true);
   try {
     const data = await SUPABASE.signIn(email, password);
@@ -1376,71 +1709,50 @@ async function handleLogin() {
     renderDashboard();
   } catch (err) {
     showLoginError(err.message || 'Sign-in failed.');
-    document.getElementById('loginPass').value = '';
-    document.getElementById('loginPass').focus();
-  } finally {
-    setLoginLoading(false);
-  }
+    document.getElementById('loginPass').value = ''; document.getElementById('loginPass').focus();
+  } finally { setLoginLoading(false); }
 }
 
-function logout() {
-  SUPABASE.signOut().catch(console.error);
-  _handleSignedOut();
-}
+function logout() { SUPABASE.signOut().catch(console.error); _handleSignedOut(); }
 
 // ── User Management (Supabase-backed) ────────
 function openChpw() {
-  umSwitchTab('users');
-  renderUserList();
-  const cu = document.getElementById('umCurrentUser');
-  if (cu) cu.textContent = SUPABASE.currentUser() || 'you';
-  document.getElementById('chpwModal').classList.add('open');
+  umSwitchTab('users'); renderUserList();
+  if (el('umCurrentUser')) el('umCurrentUser').textContent = SUPABASE.currentUser() || 'you';
+  el('chpwModal').classList.add('open');
 }
 function closeChpw() {
-  document.getElementById('chpwModal').classList.remove('open');
-  ['addUser','addPass','addConfirm','chpwCurrent','chpwNew','chpwConfirm']
-    .forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  el('chpwModal').classList.remove('open');
+  ['addUser','addPass','addConfirm','chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { if (el(id)) el(id).value = ''; });
   umHideMsg();
 }
 
 function umSwitchTab(tab) {
   document.querySelectorAll('.um-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.um-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('umTab-'+tab)?.classList.add('active');
-  document.getElementById('umPanel-'+tab)?.classList.add('active');
+  el('umTab-'+tab)?.classList.add('active'); el('umPanel-'+tab)?.classList.add('active');
   umHideMsg();
   if (tab === 'users') renderUserList();
-  if (tab === 'pw') {
-    const cu = document.getElementById('umCurrentUser');
-    if (cu) cu.textContent = SUPABASE.currentUser() || 'you';
-  }
+  if (tab === 'pw' && el('umCurrentUser')) el('umCurrentUser').textContent = SUPABASE.currentUser() || 'you';
 }
 
 function umShowMsg(msg, ok) {
-  const el = document.getElementById('umMsg');
-  if (!el) return;
-  el.textContent = msg;
-  el.style.background = ok ? 'rgba(0,229,176,.08)' : 'rgba(239,68,68,.08)';
-  el.style.color       = ok ? 'var(--brand)'        : '#f87171';
-  el.style.display     = 'block';
+  const elem = el('umMsg'); if (!elem) return;
+  elem.textContent = msg;
+  elem.style.background = ok ? 'rgba(0,229,176,.08)' : 'rgba(239,68,68,.08)';
+  elem.style.color       = ok ? 'var(--brand)'        : '#f87171';
+  elem.style.display     = 'block';
 }
-function umHideMsg() { const el = document.getElementById('umMsg'); if (el) el.style.display = 'none'; }
+function umHideMsg() { if (el('umMsg')) el('umMsg').style.display = 'none'; }
 
 function renderUserList() {
-  const list = document.getElementById('umUserList');
-  if (!list) return;
-  const email = SUPABASE.currentUser() || '—';
-  const init  = email.charAt(0).toUpperCase();
+  const list = el('umUserList'); if (!list) return;
+  const email = SUPABASE.currentUser() || '—', init = email.charAt(0).toUpperCase();
   list.innerHTML = `
     <div class="user-row you">
       <div class="user-avatar">${esc(init)}</div>
-      <div class="user-info">
-        <div class="user-name">${esc(email)}</div>
-        <div class="user-role">Signed in &check;</div>
-      </div>
-      <div class="user-actions">
-        <button class="uab brand" onclick="umSwitchTab('pw')">Change pw</button>
-      </div>
+      <div class="user-info"><div class="user-name">${esc(email)}</div><div class="user-role">Signed in &check;</div></div>
+      <div class="user-actions"><button class="uab brand" onclick="umSwitchTab('pw')">Change pw</button></div>
     </div>
     <div style="margin-top:.625rem;padding:.75rem;background:var(--bg-2);border:1px solid var(--bd);border-radius:8px;font-size:.73rem;color:var(--tx3);line-height:1.6">
       <strong style="color:var(--tx)">&#128100; Adding or removing users</strong><br>
@@ -1450,68 +1762,49 @@ function renderUserList() {
 }
 
 async function umAddUser() {
-  const emailEl = document.getElementById('addUser');
-  const email   = emailEl?.value.trim() || '';
+  const emailEl = el('addUser'), email = emailEl?.value.trim() || '';
   umHideMsg();
-  if (!email)              { umShowMsg('Enter an email address.', false); return; }
-  if (!isValidEmail(email)){ umShowMsg('Enter a valid email address.', false); return; }
+  if (!email) { umShowMsg('Enter an email address.', false); return; }
+  if (!isValidEmail(email)) { umShowMsg('Enter a valid email address.', false); return; }
 
   const btn = document.querySelector('#umPanel-add .btn-brand');
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-
   try {
     await SUPABASE.inviteUser(email);
     if (emailEl) emailEl.value = '';
     umShowMsg('\u2713 Invite sent to ' + email + '. They\u2019ll receive an email to set their password.', true);
-    setTimeout(() => umSwitchTab('users'), 2400);
-    Toast.success('Invite sent to ' + email + '.');
-  } catch (err) {
-    umShowMsg(err.message || 'Invite failed.', false);
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Send Invite'; }
-  }
+    setTimeout(() => umSwitchTab('users'), 2400); Toast.success('Invite sent to ' + email + '.');
+  } catch (err) { umShowMsg(err.message || 'Invite failed.', false); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = 'Send Invite'; } }
 }
 
 async function umChangeMyPassword() {
-  const current = document.getElementById('chpwCurrent')?.value || '';
-  const newPw   = document.getElementById('chpwNew')?.value     || '';
-  const confirm = document.getElementById('chpwConfirm')?.value || '';
-  const email   = SUPABASE.currentUser() || '';
+  const current = el('chpwCurrent')?.value || '', newPw = el('chpwNew')?.value || '', confirm = el('chpwConfirm')?.value || '';
+  const email = SUPABASE.currentUser() || '';
   umHideMsg();
-
-  if (!current)          { umShowMsg('Enter your current password to verify.', false); return; }
-  if (newPw.length < 8)  { umShowMsg('New password must be at least 8 characters.', false); return; }
+  if (!current) { umShowMsg('Enter your current password to verify.', false); return; }
+  if (newPw.length < 8) { umShowMsg('New password must be at least 8 characters.', false); return; }
   if (newPw !== confirm) { umShowMsg('New passwords do not match.', false); return; }
   if (newPw === current) { umShowMsg('New password must differ from current.', false); return; }
 
-  // Re-authenticate first to verify current password
   const btn = document.querySelector('#umPanel-pw .btn-brand');
   if (btn) { btn.disabled = true; btn.textContent = 'Verifying…'; }
   try {
     await SUPABASE.signIn(email, current);
     await SUPABASE.updatePassword(newPw);
-    ['chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+    ['chpwCurrent','chpwNew','chpwConfirm'].forEach(id => { if (el(id)) el(id).value = ''; });
     umShowMsg('\u2713 Password updated. Use your new password next time you sign in.', true);
-    setTimeout(closeChpw, 2200);
-    Toast.success('Password updated successfully.');
-  } catch (err) {
-    umShowMsg(err.message || 'Update failed.', false);
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Update Password'; }
-  }
+    setTimeout(closeChpw, 2200); Toast.success('Password updated successfully.');
+  } catch (err) { umShowMsg(err.message || 'Update failed.', false); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = 'Update Password'; } }
 }
 
-// ── Login listeners ───────────────────────
 function initLoginListeners() {
-  const form    = document.getElementById('loginForm');
-  const pwInput = document.getElementById('loginPass');
-  const pwTgl   = document.getElementById('pwToggle');
-  const emailIn = document.getElementById('loginUser');
+  el('loginForm')?.addEventListener('submit', handleLogin);
+  el('loginPass')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+  el('loginUser')?.addEventListener('keydown', e => { if (e.key === 'Enter') el('loginPass')?.focus(); });
 
-  form?.addEventListener('submit', handleLogin);
-  pwInput?.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
-  emailIn?.addEventListener('keydown', e => { if (e.key === 'Enter') pwInput?.focus(); });
-
+  const pwTgl = el('pwToggle'), pwInput = el('loginPass');
   if (pwTgl && pwInput) {
     pwTgl.addEventListener('click', () => {
       const show = pwInput.type === 'password';
@@ -1521,68 +1814,37 @@ function initLoginListeners() {
         : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
     });
   }
-
-  // Setup screen
-  document.getElementById('setupSaveBtn')?.addEventListener('click', handleSetupSave);
-  ['setupUrl','setupKey'].forEach(id => {
-    document.getElementById(id)?.addEventListener('keydown', e => {
-      if (e.key === 'Enter') handleSetupSave();
-    });
-  });
-
-  // User management modal close on overlay click
-  document.getElementById('chpwModal')?.addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeChpw();
-  });
-
-  // Spin keyframe
-  if (!document.querySelector('#spinStyle')) {
-    const s = document.createElement('style'); s.id = 'spinStyle';
-    s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-    document.head.appendChild(s);
-  }
+  el('setupSaveBtn')?.addEventListener('click', handleSetupSave);
+  ['setupUrl','setupKey'].forEach(id => el(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') handleSetupSave(); }));
 }
 
-// ── Async boot — check Supabase session ───
 (async function authBoot() {
-  const configured = SUPABASE.loadConfig();
-
-  if (!configured) {
-    // First time — show setup
-    showSetupScreen();
-    return;
-  }
-
-  // Show a brief loading state on the login card while we check
+  if (!SUPABASE.loadConfig()) { showSetupScreen(); return; }
   const session = await SUPABASE.getSession();
-
   if (session?.user) {
     const email = session.user.email;
     sessionStorage.setItem(SUPABASE.EMAIL_KEY, email);
-    // Hide login, reveal app immediately
     const ls = document.getElementById('loginScreen');
     if (ls) { ls.classList.add('hidden'); ls.style.display = 'none'; }
     revealApp(email);
   } else {
-    // No valid session — show login
     const ls = document.getElementById('loginScreen');
     if (ls && ls.style.display === 'none') ls.style.display = 'flex';
     requestAnimationFrame(() => document.getElementById('loginUser')?.focus());
   }
 })();
 
-
-// ═══════════════════════════════════════════
-// CONFIG
 // ═══════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════
 const APP = Object.freeze({
-  version:'2.0.0',
+  version:'3.0.0',
   quotePrefix:'NRT',
   storage:{ quotes:'nxt_quotes', counter:'nxt_qcounter', integrations:'nxt_intg' },
   autoSaveDelay:2000,
 });
+
+const CURRENCY_SYMBOLS = { ZAR: 'R', USD: '$', EUR: '€', GBP: '£' };
 
 // ═══════════════════════════════════════════
 // SECURITY UTILITIES
@@ -1644,7 +1906,7 @@ const Toast={
 };
 
 // ═══════════════════════════════════════════
-// CONFIRM DIALOG  (replaces native confirm())
+// CONFIRM DIALOG 
 // ═══════════════════════════════════════════
 const Dialog={
   _resolve:null,
@@ -1680,11 +1942,6 @@ class IntegrationLogger{
   getLogs(){return[...this.log];}
 }
 
-/**
- * BaseIntegration — extend this to add any new accounting/ERP/CRM integration.
- * Required overrides: authenticate(), testConnection(), sendQuote()
- * Optional overrides: createInvoice(), getContacts(), getConfigFields()
- */
 class BaseIntegration{
   constructor({id,name,category,icon,description,logoClass}){
     this.id=id;this.name=name;this.category=category;
@@ -1701,42 +1958,9 @@ class BaseIntegration{
     this.credentials=null;this.status='disconnected';
     this.logger.info('Disconnected');IntegrationHub._persist();
   }
-  async withRetry(fn,tries=3,base=800){
-    let last;
-    for(let i=1;i<=tries;i++){
-      try{return await fn();}
-      catch(e){
-        last=e;this.logger.warn(`Attempt ${i}/${tries} failed`,{err:e.message});
-        if(!e.retryable||i===tries)break;
-        await new Promise(r=>setTimeout(r,base*i));
-      }
-    }
-    throw last;
-  }
-  _normalise(state,computed){
-    return{
-      reference:state.meta.number,issueDate:state.meta.issued,
-      expiryDate:validDate(state.meta.issued,state.meta.validDays),
-      contact:{company:state.client.company,name:state.client.contact,email:state.client.email,phone:state.client.phone},
-      lineItems:state.items.map(it=>({description:it.desc,notes:it.note,quantity:it.qty,unitPrice:it.price,lineTotal:it.qty*it.price,category:it.category})),
-      totals:{subtotal:computed.sub,discount:computed.disc,vat:computed.vat,total:computed.total},currency:'ZAR',
-    };
-  }
   getConfigFields(){return[];}
 }
 
-/**
- * XeroIntegration — Xero Accounting via OAuth 2.0 + PKCE
- *
- * Production checklist:
- *  1. Register app at https://developer.xero.com/app/manage
- *  2. Set redirect URI in Xero app to your hosted URL
- *  3. Add server-side /oauth/xero/callback to exchange code → tokens
- *     (client_secret must NEVER be exposed in browser code)
- *  4. Store tokens server-side (encrypted). Refresh before expiry.
- *  5. Call sendQuote() / createInvoice() from a server endpoint
- *     that injects the access token + Xero-tenant-id header.
- */
 class XeroIntegration extends BaseIntegration{
   constructor(){
     super({id:'xero',name:'Xero',category:'accounting',icon:'X',logoClass:'xero',
@@ -1764,8 +1988,6 @@ class XeroIntegration extends BaseIntegration{
     const url=this.getOAuthUrl(creds.xero_client_id,creds.xero_redirect_uri);
     window.open(url,'_blank','width=620,height=700,noopener,noreferrer');
     Toast.info('Xero auth window opened. After authorising, implement the server-side token exchange and call IntegrationHub.get("xero").setConnected() to complete.',7000);
-    // Production: receive postMessage from OAuth popup → exchange code at /oauth/xero/callback
-    // On success: this.credentials={accessToken,refreshToken,expiresAt,tenantId}; this.status='connected';
   }
   setConnected(credentials){
     this.credentials=credentials;this.status='connected';
@@ -1775,59 +1997,23 @@ class XeroIntegration extends BaseIntegration{
   async testConnection(){return this.status==='connected';}
   async sendQuote(state,computed){
     if(this.status!=='connected'){Toast.error('Connect Xero first.');return;}
-    const xq=this._mapXeroQuote(state,computed);
-    this.logger.info('Sending quote to Xero',{ref:xq.QuoteNumber});
-    // Production: POST ${this.apiBase}/Quotes with Bearer token & Xero-tenant-id header
+    this.logger.info('Sending quote to Xero',{ref:state.meta.number});
     Toast.success('Quote synced to Xero.');return{success:true};
-  }
-  async createInvoice(state,computed){
-    if(this.status!=='connected'){Toast.error('Connect Xero first.');return;}
-    this.logger.info('Creating Xero invoice',{ref:state.meta.number});
-    Toast.success('Invoice created in Xero.');return{success:true};
-  }
-  _mapXeroQuote(state,computed){
-    return{
-      QuoteNumber:state.meta.number,Date:state.meta.issued,
-      ExpiryDate:validDate(state.meta.issued,state.meta.validDays),
-      Status:'DRAFT',CurrencyCode:'ZAR',
-      Contact:{Name:state.client.company,EmailAddress:state.client.email},
-      LineItems:state.items.map(it=>({
-        Description:[it.desc,it.note].filter(Boolean).join('\n'),
-        Quantity:it.qty,UnitAmount:it.price,AccountCode:'200',
-      })),
-      SubTotal:computed.sub,TotalTax:computed.vat,Total:computed.total,
-    };
   }
 }
 
-/**
- * QuickBooksIntegration — stub ready for production implementation
- * Docs: https://developer.intuit.com/app/developer/qbo/docs/api/accounting
- */
 class QuickBooksIntegration extends BaseIntegration{
   constructor(){super({id:'quickbooks',name:'QuickBooks Online',category:'accounting',icon:'QB',logoClass:'quickbooks',description:'Sync quotes and invoices with QuickBooks Online.'});}
   getConfigFields(){return[{id:'qb_client_id',label:'Client ID',type:'text',placeholder:'QuickBooks app client ID'}];}
   async authenticate(){Toast.info('Implement QuickBooks OAuth 2.0 flow per Intuit developer docs.');}
-  async testConnection(){return false;}
-  async sendQuote(){Toast.info('Implement QuickBooks sendQuote() with the Estimate API endpoint.');}
 }
 
-/**
- * SageIntegration — stub ready for production implementation
- * Docs: https://developer.sage.com/accounting/
- */
 class SageIntegration extends BaseIntegration{
   constructor(){super({id:'sage',name:'Sage Business Cloud',category:'accounting',icon:'S',logoClass:'sage',description:'Export quotes to Sage Business Cloud Accounting.'});}
   getConfigFields(){return[{id:'sage_client_id',label:'Client ID',type:'text',placeholder:'Sage app client ID'}];}
   async authenticate(){Toast.info('Implement Sage OAuth 2.0 flow per Sage developer docs.');}
-  async testConnection(){return false;}
-  async sendQuote(){Toast.info('Implement Sage sendQuote() with the Sales Quotes API endpoint.');}
 }
 
-/**
- * IntegrationHub — central registry.
- * To add a new integration: IntegrationHub.register(new YourIntegration())
- */
 const IntegrationHub={
   _map:new Map(),
   register(i){this._map.set(i.id,i);},
@@ -1877,7 +2063,7 @@ function renderIntegrationModal(){
               ?`<button class="btn btn-danger" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="disconnectIntg('${esc(intg.id)}')">Disconnect</button>
                 <button class="btn btn-ghost" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="syncIntg('${esc(intg.id)}')">Sync Quote</button>`
               :`${hasConfig?`<button class="intg-expand" onclick="toggleIntgConfig('${esc(intg.id)}')">Configure ▾</button>`:''}
-               <button class="btn btn-lime" style="font-size:.7rem;padding:.35rem .7rem;min-height:0" onclick="connectIntg('${esc(intg.id)}')">Connect</button>`
+               <button class="btn btn-brand" style="font-size:.7rem;padding:.35rem .7rem;min-height:0; color:var(--bg-0);" onclick="connectIntg('${esc(intg.id)}')">Connect</button>`
             }
           </div>
         </div>
@@ -1887,19 +2073,14 @@ function renderIntegrationModal(){
   }).join('');
 }
 
-function toggleIntgConfig(id){
-  const el=document.getElementById('cfg-'+id);if(el)el.classList.toggle('open');
-}
+function toggleIntgConfig(id){ const el=document.getElementById('cfg-'+id);if(el)el.classList.toggle('open'); }
 function getIntgFormCreds(id){
   const intg=IntegrationHub.get(id);if(!intg)return{};
   const creds={};
   intg.getConfigFields().forEach(f=>{const el=document.getElementById(f.id);if(el)creds[f.id]=el.value.trim();});
   return creds;
 }
-async function connectIntg(id){
-  const intg=IntegrationHub.get(id);if(!intg)return;
-  await intg.authenticate(getIntgFormCreds(id));
-}
+async function connectIntg(id){ const intg=IntegrationHub.get(id);if(!intg)return; await intg.authenticate(getIntgFormCreds(id)); }
 async function disconnectIntg(id){
   const intg=IntegrationHub.get(id);if(!intg)return;
   const ok=await Dialog.confirm('Disconnect '+intg.name,'Remove this integration connection?','Disconnect',true);
@@ -1915,15 +2096,21 @@ async function syncIntg(id){
 // ═══════════════════════════════════════════
 let state={
   id:Date.now().toString(),
-  meta:{number:'',issued:todayISO(),validDays:30,status:'draft'},
-  client:{company:'',contact:'',email:'',phone:'',address:''},
+  meta:{number:'',poNumber:'',issued:todayISO(),validDays:30,status:'draft',documentType:'quote'},
+  client:{company:'',contact:'',email:'',phone:'',address:'',signatureName:'',signatureDesig:'',signatureId:''},
   project:{title:'',description:'',delivery:'14 working days from deposit',serviceType:'Web Development'},
   items:[
     {id:1,category:'Deliverables',desc:'Website Design & Development',note:'Fully custom, mobile-responsive design built from scratch',qty:1,price:0},
     {id:2,category:'Deliverables',desc:'On-Page SEO Foundation',note:'Meta tags, structured data, sitemap, Google Search Console setup',qty:1,price:0},
     {id:3,category:'Support',desc:'30-Day Post-Launch Support',note:'Bug fixes and minor adjustments after go-live',qty:1,price:0},
   ],
-  financial:{vat:false,vatRate:15,discountType:'percent',discountValue:0,paymentStructure:'50-50',customSplit:[50,50]},
+  financial:{
+    currency:'ZAR',
+    taxEnabled:false, taxName:'VAT', taxRate:15,
+    discountType:'percent', discountValue:0,
+    paymentStructure:'50-50', customSplit:[50,50],
+    lateFee:0
+  },
   banking:{accountName:'NexridgeTech IT Solutions',bank:'',accountNumber:'',branchCode:'',accountType:'Current / Cheque'},
 };
 let nextId=4;
@@ -1937,7 +2124,8 @@ function todayISO(){return new Date().toISOString().slice(0,10);}
 function fmtDate(iso){if(!iso)return'—';const d=new Date(iso+'T00:00:00');return d.toLocaleDateString('en-ZA',{day:'2-digit',month:'long',year:'numeric'});}
 function validDate(iso,days){const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+Number(days||30));return d.toISOString().slice(0,10);}
 function fmt(n){return Number(n||0).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function R(n){return'R '+fmt(n);}
+function getCurrSym(){ return CURRENCY_SYMBOLS[state.financial.currency] || 'R'; }
+function fmtCur(n){ return getCurrSym() + ' ' + fmt(n); }
 function el(id){return document.getElementById(id);}
 function txt(id,v){const e=el(id);if(e)e.textContent=v;}
 function getPath(obj,path){return path.split('.').reduce((o,k)=>o?.[k],obj);}
@@ -1953,9 +2141,9 @@ function compute(){
   const dv=safeNum(state.financial.discountValue);
   const disc=state.financial.discountType==='percent'?sub*(dv/100):Math.min(dv,sub);
   const afterDisc=sub-disc;
-  const vat=state.financial.vat?afterDisc*(state.financial.vatRate/100):0;
-  const total=afterDisc+vat;
-  return{sub,disc,afterDisc,vat,total,pays:buildPayments(total)};
+  const tax=state.financial.taxEnabled?afterDisc*(safeNum(state.financial.taxRate)/100):0;
+  const total=afterDisc+tax;
+  return{sub,disc,afterDisc,tax,total,pays:buildPayments(total)};
 }
 
 function buildPayments(total){
@@ -1987,17 +2175,32 @@ function buildPayments(total){
 // ═══════════════════════════════════════════
 function render(){
   const C=compute();
+  const isInvoice = state.meta.documentType === 'invoice';
+
+  let docTitle = isInvoice ? 'INVOICE' : 'QUOTATION';
+  if (isInvoice && state.financial.taxEnabled) docTitle = 'TAX INVOICE';
+  
+  txt('dDocTypeTitle', docTitle);
+  txt('dNumLabel', isInvoice ? 'Invoice Number' : 'Quote Number');
+  txt('dValidLabel', isInvoice ? 'Payment Due' : 'Valid Until');
 
   // Sidebar summary
-  txt('scTotal',R(C.total));
-  txt('scNum',state.meta.number||'—');
+  txt('scTotal',fmtCur(C.total));
+  txt('scNum', (isInvoice ? 'INV: ' : 'QT: ') + (state.meta.number||'—'));
   txt('scClient',state.client.company||'—');
   txt('scValid',fmtDate(validDate(state.meta.issued,state.meta.validDays)));
   const ss=el('statusSel');if(ss)ss.value=state.meta.status;
-  updateStatusUI(state.meta.status);
 
   // Document header
   txt('dQuoteNum',state.meta.number||'—');
+  const dPoBlock = el('dPoBlock');
+  if(state.meta.poNumber) {
+    if(dPoBlock) dPoBlock.style.display = 'block';
+    txt('dPoNum', state.meta.poNumber);
+  } else {
+    if(dPoBlock) dPoBlock.style.display = 'none';
+  }
+
   txt('dIssued',fmtDate(state.meta.issued));
   txt('dValid',fmtDate(validDate(state.meta.issued,state.meta.validDays)));
   txt('dValidDays',state.meta.validDays||30);
@@ -2020,24 +2223,27 @@ function render(){
   renderItems();
 
   // Totals
-  txt('tSubtotal',R(C.sub));
+  txt('tSubtotal',fmtCur(C.sub));
   const dr=el('tDiscRow');
   if(C.disc>0){
     dr.style.display='flex';
     txt('tDiscLabel',state.financial.discountType==='percent'?`Discount (${state.financial.discountValue}%)`:'Discount');
-    txt('tDiscount','− '+R(C.disc));
+    txt('tDiscount','− '+fmtCur(C.disc));
   }else{dr.style.display='none';}
-  const vr=el('tVatRow');
-  if(state.financial.vat){vr.style.display='flex';txt('tVat',R(C.vat));}
-  else{vr.style.display='none';}
-  txt('tTotal',R(C.total));
+  const tr=el('tTaxRow');
+  if(state.financial.taxEnabled){
+    tr.style.display='flex';
+    txt('tTaxLabel', `${state.financial.taxName || 'Tax'} (${state.financial.taxRate}%)`);
+    txt('tTaxAmount', fmtCur(C.tax));
+  }else{tr.style.display='none';}
+  txt('tTotal',fmtCur(C.total));
 
-  // Payment schedule (p.when contains only our own trusted HTML with <strong>)
+  // Payment schedule 
   el('paySchedule').innerHTML=C.pays.map(p=>`
     <div class="pay-card ${esc(p.cls)}">
       <div class="pc-phase">${esc(p.phase)}</div>
       <div class="pc-pct">${esc(String(p.pct))}% of total</div>
-      <div class="pc-amt">${esc(R(p.amt))}</div>
+      <div class="pc-amt">${esc(fmtCur(p.amt))}</div>
       <div class="pc-when">${p.when}</div>
     </div>`).join('');
 
@@ -2049,15 +2255,59 @@ function render(){
   txt('dBkType',state.banking.accountType||'Current / Cheque');
   txt('dBkRef',state.meta.number||'—');
 
+  // Dynamic Terms
+  renderTerms();
+
   // Watermark & sig date
   const wm=el('watermark');
   wm.className='wm '+state.meta.status;
   wm.textContent=state.meta.status==='draft'?'':state.meta.status.toUpperCase();
   txt('dSigDate','Date: '+fmtDate(state.meta.issued));
 
+  // Signature section — client name / designation / ID
+  const sigName = state.client.signatureName || '';
+  const sigDesig = state.client.signatureDesig || '';
+  const sigId    = state.client.signatureId   || '';
+  const sigNameEl = el('dSigClientName');
+  if(sigNameEl) sigNameEl.textContent = sigName || '___________________________';
+  const sigDesigEl = el('dSigClientDesig');
+  if(sigDesigEl) sigDesigEl.textContent = sigDesig || '___________________________';
+  const sigIdEl = el('dSigClientId');
+  if(sigIdEl)  sigIdEl.textContent = sigId;
+  const sigIdLine = el('dSigIdLine');
+  if(sigIdLine) sigIdLine.style.display = sigId ? 'none' : 'block';
+  // Screen display panel
+  const dispName = el('dSigDisplayName');
+  if(dispName) dispName.textContent = sigName || (state.client.contact || '—');
+  const dispDesig = el('dSigDisplayDesig');
+  if(dispDesig) dispDesig.textContent = sigDesig ? sigDesig + (state.client.company ? ' · ' + state.client.company : '') : (state.client.company || '—');
+
   syncSidebarFields();
   markUnsaved();
-  // Auto-save disabled — user must save manually
+}
+
+function renderTerms() {
+  const tGrid = el('termsGrid');
+  if(!tGrid) return;
+  
+  const isInvoice = state.meta.documentType === 'invoice';
+  const validTitle = isInvoice ? 'Payment Due' : 'Quote Validity';
+  const validDesc = isInvoice
+    ? `Payment is required within <span id="dValidDays">${state.meta.validDays||30}</span> days from issue date.`
+    : `Valid for <span id="dValidDays">${state.meta.validDays||30}</span> days from issue date.`;
+
+  let termsHTML = `
+    <div class="term-card"><h5>Revisions</h5><p>2 rounds included. Additional rounds billed at ${fmtCur(450)}/hour.</p></div>
+    <div class="term-card"><h5>Client Delays</h5><p>Late feedback extends the delivery timeline.</p></div>
+    <div class="term-card"><h5>Intellectual Property</h5><p>All IP transfers on receipt of final payment.</p></div>
+    <div class="term-card"><h5>Cancellation</h5><p>Cancellation after work begins forfeits the deposit.</p></div>
+    <div class="term-card"><h5>Warranty</h5><p>30-day post-launch warranty on delivered scope only.</p></div>
+    <div class="term-card"><h5>${validTitle}</h5><p>${validDesc}</p></div>
+  `;
+  if(safeNum(state.financial.lateFee) > 0) {
+    termsHTML += `<div class="term-card"><h5>Late Payments</h5><p>Invoices not paid by the due date are subject to a ${state.financial.lateFee}% monthly late fee.</p></div>`;
+  }
+  tGrid.innerHTML = termsHTML;
 }
 
 function renderItems(){
@@ -2076,7 +2326,7 @@ function renderItems(){
         <td><input class="item-inp cat" value="${esc(item.category||'')}" onchange="updItem(${item.id},'category',this.value)" placeholder="Category" aria-label="Category"></td>
         <td><input type="number" class="item-inp qty" min="1" value="${esc(String(item.qty))}" onchange="updItem(${item.id},'qty',+this.value)" aria-label="Quantity"></td>
         <td style="text-align:right"><input type="number" class="item-inp price" min="0" step="100" value="${item.price||''}" placeholder="0" onchange="updItem(${item.id},'price',+this.value)" aria-label="Unit price"></td>
-        <td class="item-total-val">${esc(R(item.qty*item.price))}</td>
+        <td class="item-total-val">${esc(fmtCur(item.qty*item.price))}</td>
         <td class="del-col" style="white-space:nowrap">
           <button class="item-move" onclick="moveItem(${item.id},-1)" title="Move up" aria-label="Move up">↑</button>
           <button class="item-move" onclick="moveItem(${item.id},1)" title="Move down" aria-label="Move down">↓</button>
@@ -2090,17 +2340,22 @@ function renderItems(){
 
 function syncSidebarFields(){
   const pairs=[
-    ['fi-num','meta.number'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
+    ['fi-num','meta.number'],['fi-po','meta.poNumber'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
     ['fi-ptitle','project.title'],['fi-delivery','project.delivery'],
     ['fc-company','client.company'],['fc-contact','client.contact'],
     ['fc-email','client.email'],['fc-phone','client.phone'],['fc-address','client.address'],
+    ['fc-signame','client.signatureName'],['fc-sigdesig','client.signatureDesig'],['fc-sigid','client.signatureId'],
     ['fb-name','banking.accountName'],['fb-bank','banking.bank'],
     ['fb-acc','banking.accountNumber'],['fb-branch','banking.branchCode'],
+    ['ff-taxname','financial.taxName'],['ff-taxrate','financial.taxRate'],
+    ['ff-latefee','financial.lateFee']
   ];
   pairs.forEach(([id,path])=>{const e=el(id);if(e&&document.activeElement!==e)e.value=getPath(state,path)||'';});
+  const dtSel=el('fi-doctype');if(dtSel&&document.activeElement!==dtSel)dtSel.value=state.meta.documentType||'quote';
   const st=el('fi-stype');if(st&&document.activeElement!==st)st.value=state.project.serviceType||'Web Development';
   const bt=el('fb-type');if(bt&&document.activeElement!==bt)bt.value=state.banking.accountType||'Current / Cheque';
-  const vc=el('vatChk');if(vc)vc.checked=!!state.financial.vat;
+  const cy=el('ff-currency');if(cy&&document.activeElement!==cy)cy.value=state.financial.currency||'ZAR';
+  const tc=el('taxChk');if(tc)tc.checked=!!state.financial.taxEnabled;
   const dv=el('discVal');if(dv&&document.activeElement!==dv)dv.value=state.financial.discountValue||'';
   const dt=el('discType');if(dt&&document.activeElement!==dt)dt.value=state.financial.discountType||'percent';
   document.querySelectorAll('.ps-opt').forEach(o=>o.classList.remove('active'));
@@ -2110,13 +2365,6 @@ function syncSidebarFields(){
   updateSplitTotal();
 }
 
-function updateStatusUI(status){
-  // Status shown via select & watermark — handled in render()/syncSidebarFields()
-}
-
-// ═══════════════════════════════════════════
-// FIELD BINDING
-// ═══════════════════════════════════════════
 function bindField(path,val){setPath(state,path,val);render();}
 function updateStatus(val){state.meta.status=val;render();}
 function updItem(id,field,val){const item=state.items.find(i=>i.id===id);if(item){item[field]=val;render();}}
@@ -2131,9 +2379,6 @@ function moveItem(id,dir){
   [state.items[idx],state.items[nidx]]=[state.items[nidx],state.items[idx]];render();
 }
 
-// ═══════════════════════════════════════════
-// PAYMENT STRUCTURE
-// ═══════════════════════════════════════════
 function setPayStr(str){
   state.financial.paymentStructure=str;
   const cw=el('customSplitWrap');if(cw)cw.style.display=str==='custom'?'block':'none';
@@ -2146,16 +2391,16 @@ function updateSplitTotal(){
   const st=el('splitTotal');if(!st)return;
   const sum=state.financial.customSplit.reduce((a,b)=>a+b,0);
   st.textContent=sum+'%';
-  st.style.color=Math.abs(sum-100)<0.5?'var(--lime)':'#f87171';
+  st.style.color=Math.abs(sum-100)<0.5?'var(--ok)':'#f87171';
 }
 function renderCustomSplitFields(){
   const wrap=el('customSplitFields');if(!wrap)return;
   wrap.innerHTML=state.financial.customSplit.map((pct,i)=>`
     <div style="display:flex;align-items:center;gap:.3rem">
       <input type="number" min="0" max="100" value="${esc(String(pct))}"
-        style="width:60px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:.3rem .5rem;color:var(--text);font-family:var(--mono);font-size:.8rem;outline:none;text-align:center"
+        style="width:60px;background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:6px;padding:.3rem .5rem;color:var(--tx);font-family:var(--mono);font-size:.8rem;outline:none;text-align:center"
         onchange="updCustomSplit(${i},+this.value)" aria-label="Stage ${i+1} percentage">
-      <span style="font-size:.7rem;color:var(--muted)">%</span>
+      <span style="font-size:.7rem;color:var(--tx3)">%</span>
       ${state.financial.customSplit.length>2?`<button onclick="removeCustomSplit(${i})" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:.8rem" aria-label="Remove stage">✕</button>`:''}
     </div>`).join('');
   updateSplitTotal();
@@ -2164,24 +2409,18 @@ function updCustomSplit(i,v){state.financial.customSplit[i]=v;renderCustomSplitF
 function addCustomSplit(){state.financial.customSplit.push(0);renderCustomSplitFields();}
 function removeCustomSplit(i){if(state.financial.customSplit.length<=2)return;state.financial.customSplit.splice(i,1);renderCustomSplitFields();render();}
 
-// ═══════════════════════════════════════════
-// QUOTE NUMBER
-// ═══════════════════════════════════════════
 let counter=parseInt(Store.get(APP.storage.counter)||'1');
 function autoNumber(){
   const yr=new Date().getFullYear();
   state.meta.number=`${APP.quotePrefix}-${yr}-${String(counter).padStart(3,'0')}`;
   counter++;Store.set(APP.storage.counter,counter);
-  render();Toast.success('Quote number assigned: '+state.meta.number,2000);
+  render();Toast.success('Quote/Invoice number assigned: '+state.meta.number,2000);
 }
 
-// ═══════════════════════════════════════════
-// STORAGE — QUOTE CRUD
-// ═══════════════════════════════════════════
 function saveQuote(){
   const C=compute();
   const index=Store.get(APP.storage.quotes+'_idx')||[];
-  const entry={id:state.id,number:state.meta.number,client:state.client.company||'—',total:C.total,status:state.meta.status,date:state.meta.issued};
+  const entry={id:state.id,number:state.meta.number,client:state.client.company||'—',total:C.total,status:state.meta.status,date:state.meta.issued, currency:state.financial.currency};
   const ei=index.findIndex(e=>e.id===state.id);
   if(ei>=0)index[ei]=entry;else index.unshift(entry);
   const ok=Store.set(APP.storage.quotes+'_idx',index)&&Store.set(APP.storage.quotes+'_'+state.id,state);
@@ -2194,24 +2433,42 @@ function showSavedFeedback(){
 function loadQuote(id){
   const raw=Store.get(APP.storage.quotes+'_'+id);
   if(!raw){Toast.error('Quote not found.');return;}
-  state=raw;nextId=Math.max(...state.items.map(i=>i.id))+1;
+  state=raw;
+  // Ensure backward compatibility
+  if(state.financial.vat !== undefined) {
+    state.financial.taxEnabled = state.financial.vat;
+    state.financial.taxRate = state.financial.vatRate || 15;
+    state.financial.taxName = 'VAT';
+    delete state.financial.vat;
+    delete state.financial.vatRate;
+  }
+  if(!state.financial.currency) state.financial.currency = 'ZAR';
+  if(!state.meta.poNumber) state.meta.poNumber = '';
+  if(!state.financial.lateFee) state.financial.lateFee = 0;
+  if(!state.meta.documentType) state.meta.documentType = 'quote';
+  // Backward compat: ensure new signature fields exist
+  if(!state.client.signatureName)  state.client.signatureName  = '';
+  if(!state.client.signatureDesig) state.client.signatureDesig = '';
+  if(!state.client.signatureId)    state.client.signatureId    = '';
+
+  nextId=Math.max(...state.items.map(i=>i.id))+1;
   render();renderQuoteList();markSaved();
 }
 async function deleteQuote(id){
-  const ok=await Dialog.confirm('Delete quote','This will permanently remove this quote. Continue?','Delete',true);
+  const ok=await Dialog.confirm('Delete document','This will permanently remove this document. Continue?','Delete',true);
   if(!ok)return;
   const index=(Store.get(APP.storage.quotes+'_idx')||[]).filter(e=>e.id!==id);
   Store.set(APP.storage.quotes+'_idx',index);Store.remove(APP.storage.quotes+'_'+id);
-  if(state.id===id)newQuote();else{renderQuoteList();Toast.success('Quote deleted.');}
+  if(state.id===id)newQuote();else{renderQuoteList();Toast.success('Document deleted.');}
 }
 function newQuote(){
   state={
     id:Date.now().toString(),
-    meta:{number:'',issued:todayISO(),validDays:30,status:'draft'},
-    client:{company:'',contact:'',email:'',phone:'',address:''},
+    meta:{number:'',poNumber:'',issued:todayISO(),validDays:30,status:'draft',documentType:'quote'},
+    client:{company:'',contact:'',email:'',phone:'',address:'',signatureName:'',signatureDesig:'',signatureId:''},
     project:{title:'',description:'',delivery:'14 working days from deposit',serviceType:'Web Development'},
     items:[{id:1,category:'Deliverables',desc:'New Deliverable',note:'Description of what this includes',qty:1,price:0}],
-    financial:{vat:false,vatRate:15,discountType:'percent',discountValue:0,paymentStructure:'50-50',customSplit:[50,50]},
+    financial:{currency:'ZAR',taxEnabled:false,taxName:'VAT',taxRate:15,discountType:'percent',discountValue:0,paymentStructure:'50-50',customSplit:[50,50],lateFee:0},
     banking:{accountName:'NexridgeTech IT Solutions',bank:'',accountNumber:'',branchCode:'',accountType:'Current / Cheque'},
   };
   nextId=2;autoNumber();render();renderQuoteList();markSaved();
@@ -2222,293 +2479,13 @@ function exportJSON(){
   a.href='data:application/json;charset=utf-8,'+encodeURIComponent(data);
   a.download=(state.meta.number||'quote')+'.json';
   a.click();
-  Toast.success('Quote exported as JSON.');
+  Toast.success('Exported as JSON.');
 }
 
-// ═══════════════════════════════════════════
-// QUOTE LIST
-// ═══════════════════════════════════════════
 let qlistOpen=false;
 let qlistFilter='';
-
-function renderQuoteList(){
-  const index=Store.get(APP.storage.quotes+'_idx')||[];
-  const qc=el('qlistCount');if(qc)qc.textContent=index.length;
-  const items=el('qlistItems');if(!items)return;
-  const filtered=qlistFilter
-    ?index.filter(e=>(e.number+e.client+e.status).toLowerCase().includes(qlistFilter.toLowerCase()))
-    :index;
-  if(!filtered.length){
-    items.innerHTML=`<div style="padding:.75rem 1.25rem;font-size:.75rem;color:var(--muted);font-family:var(--mono)">${qlistFilter?'No matching quotes.':'No saved quotes yet.'}</div>`;
-    return;
-  }
-  const statusColor={accepted:'#34d399',rejected:'#f87171',sent:'#60a5fa',draft:'var(--muted)',expired:'#fb923c'};
-  items.innerHTML=filtered.map(e=>`
-    <div class="qlist-item ${e.id===state.id?'current':''}" role="listitem" onclick="loadQuote('${esc(e.id)}')" tabindex="0"
-      onkeydown="if(event.key==='Enter'||event.key===' ')loadQuote('${esc(e.id)}')" aria-label="Quote ${esc(e.number)} for ${esc(e.client)}">
-      <div class="qi-left">
-        <div class="qi-num">${esc(e.number||'—')}</div>
-        <div class="qi-client">${esc(e.client||'—')}</div>
-        <div class="qi-total">R ${fmt(e.total)} · <span style="color:${statusColor[e.status]||'var(--muted)'}">${esc(e.status)}</span></div>
-      </div>
-      <button class="qi-del" onclick="event.stopPropagation();deleteQuote('${esc(e.id)}')" title="Delete quote" aria-label="Delete quote ${esc(e.number)}">✕</button>
-    </div>`).join('');
-}
-
-function toggleQuoteList(){
-  qlistOpen=!qlistOpen;
-  el('qlist').classList.toggle('open',qlistOpen);
-  el('qlistToggle').setAttribute('aria-expanded',qlistOpen);
-}
-
-function scheduleAutoSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveQuote,APP.autoSaveDelay);}
-
-// ═══════════════════════════════════════════
-// WHATSAPP
-// ═══════════════════════════════════════════
-function shareWhatsApp(){
-  const C=compute();
-  const msg=`*QUOTATION — NexridgeTech IT Solutions*\n\nQuote #: ${state.meta.number||'—'}\nFor: ${state.client.company||'Your business'}\nService: ${state.project.title||state.project.serviceType||'IT/Web Services'}\nTotal: R ${fmt(C.total)}\nValid Until: ${fmtDate(validDate(state.meta.issued,state.meta.validDays))}\n\n_Please see the full PDF quote for complete scope, terms, and payment details._\n_Reply to confirm acceptance or ask any questions._\n\n📞 +27 60 743 3055\n📧 info@nexridgetech.co.za`;
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
-}
-
-// ═══════════════════════════════════════════
-// PRINT / EXPORT PDF
-// ═══════════════════════════════════════════
-function printQuote(){
-  // Run validation warnings before printing
-  const {errors,warnings}=validateState();
-  if(errors.length){
-    Toast.error('Fix errors before printing: '+errors[0]);return;
-  }
-  if(warnings.length){
-    Toast.warning('Note: '+warnings[0],4000);
-  }
-  window.print();
-}
-
-function validateState(){
-  const errors=[],warnings=[];
-  if(!state.meta.issued)errors.push('Issue date is required.');
-  if(!state.client.company)warnings.push('Client company name is empty.');
-  if(state.client.email&&!isValidEmail(state.client.email))errors.push('Client email is invalid.');
-  if(!state.banking.bank)warnings.push('Bank name is missing.');
-  state.items.forEach((item,i)=>{
-    if(item.qty<=0)errors.push(`Line item ${i+1}: quantity must be > 0.`);
-    if(item.price<0)errors.push(`Line item ${i+1}: price cannot be negative.`);
-  });
-  if(state.financial.discountType==='percent'&&state.financial.discountValue>100)errors.push('Discount cannot exceed 100%.');
-  if(state.financial.paymentStructure==='custom'){
-    const sum=state.financial.customSplit.reduce((a,b)=>a+b,0);
-    if(Math.abs(sum-100)>0.5)errors.push(`Custom payments total ${sum}% — must equal 100%.`);
-  }
-  return{errors,warnings};
-}
-
-// ═══════════════════════════════════════════
-// EMAIL VALIDATION LIVE FEEDBACK
-// ═══════════════════════════════════════════
-function validateEmailField(){
-  const input=el('fc-email');const errEl=el('fc-email-err');
-  if(!input||!errEl)return;
-  const val=input.value.trim();
-  const bad=val&&!isValidEmail(val);
-  input.classList.toggle('has-error',bad);
-  errEl.classList.toggle('visible',bad);
-}
-
-// ═══════════════════════════════════════════
-// UI HELPERS
-// ═══════════════════════════════════════════
-// toggleSidebar() defined in enterprise extensions
-
-
-function switchTab(tab){
-  document.querySelectorAll('.esb-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.esb-tab').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
-  const panel=el('tab-'+tab);const btn=el('tabBtn-'+tab);
-  if(panel)panel.classList.add('active');
-  if(btn){btn.classList.add('active');btn.setAttribute('aria-selected','true');}
-}
-
-function openIntegrationModal(){
-  renderIntegrationModal();
-  el('integrationModal').classList.add('open');
-}
-function closeIntegrationModal(){el('integrationModal').classList.remove('open');}
-
-// Close modal on overlay click
-document.getElementById('integrationModal').addEventListener('click',e=>{
-  if(e.target===e.currentTarget)closeIntegrationModal();
-});
-document.getElementById('intgModalClose').addEventListener('click',closeIntegrationModal);
-
-// ═══════════════════════════════════════════
-// SIDEBAR INPUT WIRING
-// ═══════════════════════════════════════════
-// wireInputs() defined in enterprise extensions
-
-
-// ═══════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════
-// keyboard handled in initKeyboard()
-;
-// keyboard handled in initKeyboard()
-;
-
-// ═══════════════════════════════════════════
-// INITIALISE
-// ═══════════════════════════════════════════
-// init() defined in enterprise extensions below
-
-
-// ═══════════════════════════════════════════
-// ENTERPRISE EXTENSIONS
-// ═══════════════════════════════════════════
-
-// ── View switching ─────────────────────────
-let currentView = 'dashboard';
-
-function switchView(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const vEl = document.getElementById('view-' + view);
-  if (vEl) vEl.classList.add('active');
-  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(n => n.classList.remove('active'));
-  const nEl = document.getElementById('nav-' + view);
-  if (nEl) nEl.classList.add('active');
-  currentView = view;
-  if (view === 'dashboard') renderDashboard();
-  if (view === 'quotes')    renderQuotesList();
-  if (view === 'editor')    render();
-  closeAllDropdowns();
-}
-
-// ── Helper: colour by initial ─────────────
-const INIT_COLORS = ['#00e5b0','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#ec4899','#06b6d4'];
-function initColor(name) {
-  const c = (name||'?').toUpperCase().charCodeAt(0);
-  return INIT_COLORS[c % INIT_COLORS.length];
-}
-function initAvatar(name, size='26px', radius='6px') {
-  const ch = (name||'?').charAt(0).toUpperCase();
-  const col = initColor(name);
-  return `<div style="width:${size};height:${size};border-radius:${radius};background:${col}20;color:${col};display:flex;align-items:center;justify-content:center;font-size:.63rem;font-weight:700;font-family:var(--mono);flex-shrink:0">${esc(ch)}</div>`;
-}
-
-// ── Load quote then open editor ────────────
-function loadAndEdit(id) {
-  loadQuote(id);
-  switchView('editor');
-}
-
-// ── Dashboard ─────────────────────────────
-function renderDashboard() {
-  const index = Store.get(APP.storage.quotes + '_idx') || [];
-
-  // KPIs
-  const total    = index.length;
-  const accepted = index.filter(e => e.status === 'accepted').length;
-  const rejected = index.filter(e => e.status === 'rejected').length;
-  const closed   = accepted + rejected;
-  const rate     = closed > 0 ? Math.round((accepted / closed) * 100) : 0;
-  const pipeline = index.reduce((s, e) => s + (e.total || 0), 0);
-  const avg      = total > 0 ? pipeline / total : 0;
-
-  txt('kpiPipeline',    'R ' + fmt(pipeline));
-  txt('kpiAccepted',    rate + '%');
-  txt('kpiTotal',       String(total));
-  txt('kpiAvg',         'R ' + fmt(avg));
-  txt('kpiPipelineSub', total + ' total quotes');
-  txt('kpiTotalSub',    closed + ' closed');
-  txt('kpiAvgSub',      total ? 'Across all quotes' : 'No quotes yet');
-
-  // Date
-  const dd = el('dashDate');
-  if (dd) dd.textContent = new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-
-  // Username on dashboard
-  const dn = el('dashName');
-  if (dn) dn.textContent = (SUPABASE.currentUser()||'').split('@')[0] || 'there';
-
-  // Pipeline bar
-  const statuses = ['draft','sent','accepted','rejected','expired'];
-  const counts = {};
-  statuses.forEach(s => counts[s] = index.filter(e => e.status === s).length);
-  const barEl = el('pipelineBar');
-  const segColors = { draft:'var(--tx4)', sent:'var(--info)', accepted:'var(--ok)', rejected:'var(--err)', expired:'var(--warn)' };
-  if (barEl) {
-    barEl.innerHTML = statuses.map(s => {
-      const pct = total > 0 ? (counts[s] / total) * 100 : 0;
-      return pct > 0 ? `<div class="pipe-seg ${s}" style="width:${pct}%"></div>` : '';
-    }).join('');
-  }
-
-  const legEl = el('pipelineLegend');
-  if (legEl) {
-    legEl.innerHTML = statuses
-      .filter(s => counts[s] > 0)
-      .map(s => `<div class="pl-item"><div class="pl-dot" style="background:${segColors[s]}"></div>${s} (${counts[s]})</div>`)
-      .join('');
-  }
-
-  const subEl = el('pipelineSub');
-  if (subEl) subEl.textContent = total + ' quotes · R ' + fmt(pipeline) + ' total';
-
-  // Recent quotes
-  const rbody = el('dashRecentBody');
-  if (rbody) {
-    const recent = index.slice(0, 6);
-    if (!recent.length) {
-      rbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--tx3);padding:1.5rem;font-size:.8rem">No quotes yet — create your first one</td></tr>`;
-    } else {
-      rbody.innerHTML = recent.map(e => `
-        <tr onclick="loadAndEdit('${esc(e.id)}')">
-          <td class="td-num">${esc(e.number || '—')}</td>
-          <td><div class="ci">${initAvatar(e.client)}<span>${esc(e.client || '—')}</span></div></td>
-          <td class="td-amt">${R(e.total || 0)}</td>
-          <td><span class="sp sp-${esc(e.status)}">${esc(e.status)}</span></td>
-        </tr>`).join('');
-    }
-  }
-
-  // Expiring soon (within 7 days, sent/draft)
-  const expEl = el('expiringList');
-  if (expEl) {
-    const today = new Date(); today.setHours(0,0,0,0);
-    const in7   = new Date(today.getTime() + 7 * 86400000);
-    const exp   = index.filter(e => {
-      if (e.status !== 'sent' && e.status !== 'draft') return false;
-      const raw = Store.get(APP.storage.quotes + '_' + e.id);
-      if (!raw) return false;
-      const d = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
-      return d >= today && d <= in7;
-    });
-    if (!exp.length) {
-      expEl.innerHTML = '<div class="empty-blk">No expiring quotes</div>';
-    } else {
-      expEl.innerHTML = exp.map(e => {
-        const raw  = Store.get(APP.storage.quotes + '_' + e.id);
-        const d    = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
-        const days = Math.ceil((d - today) / 86400000);
-        return `<div style="display:flex;align-items:center;gap:.55rem;padding:.5rem 0;border-bottom:1px solid var(--bd);cursor:pointer" onclick="loadAndEdit('${esc(e.id)}')">
-          <div style="width:8px;height:8px;border-radius:50%;background:var(--warn);flex-shrink:0"></div>
-          <div style="font-size:.8rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.number || '—')} · ${esc(e.client || '—')}</div>
-          <div style="font-size:.68rem;font-family:var(--mono);color:var(--warn);flex-shrink:0">${days}d</div>
-        </div>`;
-      }).join('');
-    }
-    // Notification badge
-    if (exp.length > 0) {
-      const nb = el('notifBadge'); if (nb) nb.style.display = 'block';
-      addNotification('⚠ ' + exp.length + ' quote(s) expiring within 7 days');
-    }
-  }
-}
-
-// ── Quotes List View ──────────────────────
-let qlFilterStatus = 'all';
-let qlSearchText   = '';
+let qlFilterStatus='all';
+let qlSearchText='';
 
 function setQlFilter(status) {
   qlFilterStatus = status;
@@ -2542,11 +2519,12 @@ function renderQuotesList() {
   tbody.innerHTML = filtered.map(e => {
     const raw     = Store.get(APP.storage.quotes + '_' + e.id);
     const svcType = raw?.project?.serviceType || '—';
+    const sym     = CURRENCY_SYMBOLS[e.currency] || 'R';
     return `<tr onclick="loadAndEdit('${esc(e.id)}')">
       <td class="td-num">${esc(e.number || '—')}</td>
       <td><div class="ci">${initAvatar(e.client)}<span>${esc(e.client || '—')}</span></div></td>
       <td class="td-muted">${esc(svcType)}</td>
-      <td class="td-amt">${R(e.total || 0)}</td>
+      <td class="td-amt">${sym} ${fmt(e.total || 0)}</td>
       <td><span class="sp sp-${esc(e.status)}">${esc(e.status)}</span></td>
       <td class="td-muted">${fmtDate(e.date)}</td>
       <td>
@@ -2558,8 +2536,216 @@ function renderQuotesList() {
     </tr>`;
   }).join('');
 }
+function renderQuoteList() { renderQuotesList(); }
 
-// ── Command Palette ───────────────────────
+function scheduleAutoSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveQuote,APP.autoSaveDelay);}
+
+function shareWhatsApp(){
+  const C=compute();
+  const isInv = state.meta.documentType === 'invoice';
+  const docName = isInv ? 'INVOICE' : 'QUOTATION';
+  const docRef = isInv ? 'Invoice' : 'Quote';
+  
+  const msg=`*${docName} — NexridgeTech IT Solutions*\n\n${docRef} #: ${state.meta.number||'—'}\nFor: ${state.client.company||'Your business'}\nService: ${state.project.title||state.project.serviceType||'IT/Web Services'}\nTotal: ${fmtCur(C.total)}\n${isInv ? 'Due Date' : 'Valid Until'}: ${fmtDate(validDate(state.meta.issued,state.meta.validDays))}\n\n_Please see the full PDF document for complete scope, terms, and payment details._\n_Reply to confirm or ask any questions._\n\n📞 +27 60 743 3055\n📧 info@nexridgetech.co.za`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+}
+
+function shareEmail() {
+  const C = compute();
+  const isInv = state.meta.documentType === 'invoice';
+  const docName = isInv ? 'INVOICE' : 'QUOTATION';
+  const docRef = isInv ? 'Invoice' : 'Quote';
+
+  const subject = `${docName} - ${state.meta.number || ''} from NexridgeTech`;
+  const body = `Hi ${state.client.contact ? state.client.contact.split(' ')[0] : 'there'},\n\nPlease find the details for your ${docRef.toLowerCase()} below.\n\n${docRef} #: ${state.meta.number || '—'}\nService: ${state.project.title || state.project.serviceType || 'IT/Web Services'}\nTotal: ${fmtCur(C.total)}\n${isInv ? 'Due Date' : 'Valid Until'}: ${fmtDate(validDate(state.meta.issued, state.meta.validDays))}\n\nPlease let us know if you have any questions.\n\nBest regards,\nNexridgeTech IT Solutions`;
+
+  window.location.href = `mailto:${state.client.email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function printQuote(){
+  const {errors,warnings}=validateState();
+  if(errors.length){ Toast.error('Fix errors before printing: '+errors[0]);return; }
+  if(warnings.length){ Toast.warning('Note: '+warnings[0],4000); }
+  window.print();
+}
+
+function validateState(){
+  const errors=[],warnings=[];
+  if(!state.meta.issued)errors.push('Issue date is required.');
+  if(!state.client.company)warnings.push('Client company name is empty.');
+  if(state.client.email&&!isValidEmail(state.client.email))errors.push('Client email is invalid.');
+  if(!state.banking.bank)warnings.push('Bank name is missing.');
+  state.items.forEach((item,i)=>{
+    if(item.qty<=0)errors.push(`Line item ${i+1}: quantity must be > 0.`);
+    if(item.price<0)errors.push(`Line item ${i+1}: price cannot be negative.`);
+  });
+  if(state.financial.discountType==='percent'&&state.financial.discountValue>100)errors.push('Discount cannot exceed 100%.');
+  if(state.financial.paymentStructure==='custom'){
+    const sum=state.financial.customSplit.reduce((a,b)=>a+b,0);
+    if(Math.abs(sum-100)>0.5)errors.push(`Custom payments total ${sum}% — must equal 100%.`);
+  }
+  return{errors,warnings};
+}
+
+function validateEmailField(){
+  const input=el('fc-email');const errEl=el('fc-email-err');
+  if(!input||!errEl)return;
+  const val=input.value.trim();
+  const bad=val&&!isValidEmail(val);
+  input.classList.toggle('has-error',bad);
+  errEl.classList.toggle('visible',bad);
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.esb-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.esb-tab').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  const panel=el('tab-'+tab);const btn=el('tabBtn-'+tab);
+  if(panel)panel.classList.add('active');
+  if(btn){btn.classList.add('active');btn.setAttribute('aria-selected','true');}
+}
+
+function openIntegrationModal(){ renderIntegrationModal(); el('integrationModal').classList.add('open'); }
+function closeIntegrationModal(){el('integrationModal').classList.remove('open');}
+
+document.getElementById('integrationModal').addEventListener('click',e=>{ if(e.target===e.currentTarget)closeIntegrationModal(); });
+document.getElementById('intgModalClose').addEventListener('click',closeIntegrationModal);
+
+let currentView = 'dashboard';
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const vEl = document.getElementById('view-' + view);
+  if (vEl) vEl.classList.add('active');
+  
+  document.querySelectorAll('.nav-item').forEach(n => {
+    const isTarget = n.getAttribute('onclick')?.includes(`switchView('${view}')`) || n.id === `nav-${view}`;
+    n.classList.toggle('active', !!isTarget);
+  });
+  
+  currentView = view;
+  if (view === 'dashboard') renderDashboard();
+  if (view === 'quotes')    renderQuotesList();
+  if (view === 'editor')    render();
+  closeAllDropdowns();
+}
+
+const INIT_COLORS = ['#00e5b0','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#ec4899','#06b6d4'];
+function initColor(name) {
+  const c = (name||'?').toUpperCase().charCodeAt(0);
+  return INIT_COLORS[c % INIT_COLORS.length];
+}
+function initAvatar(name, size='26px', radius='6px') {
+  const ch = (name||'?').charAt(0).toUpperCase();
+  const col = initColor(name);
+  return `<div style="width:${size};height:${size};border-radius:${radius};background:${col}20;color:${col};display:flex;align-items:center;justify-content:center;font-size:.63rem;font-weight:700;font-family:var(--mono);flex-shrink:0">${esc(ch)}</div>`;
+}
+
+function loadAndEdit(id) {
+  loadQuote(id);
+  switchView('editor');
+}
+
+function renderDashboard() {
+  const index = Store.get(APP.storage.quotes + '_idx') || [];
+
+  const total    = index.length;
+  const accepted = index.filter(e => e.status === 'accepted').length;
+  const rejected = index.filter(e => e.status === 'rejected').length;
+  const closed   = accepted + rejected;
+  const rate     = closed > 0 ? Math.round((accepted / closed) * 100) : 0;
+  
+  const pipeline = index.reduce((s, e) => s + (e.total || 0), 0);
+  const avg      = total > 0 ? pipeline / total : 0;
+  
+  const dashSym = index.length > 0 ? (CURRENCY_SYMBOLS[index[0].currency] || 'R') : 'R';
+
+  txt('kpiPipeline',    dashSym + ' ' + fmt(pipeline));
+  txt('kpiAccepted',    rate + '%');
+  txt('kpiTotal',       String(total));
+  txt('kpiAvg',         dashSym + ' ' + fmt(avg));
+  txt('kpiPipelineSub', total + ' total quotes/invoices');
+  txt('kpiTotalSub',    closed + ' closed');
+  txt('kpiAvgSub',      total ? 'Across all documents' : 'No quotes yet');
+
+  const dd = el('dashDate');
+  if (dd) dd.textContent = new Date().toLocaleDateString('en-ZA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  const dn = el('dashName');
+  if (dn) dn.textContent = (SUPABASE.currentUser()||'').split('@')[0] || 'there';
+
+  const statuses = ['draft','sent','accepted','rejected','expired'];
+  const counts = {};
+  statuses.forEach(s => counts[s] = index.filter(e => e.status === s).length);
+  const barEl = el('pipelineBar');
+  const segColors = { draft:'var(--tx4)', sent:'var(--info)', accepted:'var(--ok)', rejected:'var(--err)', expired:'var(--warn)' };
+  if (barEl) {
+    barEl.innerHTML = statuses.map(s => {
+      const pct = total > 0 ? (counts[s] / total) * 100 : 0;
+      return pct > 0 ? `<div class="pipe-seg ${s}" style="width:${pct}%"></div>` : '';
+    }).join('');
+  }
+
+  const legEl = el('pipelineLegend');
+  if (legEl) {
+    legEl.innerHTML = statuses
+      .filter(s => counts[s] > 0)
+      .map(s => `<div class="pl-item"><div class="pl-dot" style="background:${segColors[s]}"></div>${s} (${counts[s]})</div>`)
+      .join('');
+  }
+
+  const subEl = el('pipelineSub');
+  if (subEl) subEl.textContent = total + ' documents · ' + dashSym + ' ' + fmt(pipeline) + ' total';
+
+  const rbody = el('dashRecentBody');
+  if (rbody) {
+    const recent = index.slice(0, 6);
+    if (!recent.length) {
+      rbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--tx3);padding:1.5rem;font-size:.8rem">No quotes yet — create your first one</td></tr>`;
+    } else {
+      rbody.innerHTML = recent.map(e => {
+        const sym = CURRENCY_SYMBOLS[e.currency] || 'R';
+        return `<tr onclick="loadAndEdit('${esc(e.id)}')">
+          <td class="td-num">${esc(e.number || '—')}</td>
+          <td><div class="ci">${initAvatar(e.client)}<span>${esc(e.client || '—')}</span></div></td>
+          <td class="td-amt">${sym} ${fmt(e.total || 0)}</td>
+          <td><span class="sp sp-${esc(e.status)}">${esc(e.status)}</span></td>
+        </tr>`;
+      }).join('');
+    }
+  }
+
+  const expEl = el('expiringList');
+  if (expEl) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const in7   = new Date(today.getTime() + 7 * 86400000);
+    const exp   = index.filter(e => {
+      if (e.status !== 'sent' && e.status !== 'draft') return false;
+      const raw = Store.get(APP.storage.quotes + '_' + e.id);
+      if (!raw) return false;
+      const d = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
+      return d >= today && d <= in7;
+    });
+    if (!exp.length) {
+      expEl.innerHTML = '<div class="empty-blk">No expiring quotes</div>';
+    } else {
+      expEl.innerHTML = exp.map(e => {
+        const raw  = Store.get(APP.storage.quotes + '_' + e.id);
+        const d    = new Date(validDate(raw.meta.issued, raw.meta.validDays) + 'T00:00:00');
+        const days = Math.ceil((d - today) / 86400000);
+        return `<div style="display:flex;align-items:center;gap:.55rem;padding:.5rem 0;border-bottom:1px solid var(--bd);cursor:pointer" onclick="loadAndEdit('${esc(e.id)}')">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--warn);flex-shrink:0"></div>
+          <div style="font-size:.8rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.number || '—')} · ${esc(e.client || '—')}</div>
+          <div style="font-size:.68rem;font-family:var(--mono);color:var(--warn);flex-shrink:0">${days}d</div>
+        </div>`;
+      }).join('');
+    }
+    if (exp.length > 0) {
+      const nb = el('notifBadge'); if (nb) nb.style.display = 'block';
+      addNotification('⚠ ' + exp.length + ' document(s) expiring within 7 days');
+    }
+  }
+}
+
 let _palOpen  = false;
 let _palIdx   = 0;
 let _palActs  = [];
@@ -2571,10 +2757,7 @@ function openPalette() {
   if (inp) { inp.value = ''; inp.focus(); }
   _buildPalette('');
 }
-function closePalette() {
-  _palOpen = false;
-  document.getElementById('paletteOverlay').classList.remove('open');
-}
+function closePalette() { _palOpen = false; document.getElementById('paletteOverlay').classList.remove('open'); }
 function _buildPalette(q) {
   const index   = Store.get(APP.storage.quotes + '_idx') || [];
   const ql      = q.toLowerCase();
@@ -2582,7 +2765,7 @@ function _buildPalette(q) {
     { icon:'➕', label:'New Quote',       sub:'Start from blank',        kbd:'Ctrl+N', bg:'var(--brand-a12)', fg:'var(--brand)',  fn:()=>{ closePalette(); newQuote(); switchView('editor'); } },
     { icon:'📋', label:'All Quotes',      sub:'Browse the quotes list',  bg:'var(--info-a)',   fg:'var(--info)',   fn:()=>{ closePalette(); switchView('quotes'); } },
     { icon:'🏠', label:'Dashboard',       sub:'Go to overview',          bg:'var(--ok-a)',     fg:'var(--ok)',     fn:()=>{ closePalette(); switchView('dashboard'); } },
-    { icon:'💾', label:'Save Quote',      sub:'Save current quote',      kbd:'Ctrl+S', bg:'var(--brand-a12)', fg:'var(--brand)',  fn:()=>{ closePalette(); saveQuote(); Toast.success('Saved.'); } },
+    { icon:'💾', label:'Save Quote',      sub:'Save current document',   kbd:'Ctrl+S', bg:'var(--brand-a12)', fg:'var(--brand)',  fn:()=>{ closePalette(); saveQuote(); Toast.success('Saved.'); } },
     { icon:'🖨',  label:'Export PDF',      sub:'Print or save as PDF',    kbd:'Ctrl+P', bg:'var(--purple-a)', fg:'var(--purple)', fn:()=>{ closePalette(); printQuote(); } },
     { icon:'🔗', label:'Integrations',    sub:'Xero, QuickBooks, Sage',  bg:'var(--purple-a)', fg:'var(--purple)', fn:()=>{ closePalette(); openIntegrationModal(); } },
     { icon:'👥', label:'Manage Users',    sub:'Add or remove users',     bg:'var(--info-a)',   fg:'var(--info)',   fn:()=>{ closePalette(); openChpw(); } },
@@ -2606,7 +2789,7 @@ function _buildPalette(q) {
     html += `<div class="pal-group">Quotes</div>` + fq.map(e => `
       <div class="pal-item" onclick="closePalette();loadAndEdit('${esc(e.id)}')">
         <div class="pal-ic" style="background:${initColor(e.client)}20;color:${initColor(e.client)};font-family:var(--mono);font-size:.68rem;font-weight:700">${(e.client||'?').charAt(0).toUpperCase()}</div>
-        <div class="pal-txt"><div class="pal-lbl">${esc(e.number||'—')}</div><div class="pal-sub">${esc(e.client||'—')} · ${R(e.total||0)}</div></div>
+        <div class="pal-txt"><div class="pal-lbl">${esc(e.number||'—')}</div><div class="pal-sub">${esc(e.client||'—')} · ${CURRENCY_SYMBOLS[e.currency]||'R'} ${fmt(e.total||0)}</div></div>
         <span class="sp sp-${esc(e.status)}">${esc(e.status)}</span>
       </div>`).join('');
   }
@@ -2618,11 +2801,8 @@ function _buildPalette(q) {
   _palHighlight();
 }
 function _palRun(i) { if (_palActs[i]) _palActs[i].fn(); }
-function _palHighlight() {
-  document.querySelectorAll('.pal-item[data-pi]').forEach((el, i) => el.classList.toggle('sel', i === _palIdx));
-}
+function _palHighlight() { document.querySelectorAll('.pal-item[data-pi]').forEach((el, i) => el.classList.toggle('sel', i === _palIdx)); }
 
-// ── User Menu & Notifications ─────────────
 function closeAllDropdowns() {
   el('userMenu')?.classList.remove('open');
   el('notifPanel')?.classList.remove('open');
@@ -2663,72 +2843,71 @@ function addNotification(msg) {
 }
 function clearNotifications() { _notifs = []; renderNotifications(); }
 function renderNotifications() {
-  const list = el('notifList');
-  if (!list) return;
+  const list = el('notifList'); if (!list) return;
   if (!_notifs.length) { list.innerHTML = '<div class="empty-blk">No notifications</div>'; return; }
   list.innerHTML = _notifs.map(n => `
-    <div class="ni">
-      <div class="ni-ttl">${esc(n.msg)}</div>
-      <div class="ni-sub">${esc(n.ts)}</div>
-    </div>`).join('');
+    <div class="ni"><div class="ni-ttl">${esc(n.msg)}</div><div class="ni-sub">${esc(n.ts)}</div></div>`).join('');
 }
 
-// ── Storage bar ───────────────────────────
 function updateStorageBar() {
   const kb  = Store.usageKB();
   const pct = Math.min((kb / 5000) * 100, 100);
-  const fill  = el('sbUsageFill');
-  const label = el('sbUsageLabel');
-  const wrap  = el('sbUsage');
+  const fill  = el('sbUsageFill'), label = el('sbUsageLabel'), wrap  = el('sbUsage');
   if (fill)  { fill.style.width = pct + '%'; fill.className = 'sb-use-fill' + (pct > 90 ? ' full' : pct > 70 ? ' warn' : ''); }
   if (label) label.textContent = `Storage: ${kb} KB / 5 000 KB`;
   if (wrap && kb > 50) wrap.style.display = 'block';
 }
 
-// ── Updated toggleSidebar ─────────────────
 function toggleSidebar() {
   const sb = el('sidebar');
   if (!sb) return;
   sb.classList.toggle('collapsed');
   const exp = !sb.classList.contains('collapsed');
   el('ctToggle')?.setAttribute('aria-expanded', String(exp));
+  el('esbOverlay')?.classList.toggle('active', exp && window.innerWidth <= 900);
 }
 
-// ── Updated wireInputs ────────────────────
 function wireInputs() {
-  // Sidebar field bindings
   const bindings = [
-    ['fi-num','meta.number'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
+    ['fi-num','meta.number'],['fi-po','meta.poNumber'],['fi-issued','meta.issued'],['fi-valid','meta.validDays'],
     ['fi-ptitle','project.title'],['fi-stype','project.serviceType'],['fi-delivery','project.delivery'],['fi-desc','project.description'],
     ['fc-company','client.company'],['fc-contact','client.contact'],['fc-email','client.email'],
     ['fc-phone','client.phone'],['fc-address','client.address'],
+    ['fc-signame','client.signatureName'],['fc-sigdesig','client.signatureDesig'],['fc-sigid','client.signatureId'],
     ['fb-name','banking.accountName'],['fb-bank','banking.bank'],['fb-acc','banking.accountNumber'],
     ['fb-branch','banking.branchCode'],['fb-type','banking.accountType'],
+    ['ff-taxname','financial.taxName']
   ];
   bindings.forEach(([id,path]) => {
-    const e = el(id);
-    if (!e) return;
+    const e = el(id); if (!e) return;
     e.addEventListener(e.tagName==='SELECT'?'change':'input', () => {
       setPath(state, path, e.type==='number' ? +e.value : e.value);
       render();
     });
   });
+  
+  ['ff-taxrate', 'ff-latefee', 'discVal'].forEach(id => {
+    const e = el(id); if(!e) return;
+    e.addEventListener('input', () => {
+      if(id === 'ff-taxrate') state.financial.taxRate = safeNum(e.value);
+      if(id === 'ff-latefee') state.financial.lateFee = safeNum(e.value);
+      if(id === 'discVal') state.financial.discountValue = safeNum(e.value);
+      render();
+    });
+  });
 
-  // Contenteditable
   [['dProjTitle','project.title'],['dProjDesc','project.description']].forEach(([id,path]) => {
-    const e = el(id);
-    if (!e) return;
+    const e = el(id); if (!e) return;
     e.addEventListener('input', () => { setPath(state, path, e.textContent); markUnsaved(); });
     e.addEventListener('blur',  () => { setPath(state, path, e.textContent); });
   });
 
-  // Finance controls
-  el('vatChk')?.addEventListener('change', () => { state.financial.vat = el('vatChk').checked; render(); });
+  el('fi-doctype')?.addEventListener('change', () => { state.meta.documentType = el('fi-doctype').value; render(); });
+  el('taxChk')?.addEventListener('change', () => { state.financial.taxEnabled = el('taxChk').checked; render(); });
+  el('ff-currency')?.addEventListener('change', () => { state.financial.currency = el('ff-currency').value; render(); });
   el('discType')?.addEventListener('change', () => { state.financial.discountType = el('discType').value; render(); });
-  el('discVal')?.addEventListener('input',  () => { state.financial.discountValue = safeNum(el('discVal').value); render(); });
   el('statusSel')?.addEventListener('change', () => updateStatus(el('statusSel').value));
 
-  // Payment structure options
   document.querySelectorAll('.ps-opt').forEach(opt => {
     const str = opt.id.replace('ps-','');
     opt.addEventListener('click', () => setPayStr(str));
@@ -2736,59 +2915,45 @@ function wireInputs() {
   });
   el('btnAddSplit')?.addEventListener('click', addCustomSplit);
 
-  // Sidebar action buttons
   el('btnSave')?.addEventListener('click', () => { saveQuote(); Toast.success('Saved.'); });
   el('btnPrint')?.addEventListener('click', printQuote);
   el('btnWA')?.addEventListener('click', shareWhatsApp);
+  el('btnEmail')?.addEventListener('click', shareEmail);
   el('btnAutoNum')?.addEventListener('click', autoNumber);
   el('btnAddItem')?.addEventListener('click', addItem);
 
-  // Canvas toolbar buttons
   el('ctToggle')?.addEventListener('click', toggleSidebar);
+  el('esbOverlay')?.addEventListener('click', toggleSidebar);
   el('ctBtnSave')?.addEventListener('click', () => { saveQuote(); Toast.success('Draft saved.'); });
   el('ctBtnPrint')?.addEventListener('click', printQuote);
   el('ctBtnWA')?.addEventListener('click', shareWhatsApp);
+  el('ctBtnEmail')?.addEventListener('click', shareEmail);
   el('ctBtnIntg')?.addEventListener('click', openIntegrationModal);
 
-  // Tab buttons
   document.querySelectorAll('.esb-tab').forEach(b => {
     b.addEventListener('click', () => switchTab(b.id.replace('tabBtn-','')));
   });
 
-  // Nav rail
-  el('nav-dashboard')?.addEventListener('click', () => switchView('dashboard'));
-  el('nav-quotes')?.addEventListener('click',    () => switchView('quotes'));
-  el('nav-editor')?.addEventListener('click',    () => switchView('editor'));
-
-  // Top bar
   el('topbarSearch')?.addEventListener('click', openPalette);
   el('topbarNewQuote')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
   el('userChipBtn')?.addEventListener('click', toggleUserMenu);
   el('notifBtn')?.addEventListener('click', toggleNotifPanel);
   el('menuLogout')?.addEventListener('click', () => Dialog.confirm('Sign out','End your session and return to the login screen?','Sign out',false).then(ok => { if (ok) logout(); }));
 
-  // Dashboard quick actions
   el('dashNewBtn')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
   el('qaNew')?.addEventListener('click',  () => { newQuote(); switchView('editor'); });
   el('qaAll')?.addEventListener('click',  () => switchView('quotes'));
   el('qaIntg')?.addEventListener('click', openIntegrationModal);
 
-  // Quotes list
   el('qlSearch')?.addEventListener('input', e => { qlSearchText = e.target.value; renderQuotesList(); });
   el('qlNewBtn')?.addEventListener('click', () => { newQuote(); switchView('editor'); });
   el('qlExportBtn')?.addEventListener('click', exportJSON);
 
-  // Email validation
   el('fc-email')?.addEventListener('blur', validateEmailField);
-
-  // Integration modal
   el('intgModalClose')?.addEventListener('click', closeIntegrationModal);
   el('integrationModal')?.addEventListener('click', e => { if (e.target===e.currentTarget) closeIntegrationModal(); });
-
-  // User management modal
   el('chpwModal')?.addEventListener('click', e => { if (e.target===e.currentTarget) closeChpw(); });
 
-  // Palette
   el('paletteOverlay')?.addEventListener('click', e => { if (e.target===e.currentTarget) closePalette(); });
   el('paletteInput')?.addEventListener('input', e => _buildPalette(e.target.value));
   el('paletteInput')?.addEventListener('keydown', e => {
@@ -2798,7 +2963,6 @@ function wireInputs() {
     else if (e.key==='Enter') { e.preventDefault(); _palRun(_palIdx); }
   });
 
-  // Close dropdowns on outside click
   document.addEventListener('click', e => {
     if (!e.target.closest('#userMenu') && !e.target.closest('#userChipBtn') &&
         !e.target.closest('#notifPanel') && !e.target.closest('#notifBtn')) {
@@ -2807,7 +2971,6 @@ function wireInputs() {
   });
 }
 
-// ── Updated keyboard shortcuts ────────────
 function initKeyboard() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
@@ -2827,21 +2990,26 @@ function initKeyboard() {
   });
 }
 
-// ── Updated init ──────────────────────────
+// Ensure toggleSections function exists and operates locally
+window.toggleSection = function(elem) {
+  const sec = elem.closest('.sec');
+  const content = sec.querySelector('.sec-content');
+  if(!sec || !content) return;
+  sec.classList.toggle('collapsed');
+  content.classList.toggle('collapsed');
+}
+
 function init() {
-  // Register integrations
   IntegrationHub.register(new XeroIntegration());
   IntegrationHub.register(new QuickBooksIntegration());
   IntegrationHub.register(new SageIntegration());
 
-  // Restore integration states
   const savedIntg = Store.get(APP.storage.integrations) || {};
   for (const [id, s] of Object.entries(savedIntg)) {
     const intg = IntegrationHub.get(id);
     if (intg && s.status) intg.status = s.status;
   }
 
-  // Restore sidebar width
   try {
     const saved = parseInt(Store.get('nxt_sb_w') || '0');
     if (saved >= 220 && saved <= 480) {
@@ -2850,25 +3018,18 @@ function init() {
     }
   } catch {}
 
-  // Init UI systems
   Toast._init();
   wireInputs();
   initLoginListeners();
   initKeyboard();
 
-  // Sidebar drag resize
-  initSidebarResize();
-
-  // Footer year
   const fy = el('footerYear'); if (fy) fy.textContent = new Date().getFullYear();
 
-  // Init topbar avatar & username
   const user = SUPABASE.currentUser() || 'user';
   const av = el('topbarAvatar'); if (av) av.textContent = user.charAt(0).toUpperCase();
   const un = el('topbarUsername'); if (un) un.textContent = user;
   const dn = el('dashName'); if (dn) dn.textContent = user;
 
-  // Boot quote state
   autoNumber();
   render();
   renderDashboard();
@@ -2876,10 +3037,8 @@ function init() {
   updateStorageBar();
   markSaved();
 
-  // Storage warning
   if (Store.usageKB() > 4200) Toast.warning('Storage nearly full (' + Store.usageKB() + ' KB). Export old quotes as JSON to free space.', 6000);
 
-  // Spin style
   if (!document.querySelector('#spinStyle')) {
     const s = document.createElement('style'); s.id = 'spinStyle';
     s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
